@@ -11,9 +11,6 @@
 	<name>SantexHR</name>
 	<url>http://www.santex.com/</url>
 
-	<repositories>
-	</repositories>
-
 	<pluginRepositories>
 	  <pluginRepository>
 		 <id>codehaus snapshot repository</id>
