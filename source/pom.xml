@@ -15,9 +15,7 @@
 	  <pluginRepository>
 		 <id>codehaus snapshot repository</id>
 		 <url>http://snapshots.repository.codehaus.org/</url>
-		 <releases>
-		  <enabled>true</enabled>
-	     </releases>
+		 <releases><enabled>true</enabled></releases>
 	  </pluginRepository>
 	</pluginRepositories>
 	
