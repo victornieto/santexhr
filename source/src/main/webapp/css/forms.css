@@ -1,0 +1,151 @@
+/* General */
+form {
+	overflow: hidden;
+	z-index: 99;
+}
+
+/* The list of form inputs */
+form ul {
+	width: 100%; !important;
+	margin: 0;
+	padding: 0;
+	clear: both;
+	overflow: auto;
+}
+
+form.half,
+form ul.half {
+	width: 50%;
+	clear: none;
+}
+form ul.half.left {
+	float: left;	
+}
+form ul.half.right {
+	width: 49%;
+	float: right;
+}
+
+form.center {
+	margin: 0 auto;
+}
+
+li.save label {
+	float: left;
+}
+
+li.save input {
+	text-align: center;
+}
+
+/* The div that contains most form inputs */
+form ul li div {
+	width: 80%;
+	float: right;
+	margin-right: 4px;
+}
+form ul.small li div {
+	width: 70%;
+}
+form ul.half li div,
+form ul.smaller li div {
+	width: 60%;
+}
+
+/* List items */
+form li {
+	clear: both;
+	overflow: hidden;
+	padding: 1px 0;
+}
+
+form li.center {
+	text-align: center;
+}
+
+/* Labels and their checkbox/radio */
+form li label {
+	float: left;
+	margin-top: 3px;
+	white-space: nowrap;
+}
+form li label.input {
+	margin-top: 0px;
+}
+form li div label input {
+	width: auto;
+}
+
+/* The input fields */
+form textarea {
+	width: 99%;
+}
+
+form li div input,
+form li div textarea,
+form li select {
+	width: 100%;
+}
+
+form li div select {
+	width: 101%;
+}
+
+/* For groupings of checkbox/radio inputs */
+form li div label {
+	margin: 1px 10px 1px 0;
+}
+form li label input {
+	border: none; /* ie has border from not parsing attributes */
+}
+
+form li span {
+	float: left;
+	clear: left;
+	margin-top: 1px;
+}
+
+form li span { font-size: 10px; }
+form li span.error { color: red;  }
+
+form li.actions input,
+form li.save input  {
+	width: auto;
+}
+
+form li.actions input {
+	margin-left: 5px;
+	float: right;
+}
+
+/* Lists inside Lists!! */
+form ul li ul li div {
+	margin-top: 1px;
+}
+
+form ul li.fieldset ul li label input {
+	margin-left: 1em;
+}
+
+form ul li p {
+	line-height: 1.5;
+}
+
+/* Multiple Choice */
+ul.multiple_choice li {
+	padding: 2px 0;
+}
+
+ul.multiple_choice label input,
+ul.multiple_choice input.radio {
+	margin: 0 5px;
+}
+
+ul.multiple_choice input.prompt {
+	width: 90%;
+}
+
+ul.multiple_choice input.offset {
+	margin-left: 25px;
+}
+

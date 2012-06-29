@@ -1,0 +1,86 @@
+<?xml version="1.0"?>
+<!DOCTYPE Configure PUBLIC "-//Mort Bay Consulting//DTD Configure//EN" "http://jetty.mortbay.org/configure.dtd">
+
+<Configure id="wac" class="org.mortbay.jetty.webapp.WebAppContext">
+
+	<!-- Atomikos configuration -->
+	<!--
+	<Call class="java.lang.System" name="setProperty">
+		<Arg>com.atomikos.icatch.file</Arg>
+		<Arg>${atomikos.jta.properties}</Arg>
+	</Call>
+	-->
+	<!-- 
+		Expose UserTransaction as java:comp/UserTransaction
+		Spring: <jee:jndi-lookup id="foo" jndi-name="UserTransaction"/>
+	-->
+	<!--
+	<New id="tx" class="org.mortbay.jetty.plus.naming.Transaction">
+	 <Arg>
+	   <New class="com.atomikos.icatch.jta.UserTransactionImp"/>
+	 </Arg>
+	</New>
+	-->
+	<!--
+		[Optional] Expose TransactionManager as java:comp/TransactionManager
+		Spring: <jee:jndi-lookup id="foo" jndi-name="TransactionManager"/>
+
+		NOTE: this is only required for (REQUIRES_NEW, NOT_SUPPORTED)
+		transaction suspension.
+	-->
+	<!--
+	<New id="tm" class="org.mortbay.jetty.plus.naming.Resource">
+		<Arg>TransactionManager</Arg>
+		<Arg>
+			<New class="com.atomikos.icatch.jta.UserTransactionManager"/>
+		</Arg>
+	</New>
+	-->
+
+	<!--
+		Expose dataSource as java:comp/env/jdbc/sample-ds
+		Spring: <jee:jndi-lookup id="foo" jndi-name="jdbc/sample-ds"/>
+	-->
+	<!--
+	<New id="sample-ds" class="org.mortbay.jetty.plus.naming.Resource">
+		<Arg><Ref id="wac"/></Arg>
+		<Arg>jdbc/sample-ds</Arg>
+		<Arg>
+			<New class="com.atomikos.jdbc.nonxa.NonXADataSourceBean">
+				<Set name="Url">${jdbc.url}</Set>
+				<Set name="DriverClassName">${jdbc.driverClassName}</Set>
+				<Set name="User">${jdbc.username}</Set>
+				<Set name="Password">${jdbc.password}</Set>
+			</New>
+		</Arg>
+	</New>
+	-->
+	<!-- 
+		[Example] Expose a DriverManagerDataSource using jndi.
+		This could be useful for development without jta.
+	-->
+	<New id="openapplicant-ds" class="org.mortbay.jetty.plus.naming.Resource">
+		<Arg><Ref id="wac"/></Arg>
+		<Arg>jdbc/openapplicant-ds</Arg>
+		<Arg>
+			<New class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+				<Set name="DriverClassName">${jdbc.driverClassName}</Set>
+				<Set name="Url">${jdbc.url}</Set>
+				<Set name="Username">${jdbc.username}</Set>
+				<Set name="Password">${jdbc.password}</Set>
+			</New>
+		</Arg>
+	</New>
+	
+	<!-- Persist the session after restart -->
+	<Set name="sessionHandler">
+		<New class="org.mortbay.jetty.servlet.SessionHandler">
+			<Arg>
+				<New class="org.mortbay.jetty.servlet.HashSessionManager">
+					<Set name="storeDirectory">${project.build.directory}/jetty-session</Set>
+				</New>
+			</Arg>
+		</New>
+	</Set>
+
+</Configure>

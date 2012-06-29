@@ -1,0 +1,3 @@
+;(function(){oltk.namespace('oltk.util');oltk.include('oltk/util/LangUtils.js');var Lang=oltk.util.LangUtils;oltk.util.Call={these:function(){if(Lang.isArray(arguments[0])){return _createCallWorker(arguments[0]);}
+else{return _createCallWorker(arguments);}}};function _createCallWorker(calls){return function(){for(var i=0;i<calls.length;i++){if(!Lang.isFunction(calls[i])){continue;}
+calls[i].apply(null,arguments);}};};})();

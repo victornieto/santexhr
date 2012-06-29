@@ -1,0 +1,73 @@
+#top {
+	position:relative;
+	clear:both;
+	height:66px;
+	margin:0 -5px 7px;
+	background-image: url(../../img/backgrounds/toolbar.gif);
+}
+
+#top img#logo {
+	position: absolute;
+	top: 11px;
+	left: 12px;
+}
+
+#top div#toolbar {
+	clear:both;
+	position:absolute;
+	left:215px;
+	top:7px;
+}
+
+#top #toolbar div.toolbar_item {
+	float: left;
+	text-align: center;
+	padding: none;
+	width:40px;
+	margin-right:10px;
+}
+
+#top #toolbar div.toolbar_item#candidates_button {
+	width:80px;
+}
+
+#top #toolbar div.toolbar_item#email {
+	width:160px;
+    position: relative;
+    height:54px;
+}
+
+#top #toolbar div.toolbar_item#email .label {
+    position: absolute;
+    bottom: 50%;
+    font-size: 0.9em;
+}
+
+#top #toolbar div .label {
+	font-size:0.9em;
+	text-align:center;
+}
+
+#top a#logout,
+#top input.search {
+	width:231px;
+	height:18px;
+	float: right;
+	margin-top: 20px;
+	margin-right: 11px;
+	padding: 5px 0px 0px 30px;
+	border:none;
+	background: #FFFFFF url(../../img/backgrounds/search.gif) scroll no-repeat	 center center;
+}
+
+#top input#search {
+    	display:none;
+}
+
+#top input#search_placeholder {
+    	color: gray;
+}
+
+#top input#search_submit {
+    	display: none;
+}

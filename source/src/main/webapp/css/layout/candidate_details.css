@@ -1,0 +1,139 @@
+.file_form {
+    padding: 5px;
+    margin-bottom: 5px;
+    margin-right: 20px;
+    float:left;
+    vertical-align:middle;
+}
+
+.file_form * {
+	vertical-align:middle;
+}
+
+.file_form .upload_modal {
+	display:none;
+}
+
+.file_form .row {
+	padding-top: 8px;
+}
+
+.examDefinition {
+	display:none;
+}
+
+.examLink {
+	display:none;
+}
+
+.examDefinition .name {
+	display:none;
+}
+
+.examDefinition div {
+	padding: 5px 0;
+}
+
+.examDefinition div * {
+	vertical-align: middle;
+}
+
+.examLink .name {
+	display:none;
+}
+
+.examLink div {
+	padding: 5px 0;
+}
+
+.examLink div * {
+	vertical-align: middle;
+}
+
+#history_list {
+	overflow: auto;
+	color:#262626;
+}
+
+#history_list .event {
+	overflow: hidden;
+	clear: both;
+	padding: 5px 0;
+}
+
+#history_list .event span {
+	margin-right: .5em;
+}
+
+#history_list .event span.user {
+	margin-right: .25em;
+}
+
+#history_list .event img {
+	float:left;
+}
+
+#history_list .event div.text {
+	margin-left: 40px;
+	padding-top: 10px;
+    word-wrap: normal;
+}
+ 
+.modal {
+	display:none;
+}
+
+#modalOverlay {
+  background-color: #000;
+}
+
+/* file upload dialog */
+#modalContainer {
+  height:150px;
+  width: 350px;
+  left:50%;
+  top:15%;
+  padding: 1em;
+  margin-left:-175px; /* half the width, to center */
+  background-color:#fff;
+  border:3px solid #ccc;
+}
+
+#modalContainer div.file {
+	background:#CCC;
+	margin: 3px 0 0 0;
+	padding:12px 10px 12px 10px;
+}
+
+#modalContainer div.submit {
+	text-align:right;
+	padding:5px;
+}
+
+a.modalCloseImg {
+  background:url(../../img/x.png) no-repeat;
+  width:15px;
+  height:15px;
+  display:inline;
+  z-index:3200;
+  position:absolute;
+  top:3px;
+  right:3px;
+  cursor:pointer;
+}
+
+/* email exam link dialog */
+#modalContainerExamLinkEmail {
+	top: 75px;
+	left: 25%;
+		
+	width: 50%;
+	height: 500px;
+	
+	border:3px solid #ccc;
+	background-color:#fff;
+	padding:20px
+}
+#modalContainerExamLinkEmail textarea {
+	height:400px
+}

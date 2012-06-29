@@ -1,0 +1,43 @@
+html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, code, del, dfn, em, img, q, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td {
+	border: 0;
+	font-weight: inherit;
+	font-style: inherit;
+	font-size: 100%;
+	font-family: inherit;
+	vertical-align: baseline;
+	margin: 0;
+	padding: 0;
+}
+
+a {
+	outline: none;
+	cursor: pointer;
+}
+
+/* removes Firefox imposed outline */
+a img {
+	border: none;
+}
+
+body {
+	line-height: 1.5;
+	margin: 0;
+}
+
+ol {
+    list-style-type: arabic-numbers;
+	list-style-position: inside;
+}
+
+ul {
+	list-style: none;
+	list-style-position: outside;
+}
+
+pre {
+	white-space: pre-wrap; /* css-3 */
+	white-space: -moz-pre-wrap !important; /* Mozilla, since 1999 */
+	white-space: -pre-wrap; /* Opera 4-6 */
+	white-space: -o-pre-wrap; /* Opera 7 */
+	word-wrap: break-word; /* Internet Explorer 5.5+ */
+}

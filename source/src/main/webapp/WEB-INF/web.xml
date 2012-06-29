@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
+	
+ 	<display-name>santex-hr</display-name>
+  
+	<listener>
+	    <listener-class>
+	        org.springframework.web.context.ContextLoaderListener
+	    </listener-class>
+	</listener>
+	
+	<!-- SPRING SECURITY FILTER -->
+	<filter>
+  		<filter-name>springSecurityFilterChain</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+	<!-- RESOURCE FILTER -->
+	<filter>
+		<filter-name>JavascriptDependencyFilter</filter-name>
+		<filter-class>org.openapplicant.web.filter.ResourceFilter</filter-class>
+		<init-param>
+			<param-name>allowedExtentions</param-name>
+			<param-value>ejs js</param-value>
+		</init-param>
+		<init-param>
+			<!-- cache disabled for development -->
+			<param-name>enableCache</param-name>
+			<param-value>false</param-value>
+		</init-param>
+		<init-param>
+			<param-name>basePath</param-name>
+			<param-value>/lib/js/</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>JavascriptDependencyFilter</filter-name>
+		<url-pattern>/lib/js/*</url-pattern>
+	</filter-mapping>
+	
+	<!-- OPEN SESSION IN VIEW FILTER -->
+	<filter>
+		<filter-name>openSessionInViewFilter</filter-name>
+		<filter-class>org.springframework.orm.hibernate3.support.OpenSessionInViewFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>openSessionInViewFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+	<!-- SPRING DISPATCHER -->
+	<servlet>
+        <servlet-name>spring</servlet-name>
+        <servlet-class>
+            org.springframework.web.servlet.DispatcherServlet
+        </servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+	<servlet-mapping>
+        <servlet-name>spring</servlet-name>
+        <url-pattern>/quiz/*</url-pattern>
+    </servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>spring</servlet-name>
+		<url-pattern>/admin/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>spring</servlet-name>
+		<url-pattern>/dwr/*</url-pattern>
+	</servlet-mapping>
+	
+	<!-- DATA SOURCE -->
+	<resource-ref>
+		<res-ref-name>jdbc/openapplicant-ds</res-ref-name>
+		<res-type>javax.sql.DataSource</res-type>
+		<res-auth>Container</res-auth>
+		<res-sharing-scope>Shareable</res-sharing-scope>
+	</resource-ref>
+	
+	<!-- SESSION CONFIG -->
+	<session-config>
+		<session-timeout>240</session-timeout>
+	</session-config>
+	
+</web-app>

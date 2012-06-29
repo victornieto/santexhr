@@ -1,0 +1,49 @@
+#container {
+	min-height:600px;
+	height: 600px;
+	height: auto !important;
+}
+
+#openapplicant_loading {
+	position: absolute;
+	right: 5%;
+	top: 6%;
+	z-index: 99;
+}
+
+.openapplicant_application_content #next {
+	float: right;
+	padding-top: .5em;
+	font-weight: bold;
+	font-size: 1.4em;
+}
+
+.openapplicant_quiz_info {
+	margin: 75px auto 0;
+	width: 420px;
+}
+
+.openapplicant_quiz_question {
+	margin: 20px auto 0;
+	width: 80%;
+}
+
+#openapplicant_question_form #name {
+	float: left;
+	font-size: 1.2em;
+}
+
+#openapplicant_question_form #time_allowed {
+	float: right;
+	font-size: 1.2em;
+}
+
+#openapplicant_question_form #prompt {
+	padding: 3px 0;	
+}
+
+#openapplicant_question_form textarea {
+	width: 99%;
+	height: 275px;
+	margin: 0 auto;
+}

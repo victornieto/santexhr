@@ -1,0 +1,45 @@
+input,
+select,
+textarea {
+	font: 1em Helvetica;
+	margin: 0;
+	padding: 0;	
+	vertical-align: bottom;
+}
+
+*:focus {
+	outline: none;
+}
+
+input[type=button],
+input[type=submit] {
+/* this has no effect in Safari or Firefox, tune for IE */
+}
+
+input[type=checkbox],
+input[type=radio] {
+}
+
+input[type=text],
+input[type=password] {
+	padding: 2px 0 2px 1px;
+}
+
+select option {
+	padding: 0 0 0 2px;
+}
+
+textarea {
+	padding: 2px 1px 0;
+	height: 4em;
+	min-height: 4em;
+}
+
+/* these things need to line up */
+input[type=text],
+input[type=password],
+textarea {	
+	border-color:#333333 #AAAAAA #AAAAAA #333333;
+	border-style:solid;
+	border-width:1px;
+}

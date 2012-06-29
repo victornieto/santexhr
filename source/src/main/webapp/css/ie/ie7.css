@@ -1,0 +1,35 @@
+ul.fix li.actions input {
+	padding-left: 0;
+	padding-right: 0;
+}
+
+#sidebar li a,
+#sidebar li span,
+#sidebar li h4 {
+	padding-left: 10px;
+}
+
+#sidebar .selected {
+	position: relative;
+	left: 0;
+	padding-left:0;
+	width: auto;
+	z-index: 50;
+}
+
+#menu li {
+	padding-bottom: 0px;
+}
+
+.chart .legend {
+	margin-top: 50px;
+	margin-left: 3px;
+}
+
+table.sortable {
+	border-top: 0;
+}
+
+table.sortable thead tr .header {
+	border-bottom: 1px solid #B1B1B1;
+}

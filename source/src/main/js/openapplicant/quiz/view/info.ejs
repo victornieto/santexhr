@@ -1,0 +1,49 @@
+<form id="openapplicant_info_form">
+	<input type="hidden" name="candidate.id" value="<%=candidate.id%>"/>
+    <h2>Please enter your information:</h2>
+    <ul class="small">
+        <li>
+            <label>First Name:</label>
+           	<div>
+            	<input name="candidate.name.first" type="text" value="<%=candidate.name.first%>" class="required"/>
+            </div>
+        </li>
+        <li>
+            <label>Last Name:</label>
+            <div>
+        	    <input name="candidate.name.last" type="text" value="<%=candidate.name.last%>" class="required"/>
+        	</div>
+        </li>
+        <li>
+            <label>Email:</label>
+            <div>
+				<input name="candidate.email" type="text" value="<%=candidate.email%>" class="required email"/>
+			</div>
+        </li>
+        <% if(exams.length == 1) { %> 
+        	<input type="hidden" name="examArtifactId" value="<%=exams[0].artifactId%>"/>
+        <% } else { %>
+            <li>
+            	 <label>Exam:</label>
+            	 <div>
+	                <select name="examArtifactId">
+	                <% each(exams, function(exam) { %>
+	                    <option value="<%=exam.artifactId%>"><%=exam.name%></option>
+	                <% }) %>
+	                </select>
+	            </div>
+            </li>
+        <% } %>
+    </ul>        
+	<a id="next" style="display:none;">continue</a>
+</form>
+<script type="text/javascript">	
+	$('#next').click( function() {
+		$('#openapplicant_info_form').submit();
+	});
+	$('#openapplicant_info_form').validate({
+        submitHandler: function(form) {
+            oltk.bravo.execute('info', 'sit', oltk.bravo.expand('*',form));
+        }
+    });
+</script>

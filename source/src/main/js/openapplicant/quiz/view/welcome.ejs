@@ -1,0 +1,20 @@
+<div id="welcome">
+	<h2>Hello.</h2>
+	<p>
+		The following exam will present you with a series of questions designed to measure your problem solving abilities.
+		Not all of the questions are timed, but that does not mean you can google around for the answers.
+		Be sure to watch the timer in the upper-right corner.
+	</p>
+	<p>
+		Get a pencil, scratch paper, glass of water, and click 'start' when you are ready to begin.
+		The whole exam should take somewhere between 20 and 60 minutes.
+		Good luck!
+	</p>
+	<a id="next" style="display:none;" onclick="oltk.bravo.execute('info', 'showExamLink')">start</a>
+</div>
+<script type="text/javascript"> 
+    $('#logo').wrap('<a id="logo_link" href="http://www.openapplicant.org"></a>');
+    $('#next').click( function(){
+        $('#logo').parent().replaceWith($('#logo'));
+    });
+</script>

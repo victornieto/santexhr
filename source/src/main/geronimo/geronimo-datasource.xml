@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<connector xmlns="http://geronimo.apache.org/xml/ns/j2ee/connector-1.2">
+    <dep:environment xmlns:dep="http://geronimo.apache.org/xml/ns/deployment-1.2">
+        <dep:moduleId>
+            <dep:groupId>${project.groupId}</dep:groupId>
+            <dep:artifactId>openapplicant-ds</dep:artifactId>
+            <dep:version>${project.version}</dep:version>
+            <dep:type>rar</dep:type>
+        </dep:moduleId>
+        <dep:dependencies>
+            <dep:dependency>
+                <dep:groupId>mysql</dep:groupId>
+                <dep:artifactId>mysql-connector-java</dep:artifactId>
+                <dep:version>5.1.6</dep:version>
+                <dep:type>jar</dep:type>
+            </dep:dependency>
+        </dep:dependencies>
+    </dep:environment>
+    <resourceadapter>
+        <outbound-resourceadapter>
+            <connection-definition>
+                <connectionfactory-interface>javax.sql.DataSource</connectionfactory-interface>
+                <connectiondefinition-instance>
+                    <name>openapplicant-ds</name>
+					<config-property-setting name="UserName">
+						root
+					</config-property-setting>
+                    <config-property-setting name="Password"/>
+					<config-property-setting name="Driver">
+						com.mysql.jdbc.Driver
+					</config-property-setting>
+					<config-property-setting name="ConnectionURL">
+						jdbc:mysql://olmain:3306/openapplicant_v1
+					</config-property-setting>
+                    <connectionmanager>
+                        <local-transaction/>
+                        <single-pool>
+                            <max-size>10</max-size>
+                            <min-size>0</min-size>
+                            <blocking-timeout-milliseconds>5000</blocking-timeout-milliseconds>
+                            <idle-timeout-minutes>30</idle-timeout-minutes>
+                            <match-one/>
+                        </single-pool>
+                    </connectionmanager>
+                </connectiondefinition-instance>
+            </connection-definition>
+        </outbound-resourceadapter>
+    </resourceadapter>
+</connector>
+

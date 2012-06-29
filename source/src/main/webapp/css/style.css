@@ -1,0 +1,90 @@
+html,
+body {
+	background: #f2f2f2;
+	color: #050505;
+	font: 12px Helvetica;
+}
+
+a {
+	color: #050505;  /* JIRA color #002244 */
+	text-decoration: none;
+	cursor: pointer;
+}
+
+a:visited {
+	color: #050505;
+}
+
+a:hover,
+a:active {
+	text-decoration: underline;
+}
+
+h1, h2, h3 {
+	color: #050505;
+	font-weight: bold;
+}
+
+/* page titles */
+h1 { font-size: 18px; margin-bottom: -1px; margin-left: 2px; }
+
+/* page subsections */
+h2 { font-size: 16px; }
+
+/* navigation, eg sidebar */
+h3 { font-size: 14px; height: 20px; }
+h3 a { position: relative; top: -2px; }
+
+input,
+select,
+textarea {
+    	font: 1em Helvetica;
+}
+
+textarea.code {
+		color: #000;
+    	font: 1em Courier New;
+}
+
+textarea.essay {
+		color: #000;
+    	font: 1em Helvetica;
+}
+
+.group {
+	border: 1px solid #CCC;
+	padding: 4px;
+	margin-bottom: 5px;
+}
+
+.error,	
+.cheat,
+.urgent,
+.reserved {
+	font-weight: bold;
+    color: #C60019;
+}
+
+.success {
+    font-weight: bold;
+    color: green;
+}
+
+span.toggler {
+	cursor: pointer;
+	font-size: 1.1em;
+}
+span.toggler img {
+	position: relative;
+	top: 1px;	
+}
+
+#container {
+	background: #FFF;
+	border: 1px solid #808080;
+}
+
+#copyright {
+	font-size: 11px;
+	text-align: center;
+}

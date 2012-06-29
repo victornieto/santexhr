@@ -1,0 +1,75 @@
+#content {}
+
+.setting {
+	width: 720px;
+}
+
+/* I have to pull all of these elements left because of the
+ * response graph's y label I'm letting the other graphs extend
+ * to the left as well */
+#position,
+#control_bar{
+	margin-right: 5px;
+}
+
+#position {
+	height: 6px !important;
+	overflow-y: hidden;
+}
+
+#handle {
+	background: #777;	
+}
+
+#control_bar {
+	margin-bottom: 0;
+}
+
+#control_bar .button{
+}
+
+#prev {
+	margin-left: 20px;	
+}
+	
+#speed,
+#clock {
+	margin-left: 20px;
+	margin-top: 0;
+}
+
+#speed span.selected {
+}
+
+.ui-slider,
+.ui-slider-handle,
+.ui-slider-handle:hover {
+}
+
+.ui-slider-handle,
+.ui-slider-handle:hover {
+	background-image: none;
+	background: #000;
+}
+
+#response_graph {
+	margin-top: 0;
+	margin-right: -4px;
+	float: right;
+	width: 727px !important;
+}
+
+#question_answer_grade {
+}
+
+.third {
+	height: 87px;
+}
+
+.chart {
+	width: 350px;
+	margin-left: 0;
+}
+
+object {
+}
