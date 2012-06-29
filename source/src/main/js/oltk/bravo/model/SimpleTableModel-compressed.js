@@ -1,0 +1,15 @@
+
+oltk.namespace('oltk.bravo.model');oltk.bravo.model.SimpleTableModel=function()
+{var _columns=[];var _data=[];var _changeHandlers=[];this.addTableChangedHandler=function(handler)
+{_changeHandlers.push(handler);};this.addColumn=function(metadata)
+{_columns.push(metadata);};this.addRow=function(row)
+{_data.push(row);_fireTableChanged();};this.getColumn=function(index)
+{return _columns[index];};this.getColumnCount=function()
+{return _columns.length;};this.getData=function()
+{return _data;};this.getRowCount=function()
+{return _data.length;};this.getValueAt=function(row,column)
+{return _data[row][column];};this.setData=function(data)
+{_data=data;_fireTableChanged();};this.setValueAt=function(row,column,value)
+{_data[row][column]=value;_fireTableChanged();};var _fireTableChanged=function()
+{for(var i=0;i<_changeHandlers.length;i++)
+{var handler=_changeHandlers[i];handler();}};};

@@ -1,0 +1,172 @@
+#sidebar {
+    float: left;
+	width: 200px;
+	overflow: hidden;
+}
+
+#sidebar a:hover, #sidebar a:active {
+	text-decoration: none;
+}
+
+#sidebar .group {
+	clear:both;
+	margin:0 auto 5px;
+	width: 190px;
+	overflow: hidden;
+   	border: 1px solid #bfbfbf;
+    padding: 4px;
+}
+
+/* these need to be pushed left because
+   it's having a background applied as though it's a
+   list element
+ */
+#sidebar h3 span {
+	position: relative;
+	left: 19px;
+	top: 2px;
+}
+
+#sidebar ul {
+	margin-left: 1em;
+	list-style-position: inside;
+}
+	
+#sidebar form ul {
+	margin-left: 0;
+	list-style-position: outside;
+}
+
+#sidebar li {
+	padding-top: 1px;
+}
+
+/**
+ *	This has to be shifted because of the discrepancy
+ * 	in the size of the image and the text.
+ */
+#sidebar li a,
+#sidebar li h4,
+#sidebar li span {
+	position:relative;
+	top: -3px;
+	left: -6px;	
+}
+
+/**
+ * The padding-left and left position need to be adjusted on 
+ * a per application use... i'll eventually set that through ul depth.
+ */
+#sidebar .selected {
+	background: url(../../img/sidebar/gradient-slice.jpg);
+	background-repeat: repeat-x;
+	position: relative;
+	left:-100px;
+	padding-left:100px;
+	width:200px;
+}
+
+#sidebar li.folder.selected {
+	list-style-image: url(../../img/sidebar/folder-open.gif);	
+}
+
+/** 
+ * ICONS!
+ */
+#sidebar ul.exams,
+#sidebar li.exam {
+	list-style-image: url(../../img/sidebar/exam.gif);
+}
+
+#sidebar ul.categories,
+#sidebar li.category {
+	list-style-image: url(../../img/sidebar/category.gif);
+}
+
+#sidebar ul.folders,
+#sidebar li.folder {
+	list-style-image: url(../../img/sidebar/folder.gif);
+}
+
+#sidebar li.search_folder {
+	list-style-image: url(../../img/sidebar/search_folder.gif);
+}
+
+#sidebar ul.questions,
+#sidebar li.question {
+	list-style-image: url(../../img/sidebar/question.gif);
+}
+
+
+#sidebar h3.candidate {
+	background: url(../../img/sidebar/candidate.gif);
+	background-repeat: no-repeat;
+}
+
+#sidebar h3.search {
+	background: url(../../img/sidebar/search.gif);
+	background-repeat: no-repeat;
+}
+
+#sidebar li.candidate {
+	list-style-image: url(../../img/sidebar/candidate.gif);
+}
+
+#sidebar li.new_candidate {
+    list-style-image: url(../../img/sidebar/new_candidate.gif);
+}
+
+/* SETTINGS SIDEBAR */
+#sidebar h3.settings {
+	background: url(../../img/sidebar/settings.gif);
+	background-repeat: no-repeat;
+}
+
+#sidebar li.settings {
+	list-style-image: url(../../img/sidebar/settings.gif);	
+}
+
+#sidebar li.email {
+    list-style-image: url(../../img/sidebar/email.gif);
+}
+
+#sidebar li.exam {
+    list-style-image: url(../../img/sidebar/exam.gif);
+}
+
+#sidebar li.category {
+    list-style-image: url(../../img/sidebar/category.gif);
+}
+
+#sidebar li.company,
+#sidebar li.keywords {
+    list-style-image: url(../../img/sidebar/keyword.gif);
+}
+
+#sidebar li.preferences {
+    list-style-image: url(../../img/sidebar/prefs.gif);
+}
+
+#sidebar li.question {
+    /*font-size: 8px;*/
+    list-style-image: none;
+    list-style-type: decimal;
+}
+
+#sidebar li.screening {
+    list-style-image: url(../../img/sidebar/search.gif);
+}
+
+#sidebar ul.templates,
+#sidebar li.templates {
+    list-style-image: url(../../img/sidebar/template.gif);
+}
+
+#sidebar ul.tests {
+    list-style-image: url(../../img/sidebar/test.gif);
+}
+
+#sidebar li.user,
+#sidebar li.users {
+	list-style-image: url(../../img/sidebar/user.gif);
+}

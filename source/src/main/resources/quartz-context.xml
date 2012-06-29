@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+		
+	<context:annotation-config />
+	
+	<context:spring-configured />
+	
+	<tx:annotation-driven mode="aspectj"/>
+	
+	<!--
+	==========================================================================
+									JOBS
+	==========================================================================
+	-->
+	
+	<bean id="nightlyStatusReport" class="org.openapplicant.report.NightlyStatusReport">
+		<property name="reportService" ref="reportService"/>
+	</bean>
+	
+	<bean id="mailClient" class="org.openapplicant.service.facilitator.MailClient">
+		<property name="facilitatorService" ref="facilitatorService"/>
+		<property name="user" value="${facilitator.mail.user}"/>
+		<property name="password" value="${facilitator.mail.password}"/>
+		<property name="host" value="${facilitator.mail.host}"/>
+		<property name="protocol" value="${facilitator.mail.protocol}"/>
+		<property name="folderName" value="${facilitator.mail.folderName}"/>
+		<property name="debug" value="${facilitator.mail.debug}"/>
+	</bean>
+	
+	<bean id="reportJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+  		<property name="targetObject" ref="nightlyStatusReport"/>
+  		<property name="targetMethod" value="execute"/>
+	</bean>
+	
+	<bean id="facilitatorJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="mailClient"/>
+		<property name="targetMethod" value="processMail"/>
+		<property name="concurrent" value="false"/>
+	</bean>
+
+	<bean id="facilitatorTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+ 		 <property name="jobDetail" ref="facilitatorJobDetail"/>
+		 <property name="startDelay" value="30000"/>
+	     <property name="repeatInterval" value="${facilitator.mail.interval}"/>
+	</bean>
+
+	<bean id="reportTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+  		<property name="jobDetail" ref="reportJobDetail"/>
+  		<property name="cronExpression" value="${report.cronExpression}"/>
+	</bean>
+		
+	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+  		<property name="triggers">
+    	<list>
+     		<ref bean="reportTrigger"/>
+			<ref bean="facilitatorTrigger"/>
+	    </list>
+  		</property>
+	</bean>
+	
+</beans>

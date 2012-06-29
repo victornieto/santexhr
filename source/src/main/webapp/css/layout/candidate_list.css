@@ -1,0 +1,81 @@
+.tip_title {
+	color: gray;
+	font-weight: bold;
+}
+
+.cluetip-history span.date  {
+	font-weight: bold;
+}
+
+.cluetip-history span  {
+	margin-right: 0.5em;
+}
+
+.cluetip-history .event span.user {
+	margin-right: 0.25em;
+}
+
+.cluetip-history .event span.action {
+	margin-right:0.5em;
+}
+
+#content {
+	border: 1px solid #B1B1B1;
+	height: 575px;
+	overflow-x:hidden;
+	overflow-y:scroll;
+	margin-bottom: 5px;
+}
+
+#openapplicant_candidate_list {
+	width: 713px;
+}
+
+#openapplicant_candidate_list td {
+   	text-align: left;
+}
+
+#openapplicant_candidate_list td img {
+	vertical-align: bottom;
+}
+
+#openapplicant_candidate_list td.numerical {
+    text-align:center;
+}
+
+#openapplicant_candidate_list th.icon,
+#openapplicant_candidate_list td.icon {
+	padding: 0;
+   	text-align:center;
+}
+
+th#name {
+}
+
+th#date {
+	width:52px;
+}
+
+th#screen, th#test, th#match {
+	width:62px;
+}
+
+th#status {
+	width: 105px;
+}
+
+ul.archive_tooltip a:hover {
+	color: #002244;
+}
+	
+table.sortable {
+	border-top: none;
+	border-left: none;
+}
+
+#openapplicant_candidate_no_results {
+	border-top: none;
+	text-align:center;
+	padding: 1em;
+	vertical-align:middle;
+}

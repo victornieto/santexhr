@@ -1,0 +1,45 @@
+<form id="openapplicant_question_form">
+	<input type="hidden" name="question.id" value="<%=question.id%>"/>
+	<div class="row">
+	   <span id="name"><%=sitting.exam.name%>, <%=sitting.nextQuestionIndex%> of <%=sitting.exam.questions.length%></span>
+	   <span id="time_allowed"><%=question.timeAllowed%> s</span>
+	</div>
+	<div class="row righty">
+		<% if(question.image != undefined) { %>
+			<img src="usr/<%=question.image.path%>" title="<%=question.image.title%>"/>
+		<% } %>
+		<pre id="prompt"><%=question.prompt%></pre>
+	</div>
+	<textarea id="response" name="content" class="code"></textarea>
+	<a id="next" style="display:none;">continue</a>
+</form>
+<script type="text/javascript">
+
+    oltk.include('openapplicant/quiz/helper/timer.js');
+    oltk.include('openapplicant/quiz/helper/tab.js');
+    oltk.include('openapplicant/quiz/helper/recorder.js');
+			
+	//timer has two callbacks, when time is up & when user clicks ok
+	openapplicant.quiz.helper.timer.init('#time_allowed', <%=question.timeAllowed || 0%>,
+		function() {
+			$('#openapplicant_question_form').submit();
+		}, function() {
+			oltk.bravo.execute('question','view');
+		}
+	);
+			
+	openapplicant.quiz.helper.tab.init('#response');
+	openapplicant.quiz.helper.recorder.init('#response');
+	
+	$('#next').click( function() {
+		openapplicant.quiz.helper.timer.destroy();		
+		$('#openapplicant_question_form').submit();
+		oltk.bravo.execute('question','view');
+	});
+	
+	$('#openapplicant_question_form').submit( function() {
+		oltk.bravo.execute('question', 'submitResponse', oltk.bravo.expand('*', this));
+		return false;
+	});
+
+</script>

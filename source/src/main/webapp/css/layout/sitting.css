@@ -1,0 +1,158 @@
+#container {
+	min-height:800px;
+	height:auto !important;
+	height:800px;
+}
+
+#stats {
+	float:right;
+	left:-10px;
+	padding: 2px 0;
+	position:relative;
+	overflow: auto;
+}
+
+#stats ul {
+	float: left;
+	clear: none;
+	width: 138px;
+	margin-left: 0;
+}
+
+#stats ul li {
+	margin: 0;
+}
+
+/* I have to pull all of these elements left because of the
+ * response graph's y label I'm letting the other graphs extend
+ * to the left as well */
+#position,
+#control_bar {
+	display:block;
+	float:right;
+	margin-right:19px;
+	padding:0;
+	width:685px;
+}
+
+
+#response {
+	float: right;
+	width: 720px;
+	border: 1px solid #B2B2B2;
+	background: #FFF;
+	height: 10em;	
+}
+
+#position {
+	border:1px solid #C2C2C2;
+	height:4px;
+	margin-bottom:2px;
+	margin-left:2px;
+	margin-top:4px;
+}
+
+#handle {
+	cursor:pointer;
+	height: 141px;
+	width: 10px;
+	position: relative;
+	top: -5px;
+	z-index: 55;	
+}
+
+#control_bar {
+	background: #D5D5D5 none repeat scroll 0 0;
+	border-top: medium none;
+	border-bottom: none;
+	height: auto;
+	padding: 1px;
+	position: relative;
+	z-index: 99;
+}
+
+#control_bar .button{
+	float: left;
+}
+
+#prev {
+	margin-left: 1em;	
+}
+	
+#speed,
+#clock {
+	margin-left: 1.5em;
+	font-size: 1.1em;
+	margin-top: 1px;
+}
+
+#speed span.selected {
+	font-weight: bold;
+}
+
+.ui-slider,
+.ui-slider-handle,
+.ui-slider-handle:hover {
+	background: none;
+	border: none;
+	overflow: visible;
+}
+
+#response_graph {
+	margin-top: -3px;
+	z-index: 0;
+}
+
+#question_answer_grade {
+	height: auto;	
+}
+
+.third {
+	border:1px solid #C2C2C2;
+	float:left;
+	height:82px;
+	margin-right:5px;
+	margin-top:3px;
+	overflow-x:hidden;
+	overflow-y:auto;
+	padding:5px;
+	width:222px;
+}
+
+.third.last {
+	margin-right: 0px;
+	overflow:hidden;
+}
+
+.chart {
+	border:1px solid #C2C2C2;
+	margin-bottom:5px;
+	margin-left:6px;
+	padding:5px;
+	width:347px;
+}
+
+.chart .legend {
+	float: left;
+	width: 90px;
+	margin-top: 100px;
+}
+
+.chart .legend li {
+	clear: both;
+	padding: 2px 0;
+}
+
+.chart .legend span {
+	width: 75px;
+	float: left;
+	text-align: right;
+	position: relative;
+	top: -2px;	
+}
+.chart .legend div {
+	float: right;
+	width:10px;
+	height:10px;
+	overflow: hidden;
+}

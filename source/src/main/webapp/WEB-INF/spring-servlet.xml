@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:aop="http://www.springframework.org/schema/aop"
+	   xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:dwr="http://www.directwebremoting.org/schema/spring-dwr"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+	   http://www.springframework.org/schema/aop 
+	   http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+	   http://www.springframework.org/schema/context 
+	   http://www.springframework.org/schema/context/spring-context-2.5.xsd
+       http://www.directwebremoting.org/schema/spring-dwr
+       http://www.directwebremoting.org/schema/spring-dwr-2.0.xsd">
+
+	<!-- CONTEXT -->
+	<context:annotation-config/>
+	
+	<!-- HANDLER MAPPING -->
+	<bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+       <property name="mappings">
+       		<value>
+       			/admin/candidates/*=candidatesController
+       			/admin/category/*=categoryController
+       			/admin/categories/*=categoriesController
+				/admin/email/*=emailController
+				/admin/examDefinition/*=examDefinitionController
+				/admin/examDefinitions/*=examDefinitionsController
+				/admin/forgotPassword/*=forgotPasswordController
+				/admin/createAccount/*=createAccountController
+				/admin/help/*=helpController
+				/admin/screening/*=screeningController
+				/admin/settings/*=settingsController
+				/admin/results/*=resultsController
+				/admin/login=loginController
+				/admin/upload=fileUploadController
+				/admin/user/*=userController
+				/admin/users/*=usersController
+       			/admin/report.pdf=reportController
+       			/admin/file*=attachmentController
+				
+				/dwr/call/**=dwrController
+				/dwr/interface/**=dwrController
+				/dwr/test/**=dwrController
+				/dwr/engine.js=dwrController
+				/dwr/interface.js=dwrController
+				/dwr/util.js=dwrController
+				/dwr/index.html=dwrController <!-- test page -->
+				
+				/quiz/*=quizController
+   			</value>
+       	</property>
+		<property name="alwaysUseFullPath" value="true"/>
+    </bean>
+	
+	<!-- EXCEPTION RESOLVER -->
+	<bean class="org.openapplicant.web.view.ErrorViewHandlerExceptionResolver"/>
+    
+	<!--
+	==========================================================================
+						DWR CONFIGURATION
+	==========================================================================
+	-->
+	<dwr:configuration>
+		<dwr:convert type="hibernate3" class="org.openapplicant.domain.*"/>
+		<dwr:convert type="exception" class="org.directwebremoting.extend.AccessDeniedException"
+			javascript="AccessDeniedException"/>
+	</dwr:configuration>
+	
+	<dwr:controller name="dwrController" debug="true" />
+	
+	<bean id="dwrQuizService" class="org.openapplicant.web.dwr.DwrQuizService">
+        <dwr:remote javascript="QuizService"/>
+		<property name="quizService" ref="quizService"/>
+    </bean>
+	
+	<!--
+	==========================================================================
+						CONTROLLERS
+	==========================================================================
+	-->
+	<bean id="adminController" 
+		class="org.openapplicant.web.controller.AdminController" 
+		abstract="true">
+		<property name="adminService" ref="adminService"/>
+		<property name="currentUserService" ref="currentUserService"/>
+		<property name="sessionFacade" ref="sessionFacade"/>
+	</bean>
+	
+	<bean id="attachmentController"
+		class="org.openapplicant.web.controller.AttachmentController" 
+		parent="adminController"/>
+    
+	<bean id="candidatesController"
+		class="org.openapplicant.web.controller.CandidatesController"
+		parent="adminController"/>
+		
+	<bean id="categoryController"
+		class="org.openapplicant.web.controller.CategoryController"
+		parent="adminController">
+		<dwr:remote javascript="CategoryController">
+			<dwr:include method="moveQuestionToCategory"/>
+		</dwr:remote>
+	</bean>
+	
+	<bean id="categoriesController"
+		class="org.openapplicant.web.controller.CategoriesController"
+		parent="adminController"/>
+	
+	<bean id="emailController"
+		class="org.openapplicant.web.controller.EmailController"
+		parent="adminController"/>
+	
+	<bean id="examDefinitionController"
+		class="org.openapplicant.web.controller.ExamDefinitionController"
+		parent="adminController"/>
+	
+	<bean id="examDefinitionsController"
+		class="org.openapplicant.web.controller.ExamDefinitionsController"
+		parent="adminController"/>
+	
+	<bean id="fileUploadController"
+		class="org.openapplicant.web.controller.FileUploadController" 
+		parent="adminController">
+		<property name="facilitatorService" ref="facilitatorService"/>
+	</bean>
+	
+	<bean id="forgotPasswordController"
+		class="org.openapplicant.web.controller.ForgotPasswordController"
+		parent="adminController"/>
+		
+	<bean id="createAccountController"
+		class="org.openapplicant.web.controller.CreateAccountController"
+		parent="adminController"/>
+	
+	<bean id="helpController"
+		class="org.openapplicant.web.controller.HelpController"/>
+	
+	<bean id="loginController"
+		class="org.springframework.web.servlet.mvc.ParameterizableViewController">
+		<property name="viewName" value="login/index"/>
+	</bean>
+
+	<bean id="quizController" 
+		class="org.openapplicant.web.controller.QuizController">
+		<property name="quizService" ref="quizService"/>
+	</bean>
+		
+	<bean id="reportController"
+    	class="org.openapplicant.web.controller.ReportController"
+		parent="adminController"/>
+		
+	<bean id="screeningController"
+		class="org.openapplicant.web.controller.ScreeningController"
+		parent="adminController"/>
+	
+	<bean id="settingsController"
+		class="org.openapplicant.web.controller.SettingsController"
+		parent="adminController"/>
+
+	<bean id="resultsController"
+		class="org.openapplicant.web.controller.ResultsController"
+		parent="adminController"/>
+		
+	<bean id="userController"
+		class="org.openapplicant.web.controller.UserController"
+		parent="adminController"/>
+		
+	<bean id="usersController"
+		class="org.openapplicant.web.controller.UsersController"
+		parent="adminController">
+		<dwr:remote javascript="UsersController">
+			<dwr:include method="changePassword"/>
+		</dwr:remote>
+	</bean>
+
+	<!--
+	==========================================================================
+							VIEWS
+	==========================================================================
+	-->
+	<bean id="pdf" class="org.openapplicant.web.view.PDFReport">
+	</bean>
+	
+	<bean id="tilesConfigurer" 
+		class="org.springframework.web.servlet.view.tiles2.TilesConfigurer">
+		<property name="definitions">
+			<list>
+				<value>/WEB-INF/tiles.xml</value>
+			</list>
+		</property>
+	</bean>
+    
+    <bean id="firstViewResolver"
+    	class="org.springframework.web.servlet.view.BeanNameViewResolver">
+    	<property name="order"><value>1</value></property>
+    </bean>
+	
+	<bean id="urlBasedViewResolver"
+		class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+		<property name="viewClass" value="org.springframework.web.servlet.view.tiles2.TilesView"/>
+	</bean>
+	
+	<bean id="multipartResolver"
+   		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize" value="10485760"/> <!-- 10 megabytes -->
+	</bean>
+    
+</beans>

@@ -1,0 +1,12 @@
+
+oltk.namespace('oltk.util');oltk.include('oltk/lang/Class.js');oltk.include('oltk/util/LangUtils.js');oltk.util.ListOrderedMap=oltk.lang.Class.extend({$constructor:function(values,getKey){this._insertOrder=[];this._map={};if(values){if(typeof getKey!=='function'){throw'ListOrderedMap.constructor: a getKey function is required for these values';}
+this.putAll(values,getKey);}},put:function(key,value){if(!oltk.util.LangUtils.isValue(key)||''===key){throw new TypeError('ListOrderedMap.put: key is null|undefined|empty|NaN');}
+if(this.containsKey(key)){this._map[key]=value;}
+else{this._map[key]=value;this._insertOrder.push(key);}
+return value;},putAll:function(values,getKey){value=values||[];for(var i=0,n=values.length;i<n;i++){var key=getKey(values[i]);this.put(key,values[i]);}
+return this;},remove:function(key){if(!this.containsKey(key)){return null;}
+var result=this._map[key];var i=this.indexOf(key);this._insertOrder.splice(i,1);delete this._map[key];return result;},indexOf:function(key){for(var i=0;i<this._insertOrder.length;i++){if(this._insertOrder[i]==key){return i;}}
+return-1;},get:function(key){return this.containsKey(key)?this._map[key]:null;},getByIndex:function(index){if(index<0||index>=this.size()){return null;}
+return this.get(this._insertOrder[index]);},values:function(){var result=new Array(this.size());for(var i=0,n=result.length;i<n;i++){result[i]=this.get(this._insertOrder[i]);}
+return result;},keys:function(){return this._insertOrder.slice();},size:function(){return this._insertOrder.length;},isEmpty:function(){return this.size()==0;},clear:function(){this._map={};this._insertOrder=[];},containsKey:function(key){return key in this._map;},containsValue:function(value){for(var key in this._map)if(this._map.hasOwnProperty(key)){if(value==this._map[key]){return true;}}
+return false;},each:function(fn,scope){var values=this.values();for(var i=0,n=values.length;i<n;i++){if(fn.call(scope||window,values[i],i,n)==='break'){break;}}},firstKey:function(){return this._insertOrder[0]||null;},firstValue:function(){return this.get(this.firstKey());},lastKey:function(){return this._insertOrder[this._insertOrder.length-1]||null;},lastValue:function(){return this.get(this.lastKey());}});

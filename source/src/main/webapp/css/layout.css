@@ -1,0 +1,122 @@
+@import "vendor/jquery.cluetip.css";
+@import "vendor/jquery-ui-themeroller.css";
+@import "vendor/jquery.datepicker.css";
+
+.left {
+	float: left;	
+}
+
+.right {
+	float: right;	
+}
+
+.half {
+	width: 50%;
+}
+
+h1 img,
+h3 img {
+	position: relative;
+	top: 2px;	
+}
+
+h4 {
+	display: inline;	
+}
+
+p {
+	margin-bottom: 5px;
+	text-indent: 0;	
+}
+
+.center {
+	margin-left:auto;
+	margin-right:auto;
+	text-align:center;
+}
+
+.center input {
+	display: block;
+	margin: 0 auto;	
+	float: none;
+}
+
+table {
+	width: 100%;	
+}
+
+/* */
+
+#container {
+	width: 935px;
+	
+	min-height:655px;
+	height:auto !important; /* sets min height for ie6 */
+	height:655px;
+	
+	margin: 15px auto 3px;
+	padding: 0 5px;
+}
+
+#content {
+	float:right;
+	width:730px;
+}
+
+#menu li {
+	overflow:hidden;
+	clear: both;
+}
+
+#menu li img {
+	float:left;
+	margin-right: 5px;
+}
+
+#menu li h2 {
+	margin-top: 5px;
+}
+
+.setting {
+	width: 714px;
+	float: right;
+}
+
+#footer {
+	clear: both;
+	width: 100%;
+}
+
+#copyright {
+	margin-bottom: 10px;
+}
+
+/* */
+
+table th, 
+table td {
+	padding-left: 4px;
+	text-align: left;
+	height: 24px;
+}
+
+th.icon,
+td.icon {
+	padding-left: 0;
+	text-align: center;
+	vertical-align:center;
+}
+
+.row {
+	overflow: hidden;
+	clear: both;
+	width: 100%;
+}
+
+.error {
+	clear: right;	
+}
+
+object {
+	float: right;
+}
