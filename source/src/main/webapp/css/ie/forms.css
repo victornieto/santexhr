@@ -1,0 +1,45 @@
+input {
+	margin: 1px 0;
+	padding: 2px 0 0px;
+	background: #F0F0F0;
+}
+
+select {
+	width: 100px;
+}
+
+li div input {
+	background: #FFFFFF;	
+	width: 100%;
+}
+
+li.actions input {
+	padding: 0;
+	background: #F0F0F0;
+	width: auto;
+}	
+
+form ul li label {
+	margin-top: 5px;
+}
+
+form ul li div select {
+	width: 102%;
+}
+
+form ul li.save div {
+	position: relative;
+	left: -2px;
+}
+
+form ul li div label {
+	margin-left: -4px;
+}
+
+form ul li div label input {
+	margin: 0;
+}	
+
+form ul li.actions {
+	margin-right: 2px;
+}

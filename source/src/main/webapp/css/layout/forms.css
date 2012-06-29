@@ -1,0 +1,110 @@
+/* General */
+form {
+	overflow: hidden;
+}
+
+form ul {
+	clear:both;
+	margin:0;
+	padding:0;
+	width:100%; !important;
+	overflow: auto;
+}
+
+form ul.half {
+	width: 50%;
+	clear: none;
+}
+
+form ul.half li div,
+form ul.smaller li div {
+	width: 60%;
+}
+
+form ul.small li div {
+	width: 70%;	
+}
+
+form ul.half.left {
+	float: left;	
+}
+form ul.half.right {
+	width: 49%;
+	float: right;
+}
+
+form li {
+	clear: both;
+	overflow: hidden;
+}
+form li.last {
+	margin-bottom: 0;
+}
+
+form li label {
+	float: left;
+	margin-top: 4px;
+	white-space: nowrap;
+}
+
+form li label.input {
+	margin-top: 0px;
+}
+
+form li div {
+	width: 80%;
+	float: right;
+	padding-right: 2px;
+}
+
+form li div label input {
+	width: auto;
+}
+
+form li div input,
+form li select,
+form li textarea {
+	width: 100%;
+}
+
+form li div select {
+	width: 100.5%;
+}
+
+/* This combo correctly lines up the
+ * radio and checkbox input texts.
+ * Safari's radio boxes are 1px off... meh
+ */
+form li div label {
+	margin-top: 0;
+	margin-right: 10px;
+}
+form li label input {
+	vertical-align: bottom; /* firefox defaults to middle, safari baseline */
+	border: none; /* ie has border from not parsing attributes */
+}
+
+form li span {
+	float: left;
+	clear: left;
+	width: 100%;
+}
+
+form li span, form li label.error { font-size: 0.9em; }
+form li span.error { color: red;  }
+
+form li.actions input,
+form li.save input  {
+	width: auto;	
+}
+
+form li.actions input {
+	margin-left: 5px;
+	float: right;
+}
+
+/* Lists inside Lists!! */
+form ul li ul li {
+	margin-left:1em;
+	margin-top:0;
+}

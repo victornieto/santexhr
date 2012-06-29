@@ -1,0 +1,22 @@
+;(function(){if(window.oltk){return;}
+oltk={_scripts:[],getScriptpath:function(){var result=new OltkPathResolver().resolve();oltk.getScriptpath=function(){return result;};return oltk.getScriptpath();},imports:function(varargs){for(var i=0;i<arguments.length;i++){var classname=arguments[i];if(classname){var path=classname.replace(/(\.|\\\.)/g,function(match){return match=='.'?'/':'.';});oltk.include(path+'.js');}}},include:function(file){if(!file){return;}
+var url=oltk.getScriptpath()+file;if(oltk._scripts[url]){return;}
+var js=oltk.download(url);js='/* '+url+' */\n'+js;oltk._scripts[url]=true;oltk.eval(js);oltk._scripts.push(url);},emptyFn:function(){},namespace:function(nspace){if(!nspace){return;}
+if(_notValidNamespace(nspace)){throw'oltk.namespace: illegal namespace: '+nspace;}
+var n=nspace.split('.');var o=window;for(var i=0;i<n.length;i++){o[n[i]]=o[n[i]]||{};o=o[n[i]];}
+return o;},eval:function(js){if(window.execScript){window.execScript(js);}
+else if(/KHTML/.test(navigator.userAgent)||(/AppleWebKit\/([^\s]*)/).test(navigator.userAgent)){var script=document.createElement('script');script.type='text/javascript';script.appendChild(document.createTextNode(js));var head=document.getElementsByTagName('head')[0]||document.documentElement;head.insertBefore(script,head.firstChild);head.removeChild(script);}
+else{window.eval(js);}},createRequest:function(){var methods=[function(){return new ActiveXObject('MSXML2.XMLHTTP');},function(){return new ActiveXObject('Microsoft.XMLHTTP');},function(){return new XMLHttpRequest();}];for(var i=0;i<methods.length;i++){try{methods[i]();}
+catch(e){continue;}
+oltk.createRequest=methods[i];return oltk.createRequest();}
+throw'oltk.createRequest: could not create XmlHttpRequest';},download:function(url){var req=oltk.createRequest();req.open('GET',url,false);req.send(null);if(!_isDocumentOk(req)){throw'oltk.download: url '+url+' status: '+req.status;}
+return req.responseText;},bind:function(fn,thisObj,args,appendArgs){var method=fn;return function(){var callArgs=args||arguments;if(appendArgs===true){callArgs=Array.prototype.slice.call(arguments,0);callArgs=callArgs.concat(args);}
+else if(typeof appendArgs=='number'){callArgs=Array.prototype.slice.call(arguments,0);var applyArgs=[appendArgs,0].concat(args);Array.prototype.splice.apply(callArgs,applyArgs);}
+return method.apply(thisObj||window,callArgs);};},log:{trace:function(msg,o){},isTraceEnabled:function(){return false;},debug:function(msg,o){},isDebugEnabled:function(){return false;},info:function(msg,o){},isInfoEnabled:function(){return false;},warn:function(msg,e){},isWarnEnabled:function(){return false;},error:function(msg,e){},isErrorEnabled:function(){return false;},fatal:function(msg,e){},isFatalEnabled:function(){return false;}}};function _notValidNamespace(s){if(!s){return true;}
+return/(^\.|\.\.|\.$)/.test(s);};function _oltkScript(){var scripts=document.getElementsByTagName('script');for(var i=scripts.length-1;i>=0;i--){if(/oltk\.js/.test(scripts[i].src)){return scripts[i];}}
+throw'oltk._oltkScript: could not locate oltk script';};function _isDocumentOk(http){var stat=http.status||0;return((stat>=200)&&(stat<300))||(stat==304)||(stat==1223)||(!stat&&(location.protocol=='file:'||location.protocol=='chrome:'));};var OltkPathResolver=function(){};OltkPathResolver.prototype={resolve:function(){var path=this._getRawPath();if(this._isAbsoluteURL(path)){return path;}
+else{return this._toAbsoluteURL(path);}},_getRawPath:function(){var src=_oltkScript().src;if(/oltk\/oltk\.js/.test(src)){return src.replace(/oltk\/oltk\.js.*/,'');}
+else if(/oltk\.js/.test(src)){return src.replace(/oltk\.js.*/,'')+'../';}
+else{throw'OltkPathResolver.getRawPath: could not locate path to oltk.js';}},_isAbsoluteURL:function(path){var startsWithProtocol=new RegExp('^'+location.protocol);return startsWithProtocol.test(path);},_toAbsoluteURL:function(path){if(/^\//.test(path)){var i=location.href.indexOf(location.host)+location.host.length;var base=location.href.substring(0,i);return base+path;}
+var base=location.href;base=base.substring(0,base.lastIndexOf('/'));while(/^\.\./.test(path)){base=base.substring(0,base.lastIndexOf('/'));path=path.substring(3);}
+return base+'/'+path;}};})();

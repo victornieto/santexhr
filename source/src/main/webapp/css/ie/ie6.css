@@ -1,0 +1,43 @@
+#sidebar li {
+	background: #FFFFFF;	
+	overflow: hidden;
+}
+
+#sidebar li a,
+#sidebar li span,
+#sidebar li h4 {
+	padding-left: 10px;
+}
+
+#sidebar .selected {
+	position: relative;
+	left: 0;
+	padding-left:0;
+	margin-right: 5px;
+	width: auto;
+	z-index: 50;
+	background: #B7C8FE;
+}
+
+#sidebar .selected ul {
+	overflow: visible;
+	padding-right: 1em;
+	margin-right: -2em;
+}
+
+#sidebar .selected ul li {
+	padding-left: 1em;
+	padding-right: 1em;
+	position: relative;
+	left: -1em;
+}
+
+#menu li h2, #menu li p {
+	position:relative;
+	top: -10px;
+}
+
+.chart .legend {
+	margin-top: 90px;
+	margin-left: 3px;
+}

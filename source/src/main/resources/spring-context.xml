@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:sec="http://www.springframework.org/schema/security"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
+		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-2.0.4.xsd">
+
+	<!--
+		Configures spring beans for the application.  This file depends on 
+		a bean with id="dataSource" of type "javax.sql.DataSource"
+	-->
+	
+	<context:annotation-config />
+	
+	<context:spring-configured />
+	
+	<tx:annotation-driven mode="aspectj"/>
+	
+	<!--
+	==========================================================================
+						PROPERTIES
+	==========================================================================
+	-->
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+	    <property name="locations">
+	        <value>classpath:/application.properties</value>
+	    </property>
+	</bean>
+
+	<!--
+	==========================================================================
+						SPRING SECURITY
+	==========================================================================
+	-->
+	<sec:http entry-point-ref="authenticationEntryPoint">
+		<sec:intercept-url pattern="/lib/js/**" filters="none"/>
+		<sec:intercept-url pattern="/css/**" filters="none"/>
+		<sec:intercept-url pattern="/img/**" filters="none"/>
+		<sec:intercept-url pattern="/quiz/**" filters="none"/>
+		<sec:intercept-url pattern="/admin/login" filters="none"/>
+		<sec:intercept-url pattern="/admin/forgotPassword/**" filters="none"/>
+		<sec:intercept-url pattern="/admin/createAccount/**" filters="none"/>
+		<sec:intercept-url pattern="/blank.html" filters="none"/>
+		
+		<!-- FIXME: SECURE AJAX REQUESTS -->
+		<sec:intercept-url pattern="/admin/candidates/history" filters="none"/>
+		
+		<!-- FIXME: SECURE DWR -->
+		<sec:intercept-url pattern="/dwr/**" filters="none"/>
+		<!--
+		<sec:intercept-url pattern="/dwr/engine.js" filters="none"/>
+		<sec:intercept-url pattern="/dwr/interface.js" filters="none"/>
+		<sec:intercept-url pattern="/dwr/util.js" filters="none"/>
+		<sec:intercept-url pattern="/dwr/interface/QuizService.js"/>
+		-->
+		
+		<!-- see org.openapplicant.domain.User.Role for defined roles -->
+		<sec:intercept-url pattern="/admin/settings/**" access="ROLE_ADMIN, ROLE_SETTINGS, ROLE_GRADER"/>
+		<sec:intercept-url pattern="/admin/user/**" access="ROLE_ADMIN, ROLE_SETTINGS"/>
+		<sec:intercept-url pattern="/admin/users/**" access="ROLE_ADMIN, ROLE_SETTINGS"/>
+		<sec:intercept-url pattern="/admin/email/**" access="ROLE_ADMIN, ROLE_SETTINGS"/>
+		<sec:intercept-url pattern="/admin/examDefinitions/**" access="ROLE_ADMIN, ROLE_SETTINGS, ROLE_GRADER"/>
+		<sec:intercept-url pattern="/admin/examDefinition/**" access="ROLE_ADMIN, ROLE_SETTINGS, ROLE_GRADER"/>
+		<sec:intercept-url pattern="/admin/screening/**" access="ROLE_ADMIN, ROLE_SETTINGS"/>
+		<sec:intercept-url pattern="/admin/categories/**" access="ROLE_ADMIN, ROLE_SETTINGS, ROLE_GRADER"/>
+		<sec:intercept-url pattern="/admin/category/**" access="ROLE_ADMIN, ROLE_SETTINGS, ROLE_GRADER"/>
+		<sec:intercept-url pattern="/admin/candidates/**" access="ROLE_ADMIN, ROLE_HR, ROLE_GRADER"/>
+		<sec:intercept-url pattern="/admin/candidate/**" access="ROLE_ADMIN, ROLE_HR"/>
+		<sec:intercept-url pattern="/admin/results/**" access="ROLE_ADMIN, ROLE_GRADER"/>
+		<sec:intercept-url pattern="/**" access="ROLE_ADMIN, ROLE_HR, ROLE_GRADER, ROLE_SETTINGS"/>
+		
+		<sec:logout/>
+	</sec:http>
+	
+	<sec:authentication-provider user-service-ref="userDetailsService">
+		<sec:password-encoder ref="passwordEncoder"/>
+	</sec:authentication-provider>
+	
+	<sec:authentication-manager alias="authenticationManager"/>
+	
+	<bean id="passwordEncoder" 
+		class="org.jasypt.spring.security2.PasswordEncoder">
+		<property name="stringDigester">
+			<bean class="org.openapplicant.domain.User" factory-method="getStringDigester"/>
+		</property>
+	</bean>
+	
+	<bean id="defaultTargetUrlResolver" class="org.springframework.security.ui.TargetUrlResolverImpl" />
+	
+	<bean id="roleBasedTargetUrlResolver" class="org.openapplicant.security.RoleBasedTargetUrlResolver">
+		<constructor-arg ref="defaultTargetUrlResolver" />
+	</bean>
+	
+	<bean id="adminAuthenticationProcessingFilter"
+		class="org.openapplicant.security.AdminAuthenticationProcessingFilter">
+		<property name="defaultTargetUrl" value="/admin/candidates/index"/>
+		<property name="authenticationFailureUrl" value="/admin/login?login_error=1"/>
+		<property name="authenticationManager" ref="authenticationManager"/>
+		<property name="adminService" ref="adminService"/>
+		<property name="targetUrlResolver" ref="roleBasedTargetUrlResolver"></property>
+		<sec:custom-filter position="AUTHENTICATION_PROCESSING_FILTER"/>
+	</bean>
+	
+	<bean id="authenticationEntryPoint"
+		class="org.springframework.security.ui.webapp.AuthenticationProcessingFilterEntryPoint">
+		<property name="loginFormUrl" value="/admin/login"/>
+	</bean>
+	
+	<bean id="userDetailsService" class="org.openapplicant.security.DefaultUserDetailsService">
+		<property name="adminService" ref="adminService"/>
+	</bean>
+	
+	<bean id="currentUserService" class="org.openapplicant.security.DefaultCurrentUserService">
+		<property name="adminService" ref="adminService"/>
+	</bean>
+	
+	<!--
+	==========================================================================
+						HIBERNATE CONFIGURATION
+	==========================================================================
+	-->
+	<bean id="namingStrategy" class="org.openapplicant.dao.hibernate.NamingStrategy"/>
+	
+	<bean id="dataSource" 
+		class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName" value="java:comp/env/jdbc/openapplicant-ds"/>
+	</bean>
+	
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"/>
+		<property name="configLocation" value="classpath:/hibernate.cfg.xml"/>
+		<property name="namingStrategy" ref="namingStrategy"/>
+	</bean>
+	
+	<bean id="transactionManager" 
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+	
+	<bean id="sessionFacade"
+		class="org.openapplicant.dao.hibernate.SessionFacade">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+	
+	<!--
+	==========================================================================
+							DAO LAYER
+	==========================================================================
+	-->
+	<bean id="domainObjectDao" 
+		class="org.openapplicant.dao.hibernate.DomainObjectDAO" abstract="true">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+	
+	<bean id="candidateDao" class="org.openapplicant.dao.hibernate.CandidateDAO"
+		parent="domainObjectDao"/>
+		
+	<bean id="candidateExamLinkDao" class="org.openapplicant.dao.hibernate.CandidateExamLinkDAO"
+		parent="domainObjectDao"/>
+	
+	<bean id="candidateSearchDao" class="org.openapplicant.dao.hibernate.CandidateSearchDAO"
+		parent="domainObjectDao"/>
+	
+	<bean id="candidateWorkFlowEventDao" class="org.openapplicant.dao.hibernate.CandidateWorkFlowEventDAO"
+		parent="domainObjectDao"/>
+	
+	<bean id="companyDao" class="org.openapplicant.dao.hibernate.CompanyDAO"
+		parent="domainObjectDao"/>
+		
+	<bean id="categoryDao" class="org.openapplicant.dao.hibernate.CategoryDAO"
+		parent="domainObjectDao"/>
+		
+	<bean id="emailTemplateDao" class="org.openapplicant.dao.hibernate.EmailTemplateDAO"
+		parent="domainObjectDao"/>
+		
+	<bean id="examDao" class="org.openapplicant.dao.hibernate.ExamDAO"
+		parent="domainObjectDao"/>
+		
+	<bean id="examDefinitionDao" class="org.openapplicant.dao.hibernate.ExamDefinitionDAO"
+		parent="domainObjectDao"/>
+	
+	<bean id="examLinkDao" class="org.openapplicant.dao.hibernate.ExamLinkDAO"
+		parent="domainObjectDao"/>
+	
+	<bean id="fileAttachmentDao" class="org.openapplicant.dao.hibernate.FileAttachmentDAO"
+		parent="domainObjectDao"/>
+	
+	<bean id="gradeDao" class="org.openapplicant.dao.hibernate.GradeDAO"
+		parent="domainObjectDao"/>
+	
+	<bean id="passwordRecoveryTokenDao" class="org.openapplicant.dao.hibernate.PasswordRecoveryTokenDAO"
+		parent="domainObjectDao"/>
+		
+	<bean id="accountCreationTokenDao" class="org.openapplicant.dao.hibernate.AccountCreationTokenDAO"
+		parent="domainObjectDao"/>
+	
+	<bean id="profileDao" class="org.openapplicant.dao.hibernate.ProfileDAO"
+		parent="domainObjectDao"/>
+	
+	<bean id="questionDao" class="org.openapplicant.dao.hibernate.QuestionDAO"
+		parent="domainObjectDao"/>
+	
+	<bean id="responseDao" class="org.openapplicant.dao.hibernate.ResponseDAO"
+		parent="domainObjectDao"/>
+
+	<bean id="sittingDao" class="org.openapplicant.dao.hibernate.SittingDAO"
+		parent="domainObjectDao"/>
+	
+	<bean id="userDao" class="org.openapplicant.dao.hibernate.UserDAO"
+		parent="domainObjectDao"/>
+		
+	<bean id="rowCounter" class="org.openapplicant.dao.hibernate.RowCounter">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+	
+	<!--
+	==========================================================================
+							SERVICE LAYER 
+	==========================================================================
+	-->
+	<bean id="applicationService" 
+		class="org.openapplicant.service.ApplicationService" abstract="true">
+		<property name="fileAttachmentDao" ref="fileAttachmentDao"/>
+		<property name="candidateDao" ref="candidateDao"/>
+		<property name="candidateExamLinkDao" ref="candidateExamLinkDao"/>
+		<property name="candidateSearchDao" ref="candidateSearchDao"/>
+		<property name="candidateWorkFlowEventDao" ref="candidateWorkFlowEventDao"/>
+		<property name="companyDao" ref="companyDao"/>
+		<property name="categoryDao" ref="categoryDao" />
+		<property name="emailTemplateDao" ref="emailTemplateDao"/>
+		<property name="examDao" ref="examDao"/>
+		<property name="examDefinitionDao" ref="examDefinitionDao"/>
+		<property name="examLinkDao" ref="examLinkDao"/>
+		<property name="gradeDao" ref="gradeDao"/>
+		<property name="passwordRecoveryTokenDao" ref="passwordRecoveryTokenDao"/>
+		<property name="profileDao" ref="profileDao"/>
+		<property name="questionDao" ref="questionDao"/>
+		<property name="responseDao" ref="responseDao"/>
+		<property name="sittingDao" ref="sittingDao"/>
+		<property name="userDao" ref="userDao"/>
+		<property name="accountCreationTokenDao" ref="accountCreationTokenDao"/>
+        <property name="taskExecutor" ref="asyncTaskExecutor" />
+	</bean>
+
+    <bean id="asyncTaskExecutor" class="java.util.concurrent.Executors" factory-method="newCachedThreadPool"/>
+
+    <bean id="adminService" 
+		class="org.openapplicant.service.AdminService" parent="applicationService">
+	</bean>
+	
+	<bean id="quizService" 
+		class="org.openapplicant.service.QuizService" parent="applicationService" />
+	
+	<bean id="reportService" 
+		class="org.openapplicant.service.ReportService" parent="applicationService" />
+	
+	<bean id="facilitatorService" 
+		class="org.openapplicant.service.facilitator.FacilitatorService" parent="applicationService" />
+	
+	<!--
+	==========================================================================
+						@Configurable objects
+	==========================================================================
+	-->
+	<bean class="org.openapplicant.domain.Company" scope="prototype">
+		<property name="contextRoot" value="${web.contextRoot}"/>
+	</bean>
+	
+	<bean class="org.openapplicant.domain.SimpleStringCandidateSearch" scope="prototype">
+		<property name="candidateDao" ref="candidateDao"/>
+	</bean>
+	
+	<bean class="org.openapplicant.domain.PropertyCandidateSearch" scope="prototype">
+		<property name="candidateDao" ref="candidateDao"/>
+	</bean>
+	
+	<bean class="org.openapplicant.validation.UniqueValidator" scope="prototype">
+		<property name="rowCounter" ref="rowCounter"/>
+	</bean>
+	
+	<bean class="org.openapplicant.validation.UniqueWithValidator" scope="prototype">
+		<property name="rowCounter" ref="rowCounter"/>
+	</bean>
+	
+	<bean class="org.openapplicant.domain.link.DynamicExamsStrategy" scope="prototype">
+		<property name="examDao" ref="examDao"/>
+	</bean>
+		
+</beans>

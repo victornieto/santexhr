@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<web-app xmlns="http://geronimo.apache.org/xml/ns/j2ee/web-1.1" xmlns:dep="http://geronimo.apache.org/xml/ns/deployment-1.1" xmlns:nm="http://geronimo.apache.org/xml/ns/naming-1.1">
+
+	<dep:environment>
+		<dep:moduleId>
+			<dep:groupId>${project.groupId}</dep:groupId>
+			<dep:artifactId>${project.artifactId}</dep:artifactId>
+			<dep:version>${project.version}</dep:version>
+			<dep:type>car</dep:type>
+		</dep:moduleId>
+		<dep:dependencies>
+			<dep:dependency>
+				<dep:groupId>${project.groupId}</dep:groupId>
+				<dep:artifactId>openapplicant-ds</dep:artifactId>
+			</dep:dependency>
+		</dep:dependencies>
+		<dep:hidden-classes>
+			<filter>org.apache.commons</filter>
+		</dep:hidden-classes>
+	</dep:environment>
+
+	<context-root>${web.contextRoot}</context-root>
+
+	<nm:resource-ref>
+		<nm:ref-name>jdbc/openapplicant-ds</nm:ref-name>
+		<nm:resource-link>openapplicant-ds</nm:resource-link>
+	</nm:resource-ref>
+
+</web-app>
+

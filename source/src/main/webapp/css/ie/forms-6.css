@@ -1,0 +1,65 @@
+form li {
+	padding: 0;
+}
+
+form ul li div {
+	margin-right: 0px;
+}
+
+form li label input {
+	margin-top: -3px;
+}
+
+form li div label {
+	position: relative;
+	left: -8px;
+}
+
+form li div span {
+	width: 100%;
+}
+
+form li.save div input {
+	position: relative;
+	left: -5px;
+}
+
+form li div select {
+	position: relative;
+	left: -2px;
+}
+
+form li div textarea {
+	position: relative;
+	left: 2px;
+}
+
+form li p input {
+	position: relative;
+	top: -3px;
+}
+
+form.multiple_choice ul li {
+	padding: 0 0;
+}
+
+form.multiple_choice ul label input,
+form.multiple_choice ul input.radio {
+	margin: 0;
+	position: relative;
+	top: -2px;
+}
+
+form.multiple_choice ul input {
+	margin: 0;
+	position: relative;
+	top: -1px;
+}
+
+form.multiple_choice ul input.prompt {
+	width: 90%;
+}
+
+form.multiple_choice ul input.offset {
+	margin-left: 25px;
+}
