@@ -213,9 +213,4 @@
             </div>
         </display:column>
     </display:table>
-    <c:if test="${empty candidates}">
-        <div id="openapplicant_candidate_no_results">
-            No results found.
-        </div>
-    </c:if>
 </div>

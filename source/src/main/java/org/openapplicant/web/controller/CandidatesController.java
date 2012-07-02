@@ -5,9 +5,11 @@ import org.openapplicant.domain.Candidate;
 import org.openapplicant.domain.CandidateSearch;
 import org.openapplicant.domain.ExamDefinition;
 import org.openapplicant.domain.Note;
+import org.openapplicant.domain.event.AddNoteToCandidateEvent;
 import org.openapplicant.domain.event.CandidateWorkFlowEvent;
 import org.openapplicant.domain.link.CandidateExamLink;
 import org.openapplicant.util.Pagination;
+import org.openapplicant.web.view.CandidateNoteView;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,9 +20,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
@@ -353,6 +353,20 @@ public class CandidatesController extends AdminController {
             return redirectToDetail(candidate.getId());
 		}
 	}
+
+    @RequestMapping(method = GET)
+    public String notes(Map<String, Object> model) {
+        List<Candidate> candidates = getAdminService().findAllCandidatesByCompany(currentUser().getCompany(), Pagination.oneBased());
+        List<CandidateNoteView> candidatesNotes = new ArrayList<CandidateNoteView>();
+        for (Candidate candidate : candidates) {
+            final List<AddNoteToCandidateEvent> addNoteToCandidateEvents = getAdminService().findAddNoteToCandidateEventsByCandidateId(candidate.getId());
+            for (Note note : candidate.getNotes()) {
+                candidatesNotes.add(new CandidateNoteView(candidate, note));
+            }
+        }
+        model.put("candidatesNotes", candidatesNotes);
+        return "candidates/notes";
+    }
 	
 	private void populateModelForDetail(Map<String,Object> model, Candidate candidate) {
 		List<CandidateWorkFlowEvent> events = 

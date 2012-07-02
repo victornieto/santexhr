@@ -143,6 +143,11 @@
 		<put-attribute name="sidebar" value="sidebar/candidate"/>
 		<put-attribute name="content" value="/WEB-INF/views/candidate/detail.jsp"/>
 	</definition>
+    <definition name="candidates/notes" extends="application">
+        <put-attribute name="title" value="Santex HR | Candidates Notes"/>
+        <put-attribute name="sidebar" value="sidebar/candidates"/>
+        <put-attribute name="content" value="/WEB-INF/views/candidates/notes.jsp"/>
+    </definition>
 	<definition name="candidates/history" template="/WEB-INF/views/candidate/history.jsp"/>
 	<definition name="candidates/emailLinkDialog" template="/WEB-INF/views/candidate/emailLinkDialog.jsp"/>
 	

@@ -349,6 +349,17 @@ public class AdminService extends ApplicationService {
 		return getCandidateWorkFlowEventDao().findAllByCandidateId(candidateId);
 	}
 
+    /**
+     * Finds all "add note to candidate" work flow events for a candidate with the given id.
+     *
+     * @param candidateId
+     *            the id of the candidate who's "add note to candidate" events to find.
+     */
+    public List<AddNoteToCandidateEvent> findAddNoteToCandidateEventsByCandidateId(
+            Long candidateId) {
+        return getCandidateWorkFlowEventDao().findNotesToCandidateByCandidateId(candidateId);
+    }
+
 	/**
 	 * Creates a new candidate
 	 * 

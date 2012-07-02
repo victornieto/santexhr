@@ -3,6 +3,7 @@ package org.openapplicant.dao.hibernate;
 import java.util.List;
 
 import org.openapplicant.dao.ICandidateWorkFlowEventDAO;
+import org.openapplicant.domain.event.AddNoteToCandidateEvent;
 import org.openapplicant.domain.event.CandidateWorkFlowEvent;
 import org.springframework.stereotype.Repository;
 
@@ -22,5 +23,13 @@ public class CandidateWorkFlowEventDAO extends DomainObjectDAO<CandidateWorkFlow
 				candidateId
 		);
 	}
+
+    @SuppressWarnings("unchecked")
+    public List<AddNoteToCandidateEvent> findNotesToCandidateByCandidateId(Long candidateId) {
+        return getHibernateTemplate().find(
+                "from " + AddNoteToCandidateEvent.class.getName() + " where candidate.id = ? order by entityInfo.createdDate desc",
+                candidateId
+        );
+    }
 
 }

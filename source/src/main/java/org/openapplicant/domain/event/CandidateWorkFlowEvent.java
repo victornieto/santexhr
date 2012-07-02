@@ -1,18 +1,13 @@
 package org.openapplicant.domain.event;
 
-import javax.persistence.CascadeType;
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import org.hibernate.annotations.Cascade;
 import org.openapplicant.domain.Candidate;
 import org.openapplicant.domain.DomainObject;
 import org.springframework.util.Assert;
+
+import java.util.Date;
 
 
 /**
@@ -25,6 +20,7 @@ import org.springframework.util.Assert;
 public abstract class CandidateWorkFlowEvent extends DomainObject {
 	
 	private Candidate candidate;
+    private Date date;
 	
 	/**
 	 * Constructs a new CandidateWorkFlowEvent
@@ -56,6 +52,15 @@ public abstract class CandidateWorkFlowEvent extends DomainObject {
 	private void setCandidate(Candidate value) {
 		candidate = value;
 	}
+
+    @Column(nullable = false)
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
 	
 	/**
 	 * Accepts the given visitor
@@ -63,4 +68,9 @@ public abstract class CandidateWorkFlowEvent extends DomainObject {
 	 */
 	public abstract void accept(ICandidateWorkFlowEventVisitor visitor);
 
+    @Override
+    public void beforeSave() {
+        super.beforeSave();
+        date = new Date();
+    }
 }

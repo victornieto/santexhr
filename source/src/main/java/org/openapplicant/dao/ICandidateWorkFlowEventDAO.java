@@ -1,8 +1,9 @@
 package org.openapplicant.dao;
 
-import java.util.List;
-
+import org.openapplicant.domain.event.AddNoteToCandidateEvent;
 import org.openapplicant.domain.event.CandidateWorkFlowEvent;
+
+import java.util.List;
 
 
 public interface ICandidateWorkFlowEventDAO extends IDomainObjectDAO<CandidateWorkFlowEvent> {
@@ -14,5 +15,7 @@ public interface ICandidateWorkFlowEventDAO extends IDomainObjectDAO<CandidateWo
 	 * @return the work flow events
 	 */
 	List<CandidateWorkFlowEvent> findAllByCandidateId(Long candidateId);
+
+    List<AddNoteToCandidateEvent> findNotesToCandidateByCandidateId(Long candidateId);
 
 }
