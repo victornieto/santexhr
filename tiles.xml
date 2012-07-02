@@ -1,0 +1,438 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+	
+	<!--
+	==========================================================================
+							SHARED TEMPLATES
+	==========================================================================
+	-->
+	
+	<!-- APPLICATION -->
+	<definition name="application" template="/WEB-INF/views/layouts/application.jsp">
+	  <put-attribute name="title" value="Santex HR | Admin" />
+	  <put-attribute name="top" value="top/toolbar" />
+	  <put-attribute name="sidebar" value="" />
+	  <put-attribute name="bottom" value="/WEB-INF/views/shared/bottom.jsp" />
+	</definition>
+	
+	<!-- PUBLIC APPLICATION-->
+	<definition name="publicApplication" extends="application">
+		<put-attribute name="top" value="top"/>
+	</definition>
+	
+	<!-- QUIZ APPLICATION-->
+	<definition name="quizApplication" extends="application">
+		<put-attribute name="top" value="quizTop"/>
+	</definition>
+
+	<!-- TOP/TOOLBAR -->
+	<definition name="top/toolbar" template="/WEB-INF/views/shared/top.jsp">
+		<put-attribute name="toolbar" value="/WEB-INF/views/shared/toolbar.jsp"/>
+	</definition>
+	
+	<!-- TOP -->
+	<definition name="top" template="/WEB-INF/views/shared/top.jsp">
+		<put-attribute name="toolbar" value=""/>
+	</definition>
+	
+	<definition name="quizTop" template="/WEB-INF/views/quiz/top.jsp">
+		<put-attribute name="toolbar" value=""/>
+	</definition>
+		
+	<!-- SIDEBARS -->
+	<definition name="sidebar/candidate" template="/WEB-INF/views/shared/candidateSidebar.jsp">
+		<put-attribute name="candidateTree" value="/WEB-INF/views/candidate/candidateTree.jsp"/>
+		<put-attribute name="profile" value=""/>
+		<put-attribute name="searches" value=""/>
+	</definition>
+	<definition name="sidebar/candidates" template="/WEB-INF/views/shared/candidateSidebar.jsp">
+		<put-attribute name="candidateTree" value="/WEB-INF/views/candidates/candidateTree.jsp"/>
+		<put-attribute name="profile" value=""/>
+		<put-attribute name="searches" value="/WEB-INF/views/shared/searches.jsp"/>
+	</definition>
+
+	<definition name="sidebar/results" template="/WEB-INF/views/shared/candidateSidebar.jsp">
+		<put-attribute name="candidateTree" value="/WEB-INF/views/results/candidateTree.jsp"/>
+		<put-attribute name="profile" value="/WEB-INF/views/shared/profile.jsp"/>
+		<put-attribute name="searches" value=""/>
+	</definition>
+	
+	<definition name="sidebar/settings" template="/WEB-INF/views/shared/settingsSidebar.jsp">
+		<put-attribute name="categories" value=""/>
+		<put-attribute name="examDefinitions" value=""/>
+		<put-attribute name="email" value=""/>
+		<put-attribute name="screening" value=""/>
+		<put-attribute name="users" value=""/>
+	</definition>
+	<definition name="sidebar/settings/email" extends="sidebar/settings">
+		<put-attribute name="email" value="/WEB-INF/views/email/sidebarComponent.jsp"/>
+	</definition>
+	<definition name="sidebar/settings/examDefinition" extends="sidebar/settings">
+		<put-attribute name="examDefinitions" value="/WEB-INF/views/examDefinition/sidebarComponent.jsp"/>
+	</definition>
+	<definition name="sidebar/settings/examDefinitions" extends="sidebar/settings">
+		<put-attribute name="examDefinitions" value="/WEB-INF/views/examDefinitions/sidebarComponent.jsp"/>
+	</definition>
+	<definition name="sidebar/settings/category" extends="sidebar/settings">
+		<put-attribute name="categories" value="/WEB-INF/views/category/sidebarComponent.jsp"/>
+	</definition>
+	<definition name="sidebar/settings/categories" extends="sidebar/settings">
+		<put-attribute name="categories" value="/WEB-INF/views/categories/sidebarComponent.jsp"/>
+	</definition>
+	<definition name="sidebar/settings/screening" extends="sidebar/settings">
+		<put-attribute name="screening" value="/WEB-INF/views/screening/sidebarComponent.jsp"/>
+	</definition>
+	<definition name="sidebar/settings/user" extends="sidebar/settings">
+		<put-attribute name="users" value="/WEB-INF/views/user/sidebarComponent.jsp"/>
+	</definition>
+	<definition name="sidebar/settings/users" extends="sidebar/settings">
+		<put-attribute name="users" value=""/>
+	</definition>
+	
+	<!-- ADMIN QUESTION TYPES -->
+	<definition name="admin/content/question" template="/WEB-INF/views/category/question.jsp">
+		<put-attribute name="action" value=""/>
+		<put-attribute name="questionKind" value=""/>
+	</definition>
+
+	<definition name="admin/content/question/essay" extends="admin/content/question">
+		<put-attribute name="action" value="updateEssayQuestion"/>
+		<put-attribute name="questionKind" value="/WEB-INF/views/category/essayQuestion.jsp"/>
+	</definition>	
+	<definition name="admin/content/question/code" extends="admin/content/question">
+		<put-attribute name="action" value="updateCodeQuestion"/>
+		<put-attribute name="questionKind" value="/WEB-INF/views/category/codeQuestion.jsp"/>
+	</definition>
+	<definition name="admin/content/question/multipleChoice" extends="admin/content/question">
+		<put-attribute name="action" value="updateMultipleChoiceQuestion"/>
+		<put-attribute name="questionKind" value="/WEB-INF/views/category/multipleChoiceQuestion.jsp"/>
+	</definition>
+	
+	<!-- QUIZ QUESTION TYPES -->
+	<definition name="quiz/content/question" template="/WEB-INF/views/quiz/question.jsp">
+		<put-attribute name="questionKind" value=""/>
+	</definition>
+
+	<definition name="quiz/content/question/essay" extends="quiz/content/question">
+		<put-attribute name="questionKind" value="/WEB-INF/views/quiz/essayQuestion.jsp"/>
+	</definition>	
+	<definition name="quiz/content/question/code" extends="quiz/content/question">
+		<put-attribute name="questionKind" value="/WEB-INF/views/quiz/codeQuestion.jsp"/>
+	</definition>
+	<definition name="quiz/content/question/multipleChoice" extends="quiz/content/question">
+		<put-attribute name="questionKind" value="/WEB-INF/views/quiz/multipleChoiceQuestion.jsp"/>
+	</definition>
+
+	<!--
+	==========================================================================
+						CONTROLLER TEMPLATES
+	==========================================================================
+	-->
+	
+	<!-- CANDIDATES -->
+	<definition name="candidates/index" extends="application">
+		<put-attribute name="title" value="Santex HR | Candidates"/>
+		<put-attribute name="sidebar" value="sidebar/candidates"/>
+		<put-attribute name="content" value="/WEB-INF/views/candidates/index.jsp"/>
+	</definition>
+	<definition name="candidates/detail" extends="application">
+		<put-attribute name="title" value="Santex HR | Candidate Detail"/>
+		<put-attribute name="sidebar" value="sidebar/candidate"/>
+		<put-attribute name="content" value="/WEB-INF/views/candidate/detail.jsp"/>
+	</definition>
+    <definition name="candidates/notes" extends="application">
+        <put-attribute name="title" value="Santex HR | Candidates Notes"/>
+        <put-attribute name="sidebar" value="sidebar/candidates"/>
+        <put-attribute name="content" value="/WEB-INF/views/candidates/notes.jsp"/>
+    </definition>
+	<definition name="candidates/history" template="/WEB-INF/views/candidate/history.jsp"/>
+	<definition name="candidates/emailLinkDialog" template="/WEB-INF/views/candidate/emailLinkDialog.jsp"/>
+	
+	<!-- EMAIL -->
+	<definition name="email/index" extends="application">
+		<put-attribute name="title" value="Santex HR | Email"/>
+		<put-attribute name="sidebar" value="sidebar/settings/email"/>
+		<put-attribute name="content" value="/WEB-INF/views/email/index.jsp"/>
+	</definition>
+	<definition name="email/preferences" extends="application">
+		<put-attribute name="title" value="Santex HR | Email Preferences"/>
+		<put-attribute name="sidebar" value="sidebar/settings/email"/>
+		<put-attribute name="content" value="/WEB-INF/views/email/preferences.jsp"/>
+	</definition>
+	<definition name="email/templates" extends="application">
+		<put-attribute name="title" value="Santex HR | Email Templates"/>
+		<put-attribute name="sidebar" value="sidebar/settings/email"/>
+		<put-attribute name="content" value="/WEB-INF/views/email/templates.jsp"/>
+	</definition>
+	<definition name="email/template" extends="application">
+		<put-attribute name="title" value="Santex HR | Email Template"/>
+		<put-attribute name="sidebar" value="sidebar/settings/email"/>
+		<put-attribute name="content" value="/WEB-INF/views/email/template.jsp"/>
+	</definition>
+	<definition name="email/smtp" extends="application">
+		<put-attribute name="title" value="Santex HR | Email SMTP"/>
+		<put-attribute name="sidebar" value="sidebar/settings/email"/>
+		<put-attribute name="content" value="/WEB-INF/views/email/smtp.jsp"/>
+	</definition>
+	<definition name="email/emailConnect" extends="application">
+		<put-attribute name="title" value="Santex HR | Email Connector"/>
+		<put-attribute name="sidebar" value="sidebar/settings/email"/>
+		<put-attribute name="content" value="/WEB-INF/views/email/emailConnect.jsp"/>
+	</definition>
+	
+	<!-- ERROR -->
+	<definition name="error/index" extends="application">
+		<put-attribute name="title" value="Santex HR | Error"/>
+		<put-attribute name="sidebar" value=""/>
+		<put-attribute name="content"  value="/WEB-INF/views/error/index.jsp"/>
+	</definition>
+	
+	<!-- EXAM DEFINITION -->
+	<definition name="examDefinition/add" extends="application">
+		<put-attribute name="title" value="Santex HR | Exam Definition"/>
+		<put-attribute name="sidebar" value="sidebar/settings/examDefinition"/>
+		<put-attribute name="content" value="/WEB-INF/views/examDefinition/add.jsp"/>
+	</definition>
+	<definition name="examDefinition/view" extends="application">
+		<put-attribute name="title" value="Santex HR | Exam Definition"/>
+		<put-attribute name="sidebar" value="sidebar/settings/examDefinition"/>
+		<put-attribute name="content" value="/WEB-INF/views/examDefinition/view.jsp"/>
+	</definition>
+	<definition name="examDefinition/categoryPercentage" extends="application">
+		<put-attribute name="title" value="Santex HR | Category Percentage"/>
+		<put-attribute name="sidebar" value="sidebar/settings/examDefinition"/>
+		<put-attribute name="content" value="/WEB-INF/views/examDefinition/categoryPercentage.jsp"/>
+	</definition>
+	
+	<!-- EXAM DEFINITIONS -->
+	<definition name="examDefinitions/index" extends="application">
+		<put-attribute name="title" value="Santex HR | Exam Definitions"/>
+		<put-attribute name="sidebar" value="sidebar/settings/examDefinitions"/>
+		<put-attribute name="content" value="/WEB-INF/views/examDefinitions/index.jsp"/>
+	</definition>
+	
+	<definition name="examDefinitions/site" extends="application">
+		<put-attribute name="title" value="Santex HR | Configure Portal"/>
+		<put-attribute name="sidebar" value="sidebar/settings/examDefinitions"/>
+		<put-attribute name="content" value="/WEB-INF/views/examDefinitions/site.jsp"/>
+	</definition>
+	
+	<!-- CATEGORY -->
+	<definition name="category/add" extends="application">
+		<put-attribute name="title" value="Santex HR | Category"/>
+		<put-attribute name="sidebar" value="sidebar/settings/category"/>
+		<put-attribute name="content" value="/WEB-INF/views/category/add.jsp"/>
+	</definition>
+	<definition name="category/view" extends="application">
+		<put-attribute name="title" value="Santex HR | Category"/>
+		<put-attribute name="sidebar" value="sidebar/settings/category"/>
+		<put-attribute name="content" value="/WEB-INF/views/category/view.jsp"/>
+	</definition>
+	<definition name="category/essayQuestion" extends="application">
+		<put-attribute name="title" value="Santex HR | Essay Question"/>
+		<put-attribute name="sidebar" value="sidebar/settings/category"/>
+		<put-attribute name="content" value="admin/content/question/essay"/>
+	</definition>
+	<definition name="category/codeQuestion" extends="application">
+		<put-attribute name="title" value="Santex HR | Code Question"/>
+		<put-attribute name="sidebar" value="sidebar/settings/category"/>
+		<put-attribute name="content" value="admin/content/question/code"/>
+	</definition>
+	<definition name="category/multipleChoiceQuestion" extends="application">
+		<put-attribute name="title" value="Santex HR | Multiple Choice Question"/>
+		<put-attribute name="sidebar" value="sidebar/settings/category"/>
+		<put-attribute name="content" value="admin/content/question/multipleChoice"/>
+	</definition>
+	
+	<!-- CATEGORIES -->
+	<definition name="categories/index" extends="application">
+		<put-attribute name="title" value="Santex HR | Categories"/>
+		<put-attribute name="sidebar" value="sidebar/settings/categories"/>
+		<put-attribute name="content" value="/WEB-INF/views/categories/index.jsp"/>
+	</definition>
+	
+	<!-- CreateAccount -->
+	<definition name="createAccount/index" extends="publicApplication">
+		<put-attribute name="title" value="Santex HR | Account Creation"/>
+		<put-attribute name="content" value="_createAccount/index"/>
+	</definition>
+	<definition name="_createAccount/index" template="/WEB-INF/views/createAccount/layout.jsp">
+		<put-attribute name="header" value="Santex HR | Account Creation"/>
+		<put-attribute name="content" value="/WEB-INF/views/createAccount/index.jsp"/>
+	</definition>
+	<definition name="createAccount/success" extends="publicApplication">
+		<put-attribute name="title" value="Santex HR | Account Creation"/>
+		<put-attribute name="content" value="_createAccount/success"/>
+	</definition>
+	<definition name="_createAccount/success" template="/WEB-INF/views/createAccount/layout.jsp">
+		<put-attribute name="header" value="Santex HR | Account Created"/>
+		<put-attribute name="content" value="/WEB-INF/views/createAccount/success.jsp"/>
+	</definition>
+	<definition name="createAccount/create" extends="publicApplication">
+		<put-attribute name="title" value="Santex HR | Account Creation"/>
+		<put-attribute name="content" value="_createAccount/create"/>
+	</definition>
+	<definition name="_createAccount/create" template="/WEB-INF/views/createAccount/layout.jsp">
+		<put-attribute name="header" value="Santex HR | Account Creation"/>
+		<put-attribute name="content" value="/WEB-INF/views/createAccount/create.jsp"/>
+	</definition>
+	<definition name="createAccount/sentMail" extends="publicApplication">
+		<put-attribute name="title" value="Santex HR | Account Creation"/>
+		<put-attribute name="content" value="_createAccount/sentMail"/>
+	</definition>
+	<definition name="_createAccount/sentMail" template="/WEB-INF/views/createAccount/layout.jsp">
+		<put-attribute name="header" value="Santex HR | Account Creation"/>
+		<put-attribute name="content" value="/WEB-INF/views/createAccount/sentMail.jsp"/>
+	</definition>
+	
+	<!--FORGOTten PASSWORD -->
+	<definition name="forgotPassword/index" extends="publicApplication">
+		<put-attribute name="title" value="Santex HR | Support"/>
+		<put-attribute name="content" value="_forgotPassword/index"/>
+	</definition>
+	<definition name="_forgotPassword/index" template="/WEB-INF/views/forgotPassword/layout.jsp">
+		<put-attribute name="header" value="Forgot your password?"/>
+		<put-attribute name="content" value="/WEB-INF/views/forgotPassword/index.jsp"/>
+	</definition>
+	
+	<definition name="forgotPassword/tryAgain" extends="publicApplication">
+		<put-attribute name="title" value="Santex HR | Support"/>
+		<put-attribute name="content" value="_forgotPassword/tryAgain"/>
+	</definition>
+	<definition name="_forgotPassword/tryAgain" template="/WEB-INF/views/forgotPassword/layout.jsp">
+		<put-attribute name="header" value="Reset Password"/>
+		<put-attribute name="content" value="/WEB-INF/views/forgotPassword/tryAgain.jsp"/>
+	</definition>
+	
+	<definition name="forgotPassword/emailSent" extends="publicApplication">
+		<put-attribute name="title" value="Santex HR | Support"/>
+		<put-attribute name="content" value="_forgotPassword/emailSent"/>
+	</definition>
+	<definition name="_forgotPassword/emailSent" template="/WEB-INF/views/forgotPassword/layout.jsp">
+		<put-attribute name="header" value="Reset Password"/>
+		<put-attribute name="content" value="/WEB-INF/views/forgotPassword/emailSent.jsp"/>
+	</definition>
+	
+	<definition name="forgotPassword/confirm" extends="publicApplication">
+		<put-attribute name="title" value="Santex HR | Support"/>
+		<put-attribute name="content" value="_forgotPassword/confirm"/>
+	</definition>
+	<definition name="_forgotPassword/confirm" template="/WEB-INF/views/forgotPassword/layout.jsp">
+		<put-attribute name="header" value=""/>
+		<put-attribute name="content" value="/WEB-INF/views/forgotPassword/confirm.jsp"/>
+	</definition>
+	
+	<definition name="forgotPassword/success" extends="publicApplication">
+		<put-attribute name="title" value="Santex HR | Support"/>
+		<put-attribute name="content" value="_forgotPassword/success"/>
+	</definition>
+	<definition name="_forgotPassword/success" template="/WEB-INF/views/forgotPassword/layout.jsp">
+		<put-attribute name="header" value=""/>
+		<put-attribute name="content" value="/WEB-INF/views/forgotPassword/success.jsp"/>
+	</definition>
+	
+	<!-- HELP -->
+	<definition name="help/index" extends="application">
+		<put-attribute name="title" value="Santex HR | Help"/>
+		<put-attribute name="content" value="/WEB-INF/views/help/index.jsp"/>
+	</definition>
+	
+	<!-- LOGIN -->
+	<definition name="login/index" extends="publicApplication">
+		<put-attribute name="title" value="Santex HR | Login"/>
+		<put-attribute name="content" value="/WEB-INF/views/login/index.jsp"/>
+	</definition>
+		
+	<!-- QUIZ -->
+	<definition name="quiz/index" extends="quizApplication">
+		<put-attribute name="title" value="Santex HR | Quiz"/>
+		<put-attribute name="content" value="/WEB-INF/views/quiz/index.jsp"/>
+	</definition>
+	<definition name="quiz/info" extends="quizApplication">
+		<put-attribute name="title" value="Santex HR | Quiz Info"/>
+		<put-attribute name="content" value="/WEB-INF/views/quiz/info.jsp"/>
+	</definition>
+	
+	<definition name="quiz/essayQuestion" extends="quizApplication">
+		<put-attribute name="title" value="Santex HR | Quiz Essay Question"/>
+		<put-attribute name="content" value="quiz/content/question/essay"/>
+	</definition>
+	
+	<definition name="quiz/codeQuestion" extends="quizApplication">
+		<put-attribute name="title" value="Santex HR | Quiz Code Question"/>
+		<put-attribute name="content" value="quiz/content/question/code"/>
+	</definition>
+	
+	<definition name="quiz/multipleChoiceQuestion" extends="quizApplication">
+		<put-attribute name="title" value="Santex HR | Quiz Multiple Choice Question"/>
+		<put-attribute name="content" value="quiz/content/question/multipleChoice"/>
+	</definition>
+	
+	<definition name="quiz/thanks" extends="quizApplication">
+		<put-attribute name="title" value="Santex HR | Quiz Thanks"/>
+		<put-attribute name="content" value="/WEB-INF/views/quiz/thanks.jsp"/>
+	</definition>
+	<definition name="quiz/sorry" extends="quizApplication">
+		<put-attribute name="title" value="Santex HR | Quiz Sorry"/>
+		<put-attribute name="content" value="/WEB-INF/views/quiz/sorry.jsp"/>
+	</definition>
+		
+	<!-- SETTINGS -->
+	<definition name="settings/index" extends="application">
+		<put-attribute name="title" value="Santex HR | Settings"/>
+		<put-attribute name="sidebar" value="sidebar/settings"/>
+		<put-attribute name="content" value="/WEB-INF/views/settings/index.jsp"/>
+	</definition>
+	
+	<!-- RESULTS -->
+	<definition name="results/exam" extends="application">
+		<put-attribute name="title" value="Santex HR | Exam Results"/>
+		<put-attribute name="sidebar" value="sidebar/results"/>
+		<put-attribute name="content" value="/WEB-INF/views/results/exam.jsp"/>
+	</definition>
+	<definition name="results/question" extends="application">
+		<put-attribute name="title" value="Santex HR | Question Results"/>
+		<put-attribute name="sidebar" value="sidebar/results"/>
+		<put-attribute name="content" value="/WEB-INF/views/results/question.jsp"/>
+	</definition>
+	
+	<!-- SCREENING -->	
+	<definition name="screening/index" extends="application">
+		<put-attribute name="title" value="Santex HR | Screening"/>
+		<put-attribute name="sidebar" value="sidebar/settings/screening"/>
+		<put-attribute name="content" value="/WEB-INF/views/screening/index.jsp"/>
+	</definition>
+	<definition name="screening/preferences" extends="application">
+		<put-attribute name="title" value="Santex HR | Screening Preferences"/>
+		<put-attribute name="sidebar" value="sidebar/settings/screening"/>
+		<put-attribute name="content" value="/WEB-INF/views/screening/preferences.jsp"/>
+	</definition>
+	<definition name="screening/keywords" extends="application">
+		<put-attribute name="title" value="Santex HR | Screening Keywords"/>
+		<put-attribute name="sidebar" value="sidebar/settings/screening"/>
+		<put-attribute name="content" value="/WEB-INF/views/screening/keywords.jsp"/>
+	</definition>
+	
+	<!-- USER -->
+	<definition name="user/add" extends="application">
+		<put-attribute name="title" value="Santex HR | New User"/>
+		<put-attribute name="sidebar" value="sidebar/settings/user"/>
+		<put-attribute name="content" value="/WEB-INF/views/user/add.jsp"/>
+	</definition>
+	<definition name="user/view" extends="application">
+		<put-attribute name="title" value="Santex HR | User"/>
+		<put-attribute name="sidebar" value="sidebar/settings/user"/>
+		<put-attribute name="content" value="/WEB-INF/views/user/view.jsp"/>
+	</definition>
+	
+	<!-- USERS -->
+	<definition name="users/index" extends="application">
+		<put-attribute name="title" value="Santex HR | Users"/>
+		<put-attribute name="sidebar" value="sidebar/settings/users"/>
+		<put-attribute name="content" value="/WEB-INF/views/users/index.jsp"/>
+	</definition>
+	
+</tiles-definitions>	

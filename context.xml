@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Context>
+	<!-- for tomcat deployment -->
+  <Resource name="jdbc/openapplicant-ds" auth="Container" type="javax.sql.DataSource"
+               maxActive="10" maxIdle="3" maxWait="10000"
+               username="root" password="root" driverClassName="com.mysql.jdbc.Driver"
+               url="jdbc:mysql://localhost:3306/santex-hr?createDatabaseIfNotExist=true"/>
+</Context>
