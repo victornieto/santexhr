@@ -133,13 +133,7 @@ public class PropertyCandidateSearch extends CandidateSearch {
 	@Transient
 	@Override
 	public String getSearchString() {
-		return new StringBuilder()
-					.append(nameString)	
-					.append(" ")
-					.append(skillsString)
-					.append(" ")
-					.append(datesString)
-					.toString();
+		return nameString + " " + skillsString + " " + datesString;
 	}
 	
 
@@ -172,7 +166,7 @@ public class PropertyCandidateSearch extends CandidateSearch {
 	 * Builds a PropertyCandidateSearch
 	 */
 	public static class Builder {
-		private User user;
+		private final User user;
 		private String nameString = "";
 		private String skillsString = "";
 		private String datesString = "";

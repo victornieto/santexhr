@@ -26,7 +26,7 @@ public abstract class DomainObjectDAO<T extends DomainObject>
 	extends HibernateDaoSupport
 	implements IDomainObjectDAO<T> {
 	
-	private Class<T> type;
+	private final Class<T> type;
 	
 	/**
 	 * Constructs a new dao operating on instances of the given type.
@@ -151,7 +151,6 @@ public abstract class DomainObjectDAO<T extends DomainObject>
 	 * that returns a unique result.
 	 * @param queryString the query string to execute
 	 * @param params the named parameter bindings.
-	 * @param type the class type of the unique result
 	 * @return the unique result or null if non exists
 	 * @throws DataAccessException if a non unique result is returned.
 	 */

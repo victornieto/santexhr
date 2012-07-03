@@ -1,22 +1,17 @@
 package org.openapplicant.service;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-import java.util.Map;
-import java.util.TimeZone;
-
 import org.apache.commons.lang.time.DateFormatUtils;
 import org.openapplicant.domain.Candidate;
+import org.openapplicant.domain.Candidate.Status;
 import org.openapplicant.domain.Company;
 import org.openapplicant.domain.Profile;
 import org.openapplicant.domain.User;
-import org.openapplicant.domain.Candidate.Status;
 import org.openapplicant.domain.setting.Smtp;
-import org.openapplicant.util.DateUtils;
 import org.openapplicant.util.Pagination;
 import org.openapplicant.util.Strings;
 import org.springframework.mail.SimpleMailMessage;
+
+import java.util.*;
 
 
 public class ReportService extends ApplicationService  {
@@ -62,7 +57,7 @@ public class ReportService extends ApplicationService  {
 				count = new Integer( candidateCounts.get(substatus.name()).intValue() + count.intValue() );
 			}	
 			*/
-			returnValue += "\t" + Strings.humanize(s.name()) + " - " + count.intValue() + "\n";
+			returnValue += "\t" + Strings.humanize(s.name()) + " - " + count + "\n";
 		}
 		
 		return returnValue;
@@ -71,8 +66,7 @@ public class ReportService extends ApplicationService  {
 	public String getDailyReportRecipient(Long companyId) {
 		Company company = getCompanyDao().find(companyId);
 		Profile profile = company.getProfile();
-		String recipient = profile.getDailyReportsRecipient();
-		return recipient;
+		return profile.getDailyReportsRecipient();
 	}
 
 	public List<Company> findNightlyReportCompanies() {

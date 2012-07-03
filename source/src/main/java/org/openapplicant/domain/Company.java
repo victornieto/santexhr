@@ -1,24 +1,5 @@
 package org.openapplicant.domain;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
-
-import javax.mail.internet.AddressException;
-import javax.mail.internet.InternetAddress;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Transient;
-
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.validator.Min;
 import org.hibernate.validator.NotEmpty;
@@ -38,6 +19,16 @@ import org.openapplicant.validation.HostName;
 import org.openapplicant.validation.Unique;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.beans.factory.annotation.Required;
+
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import javax.persistence.*;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
 
 @Configurable
 @Entity
@@ -215,7 +206,7 @@ public class Company extends DomainObject {
 
 	/**
 	 * Creates a url to an exam for the given exam link
-	 * @param link
+	 * @param examLink
 	 * @return
 	 */
 	public URL urlFor(ExamLink examLink) {
@@ -236,13 +227,7 @@ public class Company extends DomainObject {
 	}
 	
 	private URL doUrlFor(String hostName, int port, String path, String queryString) {
-		String s = new StringBuilder()
-						.append("http://")
-						.append(hostName)
-						.append(port != 80 ? ":" + port : "")
-						.append(contextRoot + path)
-						.append(queryString)
-						.toString();
+		String s = "http://" + hostName + (port != 80 ? ":" + port : "") + contextRoot + path + queryString;
 		try {
 			return new URL(s);
 		} catch(MalformedURLException e) {

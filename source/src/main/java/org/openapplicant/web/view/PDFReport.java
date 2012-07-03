@@ -25,9 +25,9 @@ public class PDFReport extends AbstractPdfView {
 	
 
 
-	private static Font courierFont = new Font(Font.NORMAL);
-	private static Font arialFont = new Font(Font.BOLD);
-	private static Font headerFont = new Font(Font.BOLD,24);
+	private static final Font courierFont = new Font(Font.NORMAL);
+	private static final Font arialFont = new Font(Font.BOLD);
+	private static final Font headerFont = new Font(Font.BOLD,24);
 
 	private String formatDate(Calendar cal) {
 		//TimeZone timezone = (TimeZone)Config.get(pageContext.getSession(), Config.FMT_TIME_ZONE);
@@ -37,11 +37,11 @@ public class PDFReport extends AbstractPdfView {
 	
 	private class EventVisitor implements ICandidateWorkFlowEventVisitor {
 
-		private Document doc;
+		private final Document doc;
 
 		public Image getImage(String filename) {
 			String fullname = "";
-			Image returnValue = null;
+			Image returnValue;
 			try {
 				fullname = "/img/history_icons/"+filename+".png";
 				String realPath = getServletContext().getRealPath(fullname);
@@ -118,8 +118,8 @@ public class PDFReport extends AbstractPdfView {
 		}
 
 		public void visit(CandidateStatusChangedEvent event) {
-			String verb = "";
-			String image = "";
+			String verb;
+			String image;
 			if (event.getStatus().isArchived()) {
 				verb = "Archived Candidate";
 				image = "archived";
@@ -189,7 +189,7 @@ public class PDFReport extends AbstractPdfView {
 	};
 
 	private class HeaderFooterEvents extends PdfPageEventHelper {
-		private String logoFilename;
+		private final String logoFilename;
 		
 		public HeaderFooterEvents(String logoFilename) {
 			this.logoFilename = logoFilename;
@@ -197,8 +197,6 @@ public class PDFReport extends AbstractPdfView {
 		
 		public void onEndPage(PdfWriter writer, Document document) {
 			try {
-				Rectangle rect = document.getPageSize();
-				
 				PdfContentByte cb = writer.getDirectContent();
 				
 				FileInputStream logoStream = new FileInputStream(logoFilename);
@@ -218,7 +216,7 @@ public class PDFReport extends AbstractPdfView {
 		}
 	}
 	
-	protected void addCoverLetter(Document doc, Candidate candidate)
+	void addCoverLetter(Document doc, Candidate candidate)
 			throws DocumentException {
 		logger.debug("adding cover letter.");
 		Paragraph paragraph = new Paragraph();
@@ -270,7 +268,7 @@ public class PDFReport extends AbstractPdfView {
 		}
 	}
 
-	protected void addResume(Document doc, Candidate candidate)
+	void addResume(Document doc, Candidate candidate)
 			throws DocumentException {
 		Resume resume = candidate.getResume();
 
@@ -484,7 +482,6 @@ public class PDFReport extends AbstractPdfView {
 		
 		
 		PdfPTable tocTable = new PdfPTable(new float[]{90,20});
-		PdfPCell cell = new PdfPCell();
 		tocTable.setSpacingBefore(10);
 		tocTable.setSpacingAfter(10);
 		
@@ -549,8 +546,6 @@ public class PDFReport extends AbstractPdfView {
 		concatenated.delete();
 		tocFile.delete();
 		packetFile.delete();
-		
-		
 	}
 
 }

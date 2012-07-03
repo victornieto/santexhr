@@ -1,13 +1,13 @@
 package org.openapplicant.util;
 
-import java.text.ParseException;
-import java.util.Calendar;
-import java.util.Date;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateFormatUtils;
 import org.apache.commons.lang.time.DateUtils;
 import org.openapplicant.domain.CalendarRange;
+
+import java.text.ParseException;
+import java.util.Calendar;
+import java.util.Date;
 
 
 /**
@@ -168,7 +168,7 @@ public abstract class CalendarUtils {
 				Calendar date = parse(each);
 				if(null == startDate) {
 					startDate = date;
-				} else if(null == endDate){
+				} else {
 					endDate = date;
 					break;
 				}
@@ -183,7 +183,7 @@ public abstract class CalendarUtils {
 	 * Parse a calendar form the given string.
 	 * 
 	 * @param str the calendar string to parse (eg: 3/6/2007)
-	 * @param return the parsed calendar
+	 * @return the parsed calendar
 	 * @throws ParseException if no format parses.
 	 */
 	public static Calendar parse(String str) throws ParseException {
@@ -203,7 +203,7 @@ public abstract class CalendarUtils {
 	 * @return the parsed calendar
 	 * @throws ParseException if no format parses.
 	 */
-	public static Calendar parse(String str, String... simpleDateFormats) 
+	private static Calendar parse(String str, String... simpleDateFormats)
 		throws ParseException {
 		Date date = DateUtils.parseDate(str, simpleDateFormats);
 		Calendar c = Calendar.getInstance();

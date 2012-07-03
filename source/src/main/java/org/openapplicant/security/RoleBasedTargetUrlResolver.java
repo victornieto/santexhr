@@ -16,7 +16,7 @@ import org.springframework.security.ui.savedrequest.SavedRequest;
  */
 public class RoleBasedTargetUrlResolver implements TargetUrlResolver {
 	
-	private TargetUrlResolver defaultSpringSecurityTargetUrl;
+	private final TargetUrlResolver defaultSpringSecurityTargetUrl;
 	
 	private final static String SETTINGS_VIEW = "/admin/settings/index";
 	

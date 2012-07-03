@@ -1,22 +1,16 @@
 package org.openapplicant.domain;
 
-import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Transient;
-
 import org.apache.commons.lang.StringUtils;
 import org.openapplicant.dao.ICandidateDAO;
 import org.openapplicant.util.CalendarUtils;
 import org.openapplicant.util.Pagination;
 import org.springframework.beans.factory.annotation.Configurable;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Transient;
+import java.text.ParseException;
+import java.util.*;
 
 
 /**
@@ -104,7 +98,7 @@ public class SimpleStringCandidateSearch extends CandidateSearch {
 	}
 	
 	/**
-	 * @param a space delimited string of search terms.
+	 * @param searchString space delimited string of search terms.
 	 * @return a parsed date range.
 	 */
 	private CalendarRange _parseDateRange(String searchString) {
@@ -116,7 +110,7 @@ public class SimpleStringCandidateSearch extends CandidateSearch {
 				Calendar date = CalendarUtils.parse(each);
 				if(null == startDate) {
 					startDate = date;
-				} else if(null == endDate) {
+				} else {
 					endDate = date;
 					break;
 				}
@@ -128,7 +122,7 @@ public class SimpleStringCandidateSearch extends CandidateSearch {
 	}
 	
 	/**
-	 * @param a space delimited string of search terms.
+	 * @param searchString space delimited string of search terms.
 	 * @return a list of search terms excluding any dates.
 	 */
 	private List<String> _parseSearchTerms(String searchString) {

@@ -19,7 +19,7 @@ public class CandidateExamLinkDAO extends DomainObjectDAO<CandidateExamLink>
 	
 	@SuppressWarnings("unchecked")
 	public List<CandidateExamLink> findAllByCandidateId(final Long candidateId) {
-		List<CandidateExamLink> result = (List<CandidateExamLink>) getHibernateTemplate().execute(new HibernateCallback(){
+		return (List<CandidateExamLink>) getHibernateTemplate().execute(new HibernateCallback(){
 			public Object doInHibernate(Session s) {
 				return s.createCriteria(ExamLink.class)
 					.createCriteria("candidate")
@@ -27,6 +27,5 @@ public class CandidateExamLinkDAO extends DomainObjectDAO<CandidateExamLink>
 					.list();
 			}
 		});
-		return result;
 	}
 }

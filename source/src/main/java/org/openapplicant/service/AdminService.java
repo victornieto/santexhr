@@ -349,17 +349,6 @@ public class AdminService extends ApplicationService {
 		return getCandidateWorkFlowEventDao().findAllByCandidateId(candidateId);
 	}
 
-    /**
-     * Finds all "add note to candidate" work flow events for a candidate with the given id.
-     *
-     * @param candidateId
-     *            the id of the candidate who's "add note to candidate" events to find.
-     */
-    public List<AddNoteToCandidateEvent> findAddNoteToCandidateEventsByCandidateId(
-            Long candidateId) {
-        return getCandidateWorkFlowEventDao().findNotesToCandidateByCandidateId(candidateId);
-    }
-
 	/**
 	 * Creates a new candidate
 	 * 
@@ -619,7 +608,7 @@ public class AdminService extends ApplicationService {
 	public Question addQuestionToExam(String examArtifactId, Question question) {
 		Exam exam = findExamByArtifactId(examArtifactId);
 		exam.addQuestion(question);
-		exam = getExamDao().save(exam);
+		getExamDao().save(exam);
 		return question;
 	}
 
@@ -635,7 +624,7 @@ public class AdminService extends ApplicationService {
 		Exam exam = findExamByArtifactId(examArtifactId);
 		Question question = new MultipleChoiceQuestion();
 		exam.addQuestion(question);
-		exam = getExamDao().save(exam);
+		getExamDao().save(exam);
 		return question;
 	}
 
@@ -711,32 +700,32 @@ public class AdminService extends ApplicationService {
 			Map<String, Double> values = new HashMap<String, Double>();
 
 			elements.put("total_time", 1);
-			values.put("total_time", new Double(summary.getTotalTime()));
+			values.put("total_time", (double) summary.getTotalTime());
 
 			elements.put("key_chars", 1);
-			values.put("key_chars", new Double(summary.getKeyChars()));
+			values.put("key_chars", (double) summary.getKeyChars());
 
 			elements.put("hesitation_time", 1);
 			values.put("hesitation_time",
-					new Double(summary.getHesitationTime()));
+                    (double) summary.getHesitationTime());
 
 			elements.put("focus_changes", -1);
-			values.put("focus_changes", new Double(summary.getFocusChanges()));
+			values.put("focus_changes", (double) summary.getFocusChanges());
 
 			elements.put("paste_presses", -1);
-			values.put("paste_presses", new Double(summary.getPastePresses()));
+			values.put("paste_presses", (double) summary.getPastePresses());
 
 			QuestionStatistics qs_style = getExamDao()
 					.findSittingStatisticsBySittingId(sitting.getId(), "style");
 			elements.put("style", 1);
-			values.put("style", new Double(qs_style.getMean().doubleValue()));
+			values.put("style", qs_style.getMean().doubleValue());
 
 			QuestionStatistics qs_correct = getExamDao()
 					.findSittingStatisticsBySittingId(sitting.getId(),
 							"correctness");
 			elements.put("correctness", 1);
-			values.put("correctness", new Double(qs_correct.getMean()
-					.doubleValue()));
+			values.put("correctness", qs_correct.getMean()
+                    .doubleValue());
 
 			// resume screening score
 
@@ -756,8 +745,6 @@ public class AdminService extends ApplicationService {
 			}
 
 			double computed_score = (100.0 * score) / max_score;
-			if (score < 0)
-				score = 0;
 			candidate.setMatchScore(new BigDecimal(computed_score));
 
 		} catch (Exception e) {
@@ -1100,7 +1087,7 @@ public class AdminService extends ApplicationService {
 	 * @param questionId the question id
 	 * @return the Question with the specified primary key
 	 */
-	public Question findQuestionById(Long questionId) {
+    Question findQuestionById(Long questionId) {
 		return getQuestionDao().find(questionId);
 	}
 

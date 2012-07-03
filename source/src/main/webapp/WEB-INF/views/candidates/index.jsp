@@ -212,5 +212,10 @@
                 </ul>
             </div>
         </display:column>
+        <display:column headerClass="icon header" class="icon" title="<img src=\"${pageContext.request.contextPath}/img/table/notes.png\" title=\"Notes\"/>">
+            <a href="<c:url value='/admin/candidates/notes?candidate=${c.id}' />">
+                <img src="<c:url value='/img/table/notes.png'/>" title="${tt:abbreviateTo(c.name.first,15)}'s Notes"/>
+            </a>
+        </display:column>
     </display:table>
 </div>

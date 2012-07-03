@@ -84,34 +84,45 @@
 	});
 </script>
 <div id="content" style="width: 728px;">
-    <display:table name="candidatesNotes" id="cn" htmlId="openapplicant_candidate_list" class="sortable" pagesize="10" requestURI="${requestScope['javax.servlet.forward.request_uri']}">
-        <display:column headerClass="header" title="Name" >
-            <a class="candidate_name" href="<c:url value='detail?id=${cn.candidate.id}'/>" rel="<c:url value='history?id=${cn.candidate.id}'/>" title="History: ${tt:abbreviateTo(cn.candidate.name.fullName,37)}">
+    <h1>Candidate's Notes</h1>
+    <div class="row">
+        <div class="group left" style="margin-left: 1em;">
+            <form action="notes" method="get">
+                <input type="text" value="${filter}" name="s">
+                <input type="submit" value="Search">
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <display:table name="candidatesNotes" id="cn" htmlId="openapplicant_candidate_list" class="sortable" pagesize="10" requestURI="${requestScope['javax.servlet.forward.request_uri']}">
+            <display:column headerClass="header" title="Name" >
+                <a class="candidate_name" href="<c:url value='detail?id=${cn.candidate.id}'/>" rel="<c:url value='history?id=${cn.candidate.id}'/>" title="History: ${tt:abbreviateTo(cn.candidate.name.fullName,37)}">
+                    <c:choose>
+                        <c:when test="${!empty cn.candidate.name.first}">
+                            <span><c:out value="${tt:abbreviateTo(cn.candidate.name.first,14)}"/> <strong><c:out value="${tt:abbreviateTo(cn.candidate.name.last,14)}"/></strong></span>
+                        </c:when>
+                        <c:otherwise>
+                            <span><i>Information Required</i> <img src="<c:url value='/img/candidate_icons/warning.png'/>"/></span>
+                        </c:otherwise>
+                    </c:choose>
+                </a>
+            </display:column>
+            <display:column headerClass="header" title="Date" >
+                <fmt:formatDate value="${cn.note.entityInfo.createdDate.time}" type="date" dateStyle="short" timeStyle="short"/>
+            </display:column>
+            <display:column headerClass="header" title="Note">
+                <c:out value="${tt:abbreviateTo(cn.note.body, 30)}"/>
+            </display:column>
+            <display:column headerClass="header" title="Author">
                 <c:choose>
                     <c:when test="${!empty cn.candidate.name.first}">
-                        <span><c:out value="${tt:abbreviateTo(cn.candidate.name.first,14)}"/> <strong><c:out value="${tt:abbreviateTo(cn.candidate.name.last,14)}"/></strong></span>
+                        <span><c:out value="${tt:abbreviateTo(cn.note.author.name.first,14)}"/> <strong><c:out value="${tt:abbreviateTo(cn.note.author.name.last,14)}"/></strong></span>
                     </c:when>
                     <c:otherwise>
                         <span><i>Information Required</i> <img src="<c:url value='/img/candidate_icons/warning.png'/>"/></span>
                     </c:otherwise>
                 </c:choose>
-            </a>
-        </display:column>
-        <display:column headerClass="header" title="Date" >
-            <fmt:formatDate value="${cn.note.entityInfo.createdDate.time}" type="date" dateStyle="short" timeStyle="short"/>
-        </display:column>
-        <display:column headerClass="header" title="Note">
-            <c:out value="${tt:abbreviateTo(cn.note.body, 30)}"/>
-        </display:column>
-        <display:column headerClass="header" title="Author">
-            <c:choose>
-                <c:when test="${!empty cn.candidate.name.first}">
-                    <span><c:out value="${tt:abbreviateTo(cn.note.author.name.first,14)}"/> <strong><c:out value="${tt:abbreviateTo(cn.note.author.name.last,14)}"/></strong></span>
-                </c:when>
-                <c:otherwise>
-                    <span><i>Information Required</i> <img src="<c:url value='/img/candidate_icons/warning.png'/>"/></span>
-                </c:otherwise>
-            </c:choose>
-        </display:column>
-    </display:table>
+            </display:column>
+        </display:table>
+    </div>
 </div>

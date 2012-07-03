@@ -20,13 +20,13 @@ import org.springframework.util.Assert;
 /**
  * Helper class for reading messages.
  */
-public class MessageReader {
+class MessageReader {
 	
-	private Collection<Attachment> attachments = new ArrayList<Attachment>();
+	private final Collection<Attachment> attachments = new ArrayList<Attachment>();
 	
-	private StringBuilder bodyText = new StringBuilder();
+	private final StringBuilder bodyText = new StringBuilder();
 	
-	private Message message;
+	private final Message message;
 	
 	public MessageReader(Message message) throws MessagingException, IOException {
 		Assert.notNull(message);

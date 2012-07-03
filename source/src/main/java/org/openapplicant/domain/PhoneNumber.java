@@ -1,14 +1,14 @@
 package org.openapplicant.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
-import javax.persistence.Transient;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.hibernate.validator.NotNull;
+
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
+import javax.persistence.Transient;
 
 @Embeddable
 public class PhoneNumber {
@@ -26,11 +26,9 @@ public class PhoneNumber {
 	
 	/**
 	 * Factory method for creating an empty phone number
-	 * @return
 	 */
 	public static final PhoneNumber createEmptyPhoneNumber() {
-		PhoneNumber result = new PhoneNumber("");
-		return result;
+		return new PhoneNumber("");
 	}
 
 	@NotNull
@@ -39,7 +37,7 @@ public class PhoneNumber {
 		return number;
 	}
 
-	public void setNumber(String number) {
+	void setNumber(String number) {
 		this.number = StringUtils.trimToEmpty(number);
 	}
 	
