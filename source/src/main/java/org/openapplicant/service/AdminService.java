@@ -1184,4 +1184,12 @@ public class AdminService extends ApplicationService {
         ExamDefinition examDefinition = findExamDefinitionByArtifactId(examDefinitionArtifactId);
         getExamDefinitionDao().delete(examDefinition.getId());
     }
+
+    /**
+     * Finds all candidates registered by the given user
+     * @param user
+     */
+    public List<Candidate> findAllCandidatesByUser(User user) {
+        return getCandidateDao().findByUser(user);
+    }
 }

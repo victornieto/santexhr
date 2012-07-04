@@ -382,6 +382,13 @@ public class CandidatesController extends AdminController {
         populateModelForIndex(model, null);
         return "candidates/notes";
     }
+
+    @RequestMapping(method = GET, value = "candidates/my_candidates")
+    public String showUserCandidates(Map<String, Object> model) {
+        populateModelForIndex(model, getAdminService().findAllCandidatesByUser(currentUser()));
+        model.put("candidatesSidebar", true);
+        return "candidates/my_candidates";
+    }
 	
 	private void populateModelForDetail(Map<String,Object> model, Candidate candidate) {
 		List<CandidateWorkFlowEvent> events = 

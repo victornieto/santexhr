@@ -86,6 +86,7 @@
 			</c:forEach>
 		</ul>
 	</div>
+    <a href="<c:url value="my_candidates"/>" title="Show candidates registered by me">My Candidates</a>
 	<script type="text/javascript">
 		oltk.include('jquery/jquery.js');
 		jQuery('.status_folders .toggler').click(function() {
