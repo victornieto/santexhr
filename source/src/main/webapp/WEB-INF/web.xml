@@ -51,7 +51,18 @@
 		<filter-name>openSessionInViewFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
-	
+
+    <!-- DISPLAYTAG RESPONSE OVERRIDE FILTER -->
+
+    <filter>
+        <filter-name>responseOverrideFilter</filter-name>
+        <filter-class>org.displaytag.filter.ResponseOverrideFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>responseOverrideFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
 	<!-- SPRING DISPATCHER -->
 	<servlet>
         <servlet-name>spring</servlet-name>
