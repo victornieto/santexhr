@@ -16,19 +16,19 @@
 			<c:choose>
 			<c:when test="${category eq null}">
 			<option value="<c:url value='addEssayQuestion'/>"
-                    <c:if test="${question.class.simpleName eq 'EssayQuestion'}">selected="selected"</c:if>>Essay</option>
+                    <c:if test="${question['class'].simpleName eq 'EssayQuestion'}">selected="selected"</c:if>>Essay</option>
 			<option value="<c:url value='addCodeQuestion'/>"
-                    <c:if test="${question.class.simpleName eq 'CodeQuestion'}">selected="selected"</c:if>>Code</option>
+                    <c:if test="${question['class'].simpleName eq 'CodeQuestion'}">selected="selected"</c:if>>Code</option>
 			<option value="<c:url value='addMultipleChoiceQuestion'/>"
-                    <c:if test="${question.class.simpleName eq 'MultipleChoiceQuestion'}">selected="selected"</c:if>>Multiple Choice</option>
+                    <c:if test="${question['class'].simpleName eq 'MultipleChoiceQuestion'}">selected="selected"</c:if>>Multiple Choice</option>
 			</c:when>
 			<c:otherwise>
 			<option value="<c:url value='addEssayQuestion?c=${category.id}'/>"
-                    <c:if test="${question.class.simpleName eq 'EssayQuestion'}">selected="selected"</c:if>>Essay</option>
+                    <c:if test="${question['class'].simpleName eq 'EssayQuestion'}">selected="selected"</c:if>>Essay</option>
 			<option value="<c:url value='addCodeQuestion?c=${category.id}'/>"
-                    <c:if test="${question.class.simpleName eq 'CodeQuestion'}">selected="selected"</c:if>>Code</option>
+                    <c:if test="${question['class'].simpleName eq 'CodeQuestion'}">selected="selected"</c:if>>Code</option>
 			<option value="<c:url value='addMultipleChoiceQuestion?c=${category.id}'/>"
-                    <c:if test="${question.class.simpleName eq 'MultipleChoiceQuestion'}">selected="selected"</c:if>>Multiple Choice</option>
+                    <c:if test="${question['class'].simpleName eq 'MultipleChoiceQuestion'}">selected="selected"</c:if>>Multiple Choice</option>
 			</c:otherwise>
 			</c:choose>
 		</select>
