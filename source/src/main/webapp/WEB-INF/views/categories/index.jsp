@@ -66,7 +66,7 @@
 						<c:out value="${tt:abbreviate(q.name)}"/>								
 					</a>
 				</td>
-				<td><c:out value="${q.class.simpleName}" /></td>
+				<td><c:out value="${q['class'].simpleName}" /></td>
                 <td><a id="delQ_${q.artifactId}">
                     <img src="<c:url value="/img/delete.png" />" style="width: 16px; height: 16px" alt="Delete" />
                 </a></td>
