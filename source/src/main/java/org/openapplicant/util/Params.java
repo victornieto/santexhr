@@ -10,7 +10,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  */
 public class Params {
 	
-	private Map<String, Object> map = new HashMap<String, Object>();
+	private final Map<String, Object> map = new HashMap<String, Object>();
 	
 	public Params() {}
 	

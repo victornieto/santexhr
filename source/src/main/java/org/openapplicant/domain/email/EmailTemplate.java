@@ -1,19 +1,12 @@
 package org.openapplicant.domain.email;
 
-import java.util.List;
-
-import javax.persistence.Column;
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.Entity;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.Transient;
-
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.validator.Email;
 import org.openapplicant.domain.DomainObject;
-import org.springframework.mail.MailMessage;
 import org.springframework.mail.SimpleMailMessage;
+
+import javax.persistence.*;
+import java.util.List;
 
 
 @Entity
@@ -109,7 +102,7 @@ public abstract class EmailTemplate extends DomainObject {
 	 * @param to the to address
 	 * @param body the template's body
 	 */
-	protected SimpleMailMessage createMailMessage(String to, String body) {
+    SimpleMailMessage createMailMessage(String to, String body) {
 		SimpleMailMessage message = new SimpleMailMessage();
 		message.setTo(to);
 		if(StringUtils.isBlank(fromAddress)) {

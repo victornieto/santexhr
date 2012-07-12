@@ -104,14 +104,12 @@ public class ExamDefinitionController extends AdminController {
         }
 
         errors = null;
-        int i = 0;
         for (CategoryPercentage categoryPercentage : cmd.getCategoriesPercentage()) {
             if (errors == null) {
-                errors = populateErrorsCategoryPercentage(model, categoryPercentage, i);
+                errors = populateErrorsCategoryPercentage(model, categoryPercentage);
             } else {
-                errors.addAllErrors(populateErrorsCategoryPercentage(model, categoryPercentage, i));
+                errors.addAllErrors(populateErrorsCategoryPercentage(model, categoryPercentage));
             }
-            i++;
         }
 
         if (hierarchyCategoryError) {
@@ -128,7 +126,7 @@ public class ExamDefinitionController extends AdminController {
                     categoryErrorMapValue);
         }
 
-        if(examDefinitionErrors || duplicatedCategoryError || hierarchyCategoryError || errors.hasErrors()) {
+        if(examDefinitionErrors || duplicatedCategoryError || hierarchyCategoryError || (errors != null && errors.hasErrors())) {
             model.put("categories", getAdminService().findAllCategoriesByCompany(currentUser().getCompany(), Pagination.oneBased().forPage(1)));
             return "examDefinition/view";
         }
@@ -192,7 +190,7 @@ public class ExamDefinitionController extends AdminController {
         return "examDefinition/view";
     }
 	
-	private Errors populateErrorsCategoryPercentage(Map<String, Object> model, CategoryPercentage categoryPercentage, Integer index) {
+	private Errors populateErrorsCategoryPercentage(Map<String, Object> model, CategoryPercentage categoryPercentage) {
 		Errors errors = categoryPercentage.validate();
         HashMap<String, HashMap<String, String>> map = (HashMap<String, HashMap<String, String>>) model.get("categoriesPercentageError");
         HashMap<String, String> value;

@@ -13,15 +13,15 @@ import java.io.IOException;
  */
 class Attachment {
 	
-	private String fileName;
+	private final String fileName;
 	
-	private byte[] content;
+	private final byte[] content;
 	
 	public Attachment(Part part) throws IOException, MessagingException {
 		this(IOUtils.toByteArray(part.getInputStream()), part.getFileName());
 	}
 	
-	public Attachment(byte[] content, String fileName) {
+	private Attachment(byte[] content, String fileName) {
 		this.fileName = StringUtils.trimToEmpty(fileName);
 		if(ArrayUtils.isEmpty(content)) {
 			this.content = ArrayUtils.EMPTY_BYTE_ARRAY;

@@ -41,20 +41,18 @@ public class FileUploadController extends AdminController {
 	        	/* Fill in empty candidate fields from extracted resume info. */
 	        	Candidate extractedCandidate = facilitatorService.extractCandidate(resume.getStringContent());
 	          	Candidate existingCandidate = getAdminService().findCandidateById(candidateId);
-	     
-	          	Company company = currentUser().getCompany();
 	          	
 	          	//existingCandidate.setScreeningScore(profile.screenResume(resume.getStringContent()));
 	          	if ((existingCandidate.getEmail() == null) || existingCandidate.getEmail().equals("")) {
 	          		existingCandidate.setEmail(extractedCandidate.getEmail());
 	          	}
-	          	if (existingCandidate.getCellPhoneNumber() == null || existingCandidate.getCellPhoneNumber().equals("")) {
+	          	if (existingCandidate.getCellPhoneNumber() == null || existingCandidate.getCellPhoneNumber().equals(PhoneNumber.createEmptyPhoneNumber())) {
 	          		existingCandidate.setCellPhoneNumber(extractedCandidate.getCellPhoneNumber());
 	          	}
-	          	if (existingCandidate.getHomePhoneNumber() == null || existingCandidate.getHomePhoneNumber().equals("")) {
+	          	if (existingCandidate.getHomePhoneNumber() == null || existingCandidate.getHomePhoneNumber().equals(PhoneNumber.createEmptyPhoneNumber())) {
 	          		existingCandidate.setHomePhoneNumber(extractedCandidate.getHomePhoneNumber());
 	          	}
-	          	if (existingCandidate.getWorkPhoneNumber() == null || existingCandidate.getWorkPhoneNumber().equals("")) {
+	          	if (existingCandidate.getWorkPhoneNumber() == null || existingCandidate.getWorkPhoneNumber().equals(PhoneNumber.createEmptyPhoneNumber())) {
 	          		existingCandidate.setWorkPhoneNumber(extractedCandidate.getWorkPhoneNumber());
 	          	}
 	          	if (existingCandidate.getAddress() == null || existingCandidate.getAddress().equals("")) {

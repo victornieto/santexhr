@@ -180,6 +180,6 @@ public class QuizService extends ApplicationService {
 		Sitting sitting = getSittingDao().find(sittingId);
 		sitting.assignResponse(questionId, response);
 		getSittingDao().save(sitting);
-		return response = getResponseDao().save(response);
+		return getResponseDao().save(response);
 	}
 }

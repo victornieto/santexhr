@@ -253,11 +253,7 @@ public class DefaultCandidateWorkFlowEventVisitorTag  extends TagSupport
 	}
 	
 	private String linkToSitting(Sitting sitting, String innerHtml) {
-		return new StringBuilder()
-					.append("<a href='").append(getContextPath()).append("/admin/results/exam?s=").append(sitting.getId()).append("'>")
-						.append(innerHtml)
-					.append("</a>")
-					.toString();
+		return "<a href='" + getContextPath() + "/admin/results/exam?s=" + sitting.getId() + "'>" + innerHtml + "</a>";
 	}
 	
 	private String linkToExamPortal(ExamLink examLink) {
@@ -265,19 +261,11 @@ public class DefaultCandidateWorkFlowEventVisitorTag  extends TagSupport
 	}
 	
 	private String linkToExamPortal(ExamLink examLink, String innerHtml) {
-		return new StringBuilder()
-						.append("<a href='").append(examLink.getUrl()).append("'>")
-							.append(innerHtml)
-						.append("</a>")
-						.toString();
+		return "<a href='" + examLink.getUrl() + "'>" + innerHtml + "</a>";
 	}
 	
 	private String img(String file) {
-		return new StringBuilder()
-			.append("<img src='")
-				.append(getContextPath()).append("/img/history/").append(file)
-			.append("'/>")
-			.toString();
+		return "<img src='" + getContextPath() + "/img/history/" + file + "'/>";
 	}
 	
 	private String getContextPath() {

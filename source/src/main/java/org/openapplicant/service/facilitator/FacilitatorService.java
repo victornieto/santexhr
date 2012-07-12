@@ -41,7 +41,7 @@ import java.util.regex.Pattern;
 @Transactional
 public class FacilitatorService extends ApplicationService {
 
-	private static Log log = LogFactory.getLog(FacilitatorService.class);
+	private static final Log log = LogFactory.getLog(FacilitatorService.class);
 	
 	public void facilitateCandidate(Message mailMessage) throws IOException, MessagingException {
 		MessageReader reader = new MessageReader(mailMessage);

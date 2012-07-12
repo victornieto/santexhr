@@ -23,7 +23,7 @@ public class Response extends DomainObject {
 	private String focusEvents = "";
 	private String pasteEvents = "";
 	
-	private ResponseMeasurements measurements = new ResponseMeasurements();
+	private final ResponseMeasurements measurements = new ResponseMeasurements();
 	
 	/**
 	 * Tracking cut and copy events is misleading because we can't record

@@ -7,6 +7,7 @@ import java.util.Map;
 import org.openapplicant.domain.Candidate;
 import org.openapplicant.domain.PropertyCandidateSearch;
 import org.openapplicant.domain.SimpleStringCandidateSearch;
+import org.openapplicant.domain.User;
 import org.openapplicant.util.Pagination;
 import org.springframework.dao.DataRetrievalFailureException;
 
@@ -102,4 +103,11 @@ public interface ICandidateDAO extends IDomainObjectDAO<Candidate> {
 	 * 
 	 */
 	Map<String, Integer> findStatusCountsByCompanyId(Long companyId);
+
+    /**
+     * Finds all candidates registered by the given user
+     * @param user the user for which his candidates must be found
+     * @return a list of candidates registered by the specified user
+     */
+    List<Candidate> findByUser(User user);
 }

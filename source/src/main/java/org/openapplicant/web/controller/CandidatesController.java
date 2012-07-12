@@ -8,6 +8,7 @@ import org.openapplicant.domain.Note;
 import org.openapplicant.domain.event.CandidateWorkFlowEvent;
 import org.openapplicant.domain.link.CandidateExamLink;
 import org.openapplicant.util.Pagination;
+import org.openapplicant.web.view.CandidateNoteView;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -353,6 +354,41 @@ public class CandidatesController extends AdminController {
             return redirectToDetail(candidate.getId());
 		}
 	}
+
+    @RequestMapping(method = GET)
+    public String notes(Map<String, Object> model,
+                        @RequestParam(required = false, value = "s") String filter,
+                        @RequestParam(required = false, value = "candidate") Long candidateId) {
+        List<Candidate> candidates;
+        List<CandidateNoteView> candidatesNotes = new ArrayList<CandidateNoteView>();
+        if (candidateId != null && candidateId > 0) {
+            candidates = new ArrayList<Candidate>();
+            candidates.add(getAdminService().findCandidateById(candidateId));
+        } else {
+            if (StringUtils.isNotBlank(filter)) {
+                final CandidateSearch candidateSearch = getAdminService().createTextCandidateSearch(currentUser(), filter);
+                candidates = candidateSearch.execute(Pagination.oneBased());
+            } else {
+                candidates = getAdminService().findAllCandidatesByCompany(currentUser().getCompany(), Pagination.oneBased());
+            }
+        }
+        for (Candidate candidate : candidates) {
+            for (Note note : candidate.getNotes()) {
+                candidatesNotes.add(new CandidateNoteView(candidate, note));
+            }
+        }
+        model.put("candidatesNotes", candidatesNotes);
+        model.put("filter", filter);
+        populateModelForIndex(model, null);
+        return "candidates/notes";
+    }
+
+    @RequestMapping(method = GET, value = "candidates/my_candidates")
+    public String showUserCandidates(Map<String, Object> model) {
+        populateModelForIndex(model, getAdminService().findAllCandidatesByUser(currentUser()));
+        model.put("candidatesSidebar", true);
+        return "candidates/my_candidates";
+    }
 	
 	private void populateModelForDetail(Map<String,Object> model, Candidate candidate) {
 		List<CandidateWorkFlowEvent> events = 

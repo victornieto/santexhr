@@ -1,34 +1,29 @@
 package org.openapplicant.dao.hibernate;
 
-import static org.hibernate.criterion.Restrictions.between;
-import static org.hibernate.criterion.Restrictions.eq;
-import static org.hibernate.criterion.Restrictions.ilike;
-import static org.hibernate.criterion.Restrictions.in;
-
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.hibernate.Hibernate;
-import org.hibernate.SQLQuery;
-import org.hibernate.Session;
+import org.hibernate.*;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Disjunction;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 import org.openapplicant.dao.ICandidateDAO;
 import org.openapplicant.domain.Candidate;
+import org.openapplicant.domain.Candidate.Status;
 import org.openapplicant.domain.PropertyCandidateSearch;
 import org.openapplicant.domain.SimpleStringCandidateSearch;
-import org.openapplicant.domain.Candidate.Status;
+import org.openapplicant.domain.User;
+import org.openapplicant.domain.event.CandidateCreatedByUserEvent;
 import org.openapplicant.util.Pagination;
 import org.openapplicant.util.Params;
 import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.stereotype.Repository;
+
+import java.sql.SQLException;
+import java.util.*;
+
+import static org.hibernate.criterion.Restrictions.*;
 
 
 @Repository
@@ -223,6 +218,21 @@ public class CandidateDAO extends DomainObjectDAO<Candidate> implements ICandida
 		}
 		return returnValue;
 	}
-	
-	
+
+    public List<Candidate> findByUser(final User user) {
+        return (List<Candidate>) getHibernateTemplate().executeFind(new HibernateCallback() {
+            public Object doInHibernate(Session session) throws HibernateException, SQLException {
+                List<CandidateCreatedByUserEvent> events = session.createCriteria(CandidateCreatedByUserEvent.class)
+                        .add(Restrictions.eq("user", user))
+                        .list();
+                List<Candidate> candidates = new ArrayList<Candidate>();
+                for (CandidateCreatedByUserEvent event : events) {
+                    candidates.add(event.getCandidate());
+                }
+                return candidates;
+            }
+        });
+    }
+
+
 }

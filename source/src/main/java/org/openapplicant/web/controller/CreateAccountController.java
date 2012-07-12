@@ -1,5 +1,6 @@
 package org.openapplicant.web.controller;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openapplicant.domain.AccountCreationToken;
@@ -21,7 +22,7 @@ import java.util.Map;
 @Controller
 public class CreateAccountController extends AdminController {
 	
-	private static Log logger = LogFactory.getLog(CreateAccountController.class);
+	private static final Log logger = LogFactory.getLog(CreateAccountController.class);
 	
 	@RequestMapping(method=RequestMethod.GET)
 	public String index() {
@@ -88,7 +89,7 @@ public class CreateAccountController extends AdminController {
 		
 		User user;
 		logger.info("User to add is "+user1email);
-		if (user1email != "") {
+		if (!StringUtils.isBlank(user1email)) {
 			logger.info("Adding first user.");
 			user = new User();
 			user.setEmail(user1email);
@@ -111,7 +112,7 @@ public class CreateAccountController extends AdminController {
 			}
 			getAdminService().saveUser(user);
 		}
-		if (user2email != "") {
+		if (!StringUtils.isBlank(user2email)) {
 			logger.info("Adding second user.");
 			user = new User();
 			user.setEmail(user2email);
@@ -129,7 +130,7 @@ public class CreateAccountController extends AdminController {
 				user.setRole(Role.ROLE_HR);
 			getAdminService().saveUser(user);
 		}
-		if (user3email != "") {
+		if (!StringUtils.isBlank(user3email)) {
 			logger.info("Adding third user");
 			user = new User();
 			user.setEmail(user3email);
@@ -193,8 +194,7 @@ public class CreateAccountController extends AdminController {
 			@RequestParam("city") String city,
 			@RequestParam("state") String state,
 			@RequestParam("zip") String zip,
-			@RequestParam("sourcepage") String sourcePage,
-			Map<String, Object> model) {
+			@RequestParam("sourcepage") String sourcePage) {
 
 	
 		//getSession().beManual();
