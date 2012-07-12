@@ -72,10 +72,11 @@
 		<sec:intercept-url pattern="/admin/screening/**" access="ROLE_ADMIN, ROLE_SETTINGS"/>
 		<sec:intercept-url pattern="/admin/categories/**" access="ROLE_ADMIN, ROLE_SETTINGS, ROLE_GRADER"/>
 		<sec:intercept-url pattern="/admin/category/**" access="ROLE_ADMIN, ROLE_SETTINGS, ROLE_GRADER"/>
-		<sec:intercept-url pattern="/admin/candidates/**" access="ROLE_ADMIN, ROLE_HR, ROLE_GRADER"/>
+		<sec:intercept-url pattern="/admin/candidates/notes**" access="ROLE_ADMIN, ROLE_HR_MANAGER"/>
+		<sec:intercept-url pattern="/admin/candidates/**" access="ROLE_ADMIN, ROLE_HR, ROLE_GRADER, ROLE_HR_MANAGER"/>
 		<sec:intercept-url pattern="/admin/candidate/**" access="ROLE_ADMIN, ROLE_HR"/>
 		<sec:intercept-url pattern="/admin/results/**" access="ROLE_ADMIN, ROLE_GRADER"/>
-		<sec:intercept-url pattern="/**" access="ROLE_ADMIN, ROLE_HR, ROLE_GRADER, ROLE_SETTINGS"/>
+		<sec:intercept-url pattern="/**" access="ROLE_ADMIN, ROLE_HR, ROLE_GRADER, ROLE_SETTINGS, ROLE_HR_MANAGER"/>
 		
 		<sec:logout/>
 	</sec:http>
