@@ -5,6 +5,8 @@
 <%@ taglib uri="/WEB-INF/tlds/ttTagLibrary.tld" prefix="tt" %>
 <%@ taglib prefix="display" uri="http://displaytag.sf.net/el" %>
 <%@ page import="static org.openapplicant.domain.User.Role.ROLE_HR" %>
+<%@ page import="static org.openapplicant.domain.User.Role.ROLE_ADMIN" %>
+<%@ page import="static org.openapplicant.domain.User.Role.ROLE_HR_MANAGER" %>
 <style type="text/css">
 	 @import "<c:url value='/css/layout/candidate_list.css'/>";
 </style>
@@ -252,10 +254,12 @@
                 </ul>
             </div>
         </display:column>
+        <security:authorize ifAnyGranted="<%=(ROLE_ADMIN.name() + "," + ROLE_HR_MANAGER.name())%>">
         <display:column media="html" headerClass="icon header" class="icon" title="<img src=\"${pageContext.request.contextPath}/img/table/notes.png\" title=\"Notes\"/>">
             <a href="<c:url value='/admin/candidates/notes?candidate=${c.id}' />">
                 <img src="<c:url value='/img/table/notes.png'/>" title="${tt:abbreviateTo(c.name.first,15)}'s Notes"/>
             </a>
         </display:column>
+        </security:authorize>
     </display:table>
 </div>
