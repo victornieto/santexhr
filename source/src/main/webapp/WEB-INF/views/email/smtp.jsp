@@ -33,17 +33,17 @@
 				<form:errors path="pass" cssClass="error"/>
 			</div>
 		</li>
-		<li>
-			<label>Default config:</label>
-			<div>
-				<label>
-					<input type="radio" name="status" checked="checked"/> Yes
-				</label>
-				<label>
-					<input type="radio" name="status" disabled="disabled"/> No
-				</label>
-			</div>
-		</li>
+<!-- 		<li> -->
+<!-- 			<label>Default config:</label> -->
+<!-- 			<div> -->
+<!-- 				<label> -->
+<!-- 					<input type="radio" name="status" checked="checked"/> Yes -->
+<!-- 				</label> -->
+<!-- 				<label> -->
+<!-- 					<input type="radio" name="status" /> No -->
+<!-- 				</label> -->
+<!-- 			</div> -->
+<!-- 		</li> -->
 		<li class="actions">
 			<input type="submit" value="save"/>
 		</li>
