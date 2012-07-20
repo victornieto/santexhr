@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
 	xmlns:aop="http://www.springframework.org/schema/aop"
 	xmlns:tx="http://www.springframework.org/schema/tx"
 	xmlns:context="http://www.springframework.org/schema/context"
@@ -34,6 +35,10 @@
 	        <value>classpath:/application.properties</value>
 	    </property>
 	</bean>
+	
+	<bean id="messageSource"
+		class="org.springframework.context.support.ResourceBundleMessageSource"
+		p:basename="messages" />
 
 	<!--
 	==========================================================================
@@ -75,7 +80,9 @@
 		<sec:intercept-url pattern="/admin/candidates/notes**" access="ROLE_ADMIN, ROLE_HR_MANAGER"/>
 		<sec:intercept-url pattern="/admin/candidates/**" access="ROLE_ADMIN, ROLE_HR, ROLE_GRADER, ROLE_HR_MANAGER"/>
 		<sec:intercept-url pattern="/admin/candidate/**" access="ROLE_ADMIN, ROLE_HR"/>
+        <sec:intercept-url pattern="/admin/jobPositions/**" access="ROLE_ADMIN, ROLE_HR, ROLE_GRADER"/>
 		<sec:intercept-url pattern="/admin/results/**" access="ROLE_ADMIN, ROLE_GRADER"/>
+		<sec:intercept-url pattern="/admin/reports/**" access="ROLE_ADMIN, ROLE_HR_MANAGER"/>
 		<sec:intercept-url pattern="/**" access="ROLE_ADMIN, ROLE_HR, ROLE_GRADER, ROLE_SETTINGS, ROLE_HR_MANAGER"/>
 		
 		<sec:logout/>
@@ -202,6 +209,12 @@
 		
 	<bean id="accountCreationTokenDao" class="org.openapplicant.dao.hibernate.AccountCreationTokenDAO"
 		parent="domainObjectDao"/>
+
+    <bean id="jobPositionDao" class="org.openapplicant.dao.hibernate.JobPositionDAO"
+          parent="domainObjectDao"/>
+
+    <bean id="jobOpeningDao" class="org.openapplicant.dao.hibernate.JobOpeningDAO"
+          parent="domainObjectDao"/>
 	
 	<bean id="profileDao" class="org.openapplicant.dao.hibernate.ProfileDAO"
 		parent="domainObjectDao"/>
@@ -248,6 +261,8 @@
 		<property name="sittingDao" ref="sittingDao"/>
 		<property name="userDao" ref="userDao"/>
 		<property name="accountCreationTokenDao" ref="accountCreationTokenDao"/>
+        <property name="jobPositionDao" ref="jobPositionDao"/>
+        <property name="jobOpeningDao" ref="jobOpeningDao"/>
         <property name="taskExecutor" ref="asyncTaskExecutor" />
 	</bean>
 

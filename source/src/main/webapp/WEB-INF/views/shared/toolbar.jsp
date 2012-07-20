@@ -3,6 +3,7 @@
 <%@ page import="static org.openapplicant.domain.User.Role.ROLE_ADMIN" %>
 <%@ page import="static org.openapplicant.domain.User.Role.ROLE_SETTINGS" %>
 <%@ page import="static org.openapplicant.domain.User.Role.ROLE_HR" %>
+<%@ page import="static org.openapplicant.domain.User.Role.ROLE_HR_MANAGER" %>
 
 <div id="toolbar">
 	<security:authorize ifNotGranted="<%=ROLE_SETTINGS.name()%>">
@@ -11,7 +12,7 @@
 			<a href="<c:url value='/admin/candidates/index'/>">
 				<img src="<c:url value='/img/candidates_list.png'/>"/>
 			</a>
-			<security:authorize ifAnyGranted="<%=ROLE_ADMIN.name() + \",\" + ROLE_HR.name() %>">
+			<security:authorize ifAnyGranted="<%=ROLE_ADMIN.name() + \",\" + ROLE_HR.name() + \",\" + ROLE_HR_MANAGER.name()%>">
 			<a href="<c:url value='/admin/candidates/create'/>">
 				<img src="<c:url value='/img/candidates_new.png'/>"/>
 			</a>
@@ -20,7 +21,7 @@
 		<div class="label">Candidates</div>
 	</div>
 	</security:authorize>
-	<security:authorize ifNotGranted="<%=ROLE_HR.name()%>">
+	<security:authorize ifNotGranted="<%=ROLE_HR.name() + \",\" + ROLE_HR_MANAGER.name()%>">
 	<div class="toolbar_item">
 		<div>
 			<a href="<c:url value='/admin/settings/index'/>">
@@ -28,6 +29,16 @@
 			</a>
 		</div>
 		<div class="label">Settings</div>
+	</div>
+	</security:authorize>
+	<security:authorize ifAnyGranted="<%=ROLE_HR_MANAGER.name()%>">
+	<div class="toolbar_item">
+		<div>
+			<a href="<c:url value='/admin/reports/index'/>">
+				<img src="<c:url value='/img/reports.png'/>"/>
+			</a>
+		</div>
+		<div class="label">Reports</div>
 	</div>
 	</security:authorize>
 	<div class="toolbar_item">

@@ -1,28 +1,19 @@
 package org.openapplicant.domain;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Transient;
-
 import org.apache.commons.collections.FactoryUtils;
 import org.apache.commons.collections.list.LazyList;
-import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.*;
 import org.hibernate.validator.Max;
 import org.hibernate.validator.Min;
 import org.hibernate.validator.NotEmpty;
 import org.hibernate.validator.NotNull;
 import org.openapplicant.policy.NeverCall;
 import org.springframework.util.Assert;
+
+import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import java.util.*;
 
 @Entity
 public class ExamDefinition extends DomainObject {
@@ -36,6 +27,7 @@ public class ExamDefinition extends DomainObject {
 	private String name = "";
 	private boolean active = false;
 	private Integer numberOfQuestionsWanted = 1;
+    private JobPosition jobPosition;
 	
 	@Transient
 	public boolean isComplete() {
@@ -181,8 +173,17 @@ public class ExamDefinition extends DomainObject {
 	public void setNumberOfQuestionsWanted(Integer numberOfQuestionsWanted) {
 		this.numberOfQuestionsWanted = numberOfQuestionsWanted;
 	}
-	
-	/**
+
+    @ManyToOne
+    public JobPosition getJobPosition() {
+        return jobPosition;
+    }
+
+    public void setJobPosition(JobPosition jobPosition) {
+        this.jobPosition = jobPosition;
+    }
+
+    /**
 	 * Adds a categoryPercentage to this exam definition.
 	 * @param categoryPercentage categoryPercentages to add.
 	 */

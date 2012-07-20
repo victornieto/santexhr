@@ -1,30 +1,17 @@
 package org.openapplicant.domain;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import javax.persistence.Transient;
-
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
-import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CollectionOfElements;
 import org.hibernate.annotations.IndexColumn;
 import org.hibernate.validator.NotEmpty;
 import org.hibernate.validator.NotNull;
 import org.openapplicant.domain.question.Question;
 import org.openapplicant.policy.NeverCall;
 import org.springframework.util.Assert;
+
+import javax.persistence.*;
+import java.util.*;
 
 
 @Entity
@@ -39,6 +26,8 @@ public class Exam extends DomainObject {
 	private List<Question> questions = new ArrayList<Question>();
 	
 	private String artifactId = UUID.randomUUID().toString();
+
+    private JobPosition jobPosition;
 
 	/**
 	 * @return the artifactId of this exam.
@@ -173,4 +162,13 @@ public class Exam extends DomainObject {
 		}
 		questions = value;
 	}
+
+    @ManyToOne
+    public JobPosition getJobPosition() {
+        return jobPosition;
+    }
+
+    public void setJobPosition(JobPosition jobPosition) {
+        this.jobPosition = jobPosition;
+    }
 }

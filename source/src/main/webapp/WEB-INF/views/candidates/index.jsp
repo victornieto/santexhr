@@ -18,46 +18,6 @@
 	
 	$('#content').ready(function() {
 		oltk.include('jquery/ui/ui.datepicker.js');
-		/*oltk.include('openapplicant/admin/helper/jquery.tablesorter.min.js');
-		/*
-		$.tablesorter.addParser({ 
-			id: 'lastName',
-			is: function(s) {
-	            
-	            return false;
-	        },
-	        format: function(s) {
-	            return $(s).find("strong").text().toLowerCase();
-	        },
-	        
-	        type: 'text'
-	    });
-
-		$.tablesorter.addParser({
-	        id: 'score',
-	        is: function(s) {
-	            return false;
-	        },
-	        format: function(s) {
-	            return s.replace(/\u2014/, -1);
-	        }, 
-	        type: 'numericHack'
-	    });
-
-		if( $("#openapplicant_candidate_list tr").length > 1) {
-			$("#openapplicant_candidate_list").tablesorter({
-				sortList: [[1,0]],
-				widgets: ['zebra'], //alternating row styles
-				headers: {
-					0: {sorter:'lastName'},
-					2: {sorter:'score'},
-					3: {sorter:'score'},
-					4: {sorter:'score'},
-					11: {sorter: false }
-				}
-			});
-		}
-		*/
 		
 
 		/* TODO: JQuery UI's datepicker has a DST bug in JQuery UI 1.5.2.  The bug 
@@ -72,8 +32,7 @@
 			ajaxSettings: {
 				type: 'POST'
 			}
-		})
-		/*.click(function(){return true;})*/;
+		});
 	
 		$('.tooltip').each( function() {
 			var activation = $(this).hasClass('hover') ? 'hover' : 'click';
@@ -227,12 +186,14 @@
             </c:if>
         </display:column>
         </security:authorize>
-        <display:column media="html" headerClass="icon header" class="icon" title="<img src=\"${pageContext.request.contextPath}/img/table/packet.gif\" title=\"Sort by Printable Packet\"/>" sortable="true">
-            <a href="<c:url value='/admin/report.pdf?candidate=${c.id}' />">
-                <img src="<c:url value='/img/table/packet.gif'/>" title="${tt:abbreviateTo(c.name.first,15)}'s Packet"/>
-            </a>
-        </display:column>
-        <display:column media="html" headerClass="icon header" class="icon" title="<img src=\"${pageContext.request.contextPath}/img/table/archive.gif\" title=\"Sort by Archive\"/>" sortable="true">
+        <security:authorize ifAnyGranted="<%=ROLE_HR_MANAGER.name() + \",\" + ROLE_HR.name() %>">
+	        <display:column media="html" headerClass="icon header" class="icon" title="<img src=\"${pageContext.request.contextPath}/img/table/packet.gif\" title=\"Sort by Printable Packet\"/>">
+	            <a href="<c:url value='/admin/report.pdf?candidate=${c.id}' />">
+	                <img src="<c:url value='/img/table/packet.gif'/>" title="${tt:abbreviateTo(c.name.first,15)}'s Packet"/>
+	            </a>
+	        </display:column>
+        </security:authorize>
+        <display:column media="html" headerClass="icon header" class="icon" title="<img src=\"${pageContext.request.contextPath}/img/table/archive.gif\" title=\"Sort by Archive\"/>">
             <a class="tooltip" rel="#tooltip_${c.id }" title="Move to">
                 <img src="<c:url value='/img/table/archive.gif'/>"/>
             </a>
@@ -258,7 +219,7 @@
             </div>
         </display:column>
         <security:authorize ifAnyGranted="<%=(ROLE_ADMIN.name() + \",\" + ROLE_HR_MANAGER.name())%>">
-        <display:column media="html" headerClass="icon header" class="icon" title="<img src=\"${pageContext.request.contextPath}/img/table/notes.png\" title=\"Notes\"/>" sortable="true">
+        <display:column media="html" headerClass="icon header" class="icon" title="<img src=\"${pageContext.request.contextPath}/img/table/notes.png\" title=\"Notes\"/>">
             <a href="<c:url value='/admin/candidates/notes?candidate=${c.id}' />">
                 <img src="<c:url value='/img/table/notes.png'/>" title="${tt:abbreviateTo(c.name.first,15)}'s Notes"/>
             </a>

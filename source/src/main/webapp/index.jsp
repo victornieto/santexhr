@@ -4,7 +4,7 @@
 <html>
 <head>
 	<meta http-equiv="Refresh" content="0; URL=<c:url value='/admin/candidates/index'/>">
-	<title>Santex America HR | Admin</title>
+	<title>Santex America HR | Adminnnn</title>
 </head>
 <body>
 </body>

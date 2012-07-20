@@ -104,7 +104,12 @@
 		    		<artifactId>spring-jdbc</artifactId>
 		    	</exclusion>
 		    </exclusions>
-		</dependency> 
+		</dependency>
+        <dependency>
+            <groupId>org.springframework.webflow</groupId>
+            <artifactId>spring-js</artifactId>
+            <version>${spring.webflow.version}</version>
+        </dependency>
 		<dependency>
 		    <groupId>org.apache.tiles</groupId>
 		    <artifactId>tiles-core</artifactId>
@@ -544,6 +549,7 @@
 		<project.build.sourceEncoding>ISO-8859-1</project.build.sourceEncoding>
 		<!-- dependency versions -->
 		<spring.version>2.5.5</spring.version>
+        <spring.webflow.version>2.0.9.RELEASE</spring.webflow.version>
 		<spring.security.version>2.0.4</spring.security.version>
 		<tiles.version>2.1.0</tiles.version>
 		<aspectj.version>1.6.0</aspectj.version>

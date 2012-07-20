@@ -28,6 +28,12 @@
 				</a>
 				<tiles:insertAttribute name="examDefinitions"/>
 			</li>
+            <li class="exam ${jobPositionsSidebar?'selected':''}">
+                <a href="<c:url value='/admin/jobPositions/index' />">
+                    Job Positions
+                </a>
+                <tiles:insertAttribute name="jobPosition"/>
+            </li>
 			<security:authorize ifAnyGranted="<%=ROLE_ADMIN.name() + \",\" + ROLE_SETTINGS.name()%>">
 				<li class="email ${emailSidebar?'selected':''}">
 					<a href="<c:url value='/admin/email/index' />">

@@ -2,6 +2,12 @@
 <%@ taglib prefix="tt" uri="/WEB-INF/tlds/ttTagLibrary.tld"%>
 
 <div class="group">
+    <h3>
+        <img src="<c:url value='/img/sidebar/candidate.gif' />" />
+        <a href="<c:url value='/admin/jobOpenings/all' />">Job Openings</a>
+    </h3>
+</div>
+<div class="group">
 	<h3>
 		<img src="<c:url value='/img/sidebar/candidate.gif' />" />
 		<a href="<c:url value='all' />">Candidates</a>

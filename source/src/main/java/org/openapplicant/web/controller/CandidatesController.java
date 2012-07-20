@@ -35,7 +35,7 @@ public class CandidatesController extends AdminController {
 	private static final String INDEX_VIEW = "candidates/index";
 	
 	private static final String DETAIL_VIEW = "candidates/detail";
-	
+
 	@RequestMapping(method=GET)
 	public String index(Map<String,Object> model) {
 		return "redirect:active";

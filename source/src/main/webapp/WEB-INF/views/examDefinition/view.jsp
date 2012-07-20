@@ -63,6 +63,12 @@
 					<form:errors cssClass="error" path="numberOfQuestionsWanted"/>
 				</div>
 			</li>
+            <li>
+                <label>Job Position:</label>
+                <div>
+                    <form:select path="jobPosition" items="${jobPositions}" itemLabel="title" />
+                </div>
+            </li>
 		</ul>
         <a id="addCP" style="float: right; margin-top: 0.35em; margin-bottom: 0.35em;">
             <img src="<c:url value="/img/add.png"/>" alt="Add" style="width: 16px; height: 16px;"/>

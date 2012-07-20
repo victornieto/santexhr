@@ -23,6 +23,13 @@
 				<h2>Exam Definitions:</h2>
 				<p>Edit existing exam definitions and create new ones to make available for exams generation.</p>
 			</li>
+            <li>
+                <a href="<c:url value='/admin/jobPositions/index' />">
+                    <img src="<c:url value='/img/settings/exams.jpg' />" />
+                </a>
+                <h2>Job Positions:</h2>
+                <p>Edit existing Job Positions.</p>
+            </li>
 			<security:authorize ifAnyGranted="<%=ROLE_ADMIN.name() + \",\" + ROLE_SETTINGS.name()%>">
 			<li>
 				<a href="<c:url value='/admin/email/index' />">

@@ -937,13 +937,14 @@ public class AdminService extends ApplicationService {
 	@Transactional(isolation=Isolation.SERIALIZABLE)
 	public void updateExamDefinitionInfo(String examDefinitionArtifactId, String name,
 			String genre, String description, Integer numberOfQuestionsWanted, boolean isActive,
-            List<CategoryPercentage> categoriesPercentage) {
+            List<CategoryPercentage> categoriesPercentage, JobPosition jobPosition) {
 		ExamDefinition examDefinition = findExamDefinitionByArtifactId(examDefinitionArtifactId);
 		examDefinition.setName(name);
 		examDefinition.setGenre(genre);
 		examDefinition.setDescription(description);
 		examDefinition.setNumberOfQuestionsWanted(numberOfQuestionsWanted);
 		examDefinition.setActive(isActive);
+        examDefinition.setJobPosition(jobPosition);
         // Delete not present categories percentage
         List<CategoryPercentage> currentCategoriesPercentage = examDefinition.getCategoriesPercentage();
         for (int i = 0; i < currentCategoriesPercentage.size(); i++) {
@@ -1191,5 +1192,126 @@ public class AdminService extends ApplicationService {
      */
     public List<Candidate> findAllCandidatesByUser(User user) {
         return getCandidateDao().findByUser(user);
+    }
+
+    /**
+     * Finds all jobs positions for the given company
+     * @param company
+     * @return
+     */
+    public Collection<JobPosition> findJobPositionsByCompany(Company company) {
+        return getJobPositionDao().findAllByCompany(company);
+    }
+
+    /**
+     * Updates a job position info
+     * @param id
+     * @param name
+     */
+    public void updateJobPositionInfo(Long id, String name, Set<Seniority> seniorities) {
+        JobPosition jobPosition = getJobPositionDao().find(id);
+        jobPosition.setName(name);
+        jobPosition.setSeniorities(seniorities);
+        getJobPositionDao().save(jobPosition);
+    }
+
+    /**
+     * Returns a JobPosition instance given by its id
+     * @param id
+     * @return
+     */
+    public JobPosition findJobPositionById(Long id) {
+        return getJobPositionDao().find(id);
+    }
+
+    /**
+     * Saves a job position
+     * @param jobPosition
+     * @return
+     */
+    public JobPosition saveJobPosition(JobPosition jobPosition) {
+        return getJobPositionDao().save(jobPosition);
+    }
+
+    /**
+     * Deletes a job positions with the given id
+     * @param id
+     */
+    public void deleteJobPositionWithId(Long id) {
+        getJobPositionDao().delete(id);
+    }
+
+    /**
+     * Returns all job openings from the given company
+     * @param company
+     * @return
+     */
+    public List<JobOpening> findAllJobOpeningsByCompany(Company company) {
+        return getJobOpeningDao().findAllByCompany(company);
+    }
+
+    /**
+     * Returns active job openings from the given company
+     * @param company
+     * @return
+     */
+    public List<JobOpening> findActiveJobOpeningsByCompany(Company company) {
+        return getJobOpeningDao().findActiveByCompany(company);
+    }
+
+    /**
+     * Returns archived job openings from the given company
+     * @param company
+     * @return
+     */
+    public List<JobOpening> findArchivedJobOpeningsByCompany(Company company) {
+        return getJobOpeningDao().findArchivedByCompany(company);
+    }
+
+    /**
+     * Returns job openings from the given company with the given status
+     * @param company
+     * @return
+     */
+    public List<JobOpening> findJobOpeningsByCompanyAndStatus(Company company, JobOpening.Status status) {
+        return getJobOpeningDao().findByCompanyAndStatus(company, status);
+    }
+
+    /**
+     * Returns the job opening with the given id
+     * @param jobOpeningId
+     * @return
+     */
+    public JobOpening findJobOpeningById(Long jobOpeningId) {
+        return getJobOpeningDao().find(jobOpeningId);
+    }
+
+    /**
+     * Updates a job opening information
+     * @param id
+     * @param jobPosition
+     * @param finishDate
+     * @param client
+     * @param description
+     * @param applicants
+     */
+    @Transactional(isolation = Isolation.SERIALIZABLE)
+    public void updateJobOpeningInfo(Long id, JobPosition jobPosition, Date finishDate, String client, String description, Set<Candidate> applicants) {
+        JobOpening jobOpening = getJobOpeningDao().find(id);
+        jobOpening.setJobPosition(jobPosition);
+        jobOpening.setFinishDate(finishDate);
+        jobOpening.setClient(client);
+        jobOpening.setDescription(description);
+        jobOpening.setApplicants(applicants);
+        getJobOpeningDao().save(jobOpening);
+    }
+
+    /**
+     * Saves a job opening
+     * @param jobOpening
+     */
+    @Transactional(isolation = Isolation.SERIALIZABLE)
+    public void saveJobOpening(JobOpening jobOpening) {
+        getJobOpeningDao().save(jobOpening);
     }
 }
