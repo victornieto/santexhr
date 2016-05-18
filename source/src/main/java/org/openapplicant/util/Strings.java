@@ -22,14 +22,27 @@ public abstract class Strings extends StringUtils {
 	 * @return the humanized string.
 	 */
 	public static String humanize(String s) {
-		String[] values = trimToEmpty(s).split("_");
-		for(int i=0; i<values.length; i++) {
-			values[i] = values[i].toLowerCase();
-		}
-		if(values.length > 0) {
-			values[0] = capitalize(values[0]);
-		}
-		return join(values, " ");
+        return humanize(s, false);
 	}
 
+    public static String humanize(String s, boolean capitalizeEveryWord) {
+        String[] values = trimToEmpty(s).split("_");
+        for(int i=0; i<values.length; i++) {
+            values[i] = values[i].toLowerCase();
+        }
+        if (capitalizeEveryWord) {
+            for (int i = 0; i < values.length; i++) {
+                values[i] = capitalize(values[i]);
+            }
+        } else {
+            if(values.length > 0) {
+                values[0] = capitalize(values[0]);
+            }
+        }
+        return join(values, " ");
+    }
+
+    public static String dehumanize(String s) {
+        return s.toUpperCase().replace(' ', '_');
+    }
 }

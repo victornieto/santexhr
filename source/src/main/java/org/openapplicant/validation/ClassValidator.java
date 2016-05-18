@@ -1,6 +1,20 @@
 //$Id$
 package org.openapplicant.validation;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.hibernate.AssertionFailure;
+import org.hibernate.Hibernate;
+import org.hibernate.MappingException;
+import org.hibernate.annotations.common.reflection.*;
+import org.hibernate.annotations.common.reflection.java.JavaReflectionManager;
+import org.hibernate.mapping.Component;
+import org.hibernate.mapping.PersistentClass;
+import org.hibernate.mapping.Property;
+import org.hibernate.util.IdentitySet;
+import org.hibernate.validator.*;
+import org.hibernate.validator.interpolator.DefaultMessageInterpolatorAggerator;
+
 import java.beans.Introspector;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -10,45 +24,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.MissingResourceException;
-import java.util.ResourceBundle;
-import java.util.Set;
-import java.util.StringTokenizer;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.hibernate.AssertionFailure;
-import org.hibernate.Hibernate;
-import org.hibernate.MappingException;
-import org.hibernate.annotations.common.reflection.Filter;
-import org.hibernate.annotations.common.reflection.ReflectionManager;
-import org.hibernate.annotations.common.reflection.XClass;
-import org.hibernate.annotations.common.reflection.XMember;
-import org.hibernate.annotations.common.reflection.XMethod;
-import org.hibernate.annotations.common.reflection.XProperty;
-import org.hibernate.annotations.common.reflection.java.JavaReflectionManager;
-import org.hibernate.mapping.Component;
-import org.hibernate.mapping.PersistentClass;
-import org.hibernate.mapping.Property;
-import org.hibernate.util.IdentitySet;
-import org.hibernate.validator.InvalidStateException;
-import org.hibernate.validator.InvalidValue;
-import org.hibernate.validator.MessageInterpolator;
-import org.hibernate.validator.PersistentClassConstraint;
-import org.hibernate.validator.PropertyConstraint;
-import org.hibernate.validator.Valid;
-import org.hibernate.validator.Validator;
-import org.hibernate.validator.ValidatorClass;
-import org.hibernate.validator.Version;
-import org.hibernate.validator.interpolator.DefaultMessageInterpolatorAggerator;
+import java.util.*;
 
 /*
  * READ ME!!!
@@ -72,7 +48,7 @@ import org.hibernate.validator.interpolator.DefaultMessageInterpolatorAggerator;
  */
 public class ClassValidator<T> implements Serializable {
 	//TODO Define magic number
-	private static Log log = LogFactory.getLog( ClassValidator.class );
+	private static final Log log = LogFactory.getLog( ClassValidator.class );
 	private static final InvalidValue[] EMPTY_INVALID_VALUE_ARRAY = new InvalidValue[]{};
 	private static final String DEFAULT_VALIDATOR_MESSAGE = "org.hibernate.validator.resources.DefaultValidatorMessages";
 	private static final String VALIDATOR_MESSAGE = "ValidatorMessages";
@@ -223,12 +199,11 @@ public class ClassValidator<T> implements Serializable {
 		addSuperClassesAndInterfaces( xClass, classes );
 		for ( XClass currentClass : classes ) {
 			Annotation[] classAnnotations = currentClass.getAnnotations();
-			for ( int i = 0; i < classAnnotations.length ; i++ ) {
-				Annotation classAnnotation = classAnnotations[i];
-				Validator beanValidator = createValidator( classAnnotation );
-				if ( beanValidator != null ) beanValidators.add( beanValidator );
-				handleAggregateAnnotations(classAnnotation, null);
-			}
+            for (Annotation classAnnotation : classAnnotations) {
+                Validator beanValidator = createValidator(classAnnotation);
+                if (beanValidator != null) beanValidators.add(beanValidator);
+                handleAggregateAnnotations(classAnnotation, null);
+            }
 		}
 
 		//Check on all selected classes

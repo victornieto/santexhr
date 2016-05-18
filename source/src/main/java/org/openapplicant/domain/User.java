@@ -56,6 +56,7 @@ public class User extends DomainObject {
 	public enum Role {
 		ROLE_HR,
 		ROLE_GRADER,
+		ROLE_HR_MANAGER,
 		ROLE_SETTINGS,
 		ROLE_ADMIN;
 		

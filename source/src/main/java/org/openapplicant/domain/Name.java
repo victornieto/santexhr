@@ -33,7 +33,7 @@ public class Name {
 		// change the name from "Meadows, Rob" to "Rob Meadows"
 		Pattern commaPattern = Pattern.compile("^(\\w+),\\s?");
 		Matcher matcher = commaPattern.matcher(arg);
-		String toParse = "";
+		String toParse;
 		if (matcher.find()) {
 			String lastName = matcher.group(1);
 			String firstName = arg.replace(lastName+",", "");

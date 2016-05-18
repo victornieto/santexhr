@@ -33,7 +33,7 @@ public class Profile extends DomainObject {
 		public String getHumanString() {
 			return Strings.humanize(name());
 		}
-	};
+	}
 
 	private boolean acceptResumesByEmail = false;
 
@@ -322,7 +322,7 @@ public class Profile extends DomainObject {
 		}
 		System.err.println("Score from "+requiredTotal+" required is "+score);
 		
-		double preferred = 0.0;
+		double preferred;
 		if (preferredTotal > 0) 
 			preferred = ( (20.0 * preferredMatch) / preferredTotal);
 		else
@@ -330,7 +330,7 @@ public class Profile extends DomainObject {
 		System.err.println("Score from "+preferredTotal+" preferred is "+preferred);
 		score += preferred;
 		
-		double optional = 0.0;
+		double optional;
 		if (optionalTotal > 0) 
 			optional = ( (10.0 * optionalMatch)  / optionalTotal);
 		else

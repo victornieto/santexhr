@@ -7,7 +7,7 @@ import java.util.ResourceBundle;
  */
 public abstract class Messages {
 
-	private static ResourceBundle messages = ResourceBundle.getBundle("messages");
+	private static final ResourceBundle messages = ResourceBundle.getBundle("messages");
 	
 	/**
 	 * @return the default welcome text to display in the quiz portal
@@ -22,4 +22,8 @@ public abstract class Messages {
 	public static String getDefaultCompanyCompletionText() {
 		return messages.getString("company.completionText");
 	}
+
+    public static String getJobPositionDeleteDataIntegrityViolationExceptionText() {
+        return messages.getString("jobPosition.deleteDataIntegrityViolationExceptionText");
+    }
 }

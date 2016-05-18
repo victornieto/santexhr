@@ -1,9 +1,5 @@
 package org.openapplicant.dao.hibernate;
 
-import java.math.BigDecimal;
-import java.util.Formatter;
-import java.util.List;
-
 import org.hibernate.Hibernate;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
@@ -15,6 +11,11 @@ import org.openapplicant.util.Params;
 import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Formatter;
+import java.util.List;
+
 
 @Repository
 public class ExamDAO extends DomainObjectDAO<Exam> implements IExamDAO {
@@ -25,12 +26,16 @@ public class ExamDAO extends DomainObjectDAO<Exam> implements IExamDAO {
 	
 	@SuppressWarnings("unchecked")
 	public List<Exam> findByCompanyId(long companyId) {
+        /*
 		return getHibernateTemplate().find(
 				"from " + Exam.class.getName() + 
 				" where company.id = ?",
 				companyId
-		);
-	}
+		);*/
+        // FIXME This method was being called by DynamicExamsStrategy, but now the system works with
+        // ExamDefinition instances, not with Exam instances
+        return new ArrayList<Exam>();
+    }
 	
 	public Exam findByArtifactId(String artifactId) {
 		return findUniqueResult(
@@ -146,9 +151,7 @@ public class ExamDAO extends DomainObjectDAO<Exam> implements IExamDAO {
 			}
 		});
 		
-		QuestionStatistics qs = new QuestionStatistics(result[0],result[1],result[2],result[3]);
-		
-		return qs;
+		return new QuestionStatistics(result[0],result[1],result[2],result[3]);
 	}
 	
 	

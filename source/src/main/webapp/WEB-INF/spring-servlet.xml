@@ -29,6 +29,8 @@
 				/admin/forgotPassword/*=forgotPasswordController
 				/admin/createAccount/*=createAccountController
 				/admin/help/*=helpController
+                /admin/jobOpenings/*=jobOpeningController
+                /admin/jobPositions/*=jobPositionController
 				/admin/screening/*=screeningController
 				/admin/settings/*=settingsController
 				/admin/results/*=resultsController
@@ -38,6 +40,7 @@
 				/admin/users/*=usersController
        			/admin/report.pdf=reportController
        			/admin/file*=attachmentController
+       			/admin/reports/*=reportController
 				
 				/dwr/call/**=dwrController
 				/dwr/interface/**=dwrController

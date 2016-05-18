@@ -1,12 +1,13 @@
 package org.openapplicant.security;
 
-import static org.openapplicant.domain.User.Role.ROLE_SETTINGS;
-
-import javax.servlet.http.HttpServletRequest;
 import org.springframework.security.Authentication;
 import org.springframework.security.GrantedAuthority;
 import org.springframework.security.ui.TargetUrlResolver;
 import org.springframework.security.ui.savedrequest.SavedRequest;
+
+import javax.servlet.http.HttpServletRequest;
+
+import static org.openapplicant.domain.User.Role.ROLE_SETTINGS;
 
 /**
  * Upon login, if the user has a ROLE_SETTINGS role, he's sent directly to 
@@ -16,7 +17,7 @@ import org.springframework.security.ui.savedrequest.SavedRequest;
  */
 public class RoleBasedTargetUrlResolver implements TargetUrlResolver {
 	
-	private TargetUrlResolver defaultSpringSecurityTargetUrl;
+	private final TargetUrlResolver defaultSpringSecurityTargetUrl;
 	
 	private final static String SETTINGS_VIEW = "/admin/settings/index";
 	

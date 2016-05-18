@@ -2,6 +2,12 @@
 <%@ taglib prefix="tt" uri="/WEB-INF/tlds/ttTagLibrary.tld"%>
 
 <div class="group">
+    <h3>
+        <img src="<c:url value='/img/sidebar/candidate.gif' />" />
+        <a href="<c:url value='/admin/jobOpenings/all' />">Job Openings</a>
+    </h3>
+</div>
+<div class="group">
 	<h3 class="${candidatesSidebar ? 'selected':''}">
 		<img src="<c:url value='/img/sidebar/candidate.gif' />" />
 		<a href="<c:url value='all' />">Candidates</a>
@@ -40,6 +46,7 @@
 			</c:forEach>
 		</ul>
 	</div>
+    <a href="<c:url value="my_candidates"/>" title="Show candidates registered by me">My Candidates</a>
 	<script type="text/javascript">
 		oltk.include('jquery/jquery.js');
 		jQuery('.status_folders .toggler').click(function() {

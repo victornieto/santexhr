@@ -6,9 +6,9 @@
 	<session-factory>
 
 		<property name="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</property>
-		<property name="hibernate.show_sql">false</property>
+		<property name="hibernate.show_sql">true</property>
 		<property name="hibernate.format_sql">true</property>
-		<!-- property name="hibernate.hbm2ddl.auto">update</property> -->
+		<property name="hibernate.hbm2ddl.auto">update</property>
 		
 		<mapping class="org.openapplicant.domain.EntityInfo" />
 		<mapping class="org.openapplicant.domain.DomainObject" />
@@ -32,6 +32,8 @@
 		<mapping class="org.openapplicant.domain.Category"/>
 		<mapping class="org.openapplicant.domain.CategoryPercentage"/>
 		<mapping class="org.openapplicant.domain.ExamDefinition" />
+        <mapping class="org.openapplicant.domain.JobPosition" />
+        <mapping class="org.openapplicant.domain.JobOpening" />
 
 		<mapping class="org.openapplicant.domain.AccountCreationToken"/>
 		<mapping class="org.openapplicant.domain.PasswordRecoveryToken"/>

@@ -608,7 +608,7 @@ public class AdminService extends ApplicationService {
 	public Question addQuestionToExam(String examArtifactId, Question question) {
 		Exam exam = findExamByArtifactId(examArtifactId);
 		exam.addQuestion(question);
-		exam = getExamDao().save(exam);
+		getExamDao().save(exam);
 		return question;
 	}
 
@@ -624,7 +624,7 @@ public class AdminService extends ApplicationService {
 		Exam exam = findExamByArtifactId(examArtifactId);
 		Question question = new MultipleChoiceQuestion();
 		exam.addQuestion(question);
-		exam = getExamDao().save(exam);
+		getExamDao().save(exam);
 		return question;
 	}
 
@@ -700,32 +700,32 @@ public class AdminService extends ApplicationService {
 			Map<String, Double> values = new HashMap<String, Double>();
 
 			elements.put("total_time", 1);
-			values.put("total_time", new Double(summary.getTotalTime()));
+			values.put("total_time", (double) summary.getTotalTime());
 
 			elements.put("key_chars", 1);
-			values.put("key_chars", new Double(summary.getKeyChars()));
+			values.put("key_chars", (double) summary.getKeyChars());
 
 			elements.put("hesitation_time", 1);
 			values.put("hesitation_time",
-					new Double(summary.getHesitationTime()));
+                    (double) summary.getHesitationTime());
 
 			elements.put("focus_changes", -1);
-			values.put("focus_changes", new Double(summary.getFocusChanges()));
+			values.put("focus_changes", (double) summary.getFocusChanges());
 
 			elements.put("paste_presses", -1);
-			values.put("paste_presses", new Double(summary.getPastePresses()));
+			values.put("paste_presses", (double) summary.getPastePresses());
 
 			QuestionStatistics qs_style = getExamDao()
 					.findSittingStatisticsBySittingId(sitting.getId(), "style");
 			elements.put("style", 1);
-			values.put("style", new Double(qs_style.getMean().doubleValue()));
+			values.put("style", qs_style.getMean().doubleValue());
 
 			QuestionStatistics qs_correct = getExamDao()
 					.findSittingStatisticsBySittingId(sitting.getId(),
 							"correctness");
 			elements.put("correctness", 1);
-			values.put("correctness", new Double(qs_correct.getMean()
-					.doubleValue()));
+			values.put("correctness", qs_correct.getMean()
+                    .doubleValue());
 
 			// resume screening score
 
@@ -745,8 +745,6 @@ public class AdminService extends ApplicationService {
 			}
 
 			double computed_score = (100.0 * score) / max_score;
-			if (score < 0)
-				score = 0;
 			candidate.setMatchScore(new BigDecimal(computed_score));
 
 		} catch (Exception e) {
@@ -939,13 +937,14 @@ public class AdminService extends ApplicationService {
 	@Transactional(isolation=Isolation.SERIALIZABLE)
 	public void updateExamDefinitionInfo(String examDefinitionArtifactId, String name,
 			String genre, String description, Integer numberOfQuestionsWanted, boolean isActive,
-            List<CategoryPercentage> categoriesPercentage) {
+            List<CategoryPercentage> categoriesPercentage, JobPosition jobPosition) {
 		ExamDefinition examDefinition = findExamDefinitionByArtifactId(examDefinitionArtifactId);
 		examDefinition.setName(name);
 		examDefinition.setGenre(genre);
 		examDefinition.setDescription(description);
 		examDefinition.setNumberOfQuestionsWanted(numberOfQuestionsWanted);
 		examDefinition.setActive(isActive);
+        examDefinition.setJobPosition(jobPosition);
         // Delete not present categories percentage
         List<CategoryPercentage> currentCategoriesPercentage = examDefinition.getCategoriesPercentage();
         for (int i = 0; i < currentCategoriesPercentage.size(); i++) {
@@ -1089,7 +1088,7 @@ public class AdminService extends ApplicationService {
 	 * @param questionId the question id
 	 * @return the Question with the specified primary key
 	 */
-	public Question findQuestionById(Long questionId) {
+    Question findQuestionById(Long questionId) {
 		return getQuestionDao().find(questionId);
 	}
 
@@ -1185,5 +1184,134 @@ public class AdminService extends ApplicationService {
     public void deleteExamDefinition(String examDefinitionArtifactId) {
         ExamDefinition examDefinition = findExamDefinitionByArtifactId(examDefinitionArtifactId);
         getExamDefinitionDao().delete(examDefinition.getId());
+    }
+
+    /**
+     * Finds all candidates registered by the given user
+     * @param user
+     */
+    public List<Candidate> findAllCandidatesByUser(User user) {
+        return getCandidateDao().findByUser(user);
+    }
+
+    /**
+     * Finds all jobs positions for the given company
+     * @param company
+     * @return
+     */
+    public Collection<JobPosition> findJobPositionsByCompany(Company company) {
+        return getJobPositionDao().findAllByCompany(company);
+    }
+
+    /**
+     * Updates a job position info
+     * @param id
+     * @param name
+     */
+    public void updateJobPositionInfo(Long id, String name, Set<Seniority> seniorities) {
+        JobPosition jobPosition = getJobPositionDao().find(id);
+        jobPosition.setName(name);
+        jobPosition.setSeniorities(seniorities);
+        getJobPositionDao().save(jobPosition);
+    }
+
+    /**
+     * Returns a JobPosition instance given by its id
+     * @param id
+     * @return
+     */
+    public JobPosition findJobPositionById(Long id) {
+        return getJobPositionDao().find(id);
+    }
+
+    /**
+     * Saves a job position
+     * @param jobPosition
+     * @return
+     */
+    public JobPosition saveJobPosition(JobPosition jobPosition) {
+        return getJobPositionDao().save(jobPosition);
+    }
+
+    /**
+     * Deletes a job positions with the given id
+     * @param id
+     */
+    public void deleteJobPositionWithId(Long id) {
+        getJobPositionDao().delete(id);
+    }
+
+    /**
+     * Returns all job openings from the given company
+     * @param company
+     * @return
+     */
+    public List<JobOpening> findAllJobOpeningsByCompany(Company company) {
+        return getJobOpeningDao().findAllByCompany(company);
+    }
+
+    /**
+     * Returns active job openings from the given company
+     * @param company
+     * @return
+     */
+    public List<JobOpening> findActiveJobOpeningsByCompany(Company company) {
+        return getJobOpeningDao().findActiveByCompany(company);
+    }
+
+    /**
+     * Returns archived job openings from the given company
+     * @param company
+     * @return
+     */
+    public List<JobOpening> findArchivedJobOpeningsByCompany(Company company) {
+        return getJobOpeningDao().findArchivedByCompany(company);
+    }
+
+    /**
+     * Returns job openings from the given company with the given status
+     * @param company
+     * @return
+     */
+    public List<JobOpening> findJobOpeningsByCompanyAndStatus(Company company, JobOpening.Status status) {
+        return getJobOpeningDao().findByCompanyAndStatus(company, status);
+    }
+
+    /**
+     * Returns the job opening with the given id
+     * @param jobOpeningId
+     * @return
+     */
+    public JobOpening findJobOpeningById(Long jobOpeningId) {
+        return getJobOpeningDao().find(jobOpeningId);
+    }
+
+    /**
+     * Updates a job opening information
+     * @param id
+     * @param jobPosition
+     * @param finishDate
+     * @param client
+     * @param description
+     * @param applicants
+     */
+    @Transactional(isolation = Isolation.SERIALIZABLE)
+    public void updateJobOpeningInfo(Long id, JobPosition jobPosition, Date finishDate, String client, String description, Set<Candidate> applicants) {
+        JobOpening jobOpening = getJobOpeningDao().find(id);
+        jobOpening.setJobPosition(jobPosition);
+        jobOpening.setFinishDate(finishDate);
+        jobOpening.setClient(client);
+        jobOpening.setDescription(description);
+        jobOpening.setApplicants(applicants);
+        getJobOpeningDao().save(jobOpening);
+    }
+
+    /**
+     * Saves a job opening
+     * @param jobOpening
+     */
+    @Transactional(isolation = Isolation.SERIALIZABLE)
+    public void saveJobOpening(JobOpening jobOpening) {
+        getJobOpeningDao().save(jobOpening);
     }
 }

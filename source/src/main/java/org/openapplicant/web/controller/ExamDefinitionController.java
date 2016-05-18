@@ -1,8 +1,6 @@
 package org.openapplicant.web.controller;
 
-import org.openapplicant.domain.Category;
-import org.openapplicant.domain.CategoryPercentage;
-import org.openapplicant.domain.ExamDefinition;
+import org.openapplicant.domain.*;
 import org.openapplicant.util.Pagination;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -37,6 +35,7 @@ public class ExamDefinitionController extends AdminController {
         model.put("categories", getAdminService().findAllCategoriesByCompany(
                 currentUser().getCompany(),
                 Pagination.oneBased()));
+        model.put("jobPositions", getAdminService().findJobPositionsByCompany(currentUser().getCompany()));
 		return "examDefinition/view";
 	}
 	
@@ -104,14 +103,12 @@ public class ExamDefinitionController extends AdminController {
         }
 
         errors = null;
-        int i = 0;
         for (CategoryPercentage categoryPercentage : cmd.getCategoriesPercentage()) {
             if (errors == null) {
-                errors = populateErrorsCategoryPercentage(model, categoryPercentage, i);
+                errors = populateErrorsCategoryPercentage(model, categoryPercentage);
             } else {
-                errors.addAllErrors(populateErrorsCategoryPercentage(model, categoryPercentage, i));
+                errors.addAllErrors(populateErrorsCategoryPercentage(model, categoryPercentage));
             }
-            i++;
         }
 
         if (hierarchyCategoryError) {
@@ -128,7 +125,7 @@ public class ExamDefinitionController extends AdminController {
                     categoryErrorMapValue);
         }
 
-        if(examDefinitionErrors || duplicatedCategoryError || hierarchyCategoryError || errors.hasErrors()) {
+        if(examDefinitionErrors || duplicatedCategoryError || hierarchyCategoryError || (errors != null && errors.hasErrors())) {
             model.put("categories", getAdminService().findAllCategoriesByCompany(currentUser().getCompany(), Pagination.oneBased().forPage(1)));
             return "examDefinition/view";
         }
@@ -140,7 +137,8 @@ public class ExamDefinitionController extends AdminController {
 				cmd.getDescription(),
 				cmd.getNumberOfQuestionsWanted(),
 				cmd.isActive(),
-                cmd.getCategoriesPercentage()
+                cmd.getCategoriesPercentage(),
+                cmd.getJobPosition()
 		);
 		return "redirect:view?ed="+cmd.getArtifactId();
 	}
@@ -148,6 +146,7 @@ public class ExamDefinitionController extends AdminController {
 	@RequestMapping(method=GET)
 	public String add(Map<String, Object> model) {
 		model.put("examDefinition", new ExamDefinition());
+        model.put("jobPositions", getAdminService().findJobPositionsByCompany(currentUser().getCompany()));
 		return "examDefinition/add";
 	}
 	
@@ -176,6 +175,7 @@ public class ExamDefinitionController extends AdminController {
         model.put("categories", getAdminService().findAllCategoriesByCompany(
                 currentUser().getCompany(),
                 Pagination.oneBased()));
+        model.put("jobPositions", getAdminService().findJobPositionsByCompany(currentUser().getCompany()));
 		return "examDefinition/view";
 	}
 
@@ -189,10 +189,11 @@ public class ExamDefinitionController extends AdminController {
         model.put("categories", getAdminService().findAllCategoriesByCompany(
                 currentUser().getCompany(),
                 Pagination.oneBased()));
+        model.put("jobPositions", getAdminService().findJobPositionsByCompany(currentUser().getCompany()));
         return "examDefinition/view";
     }
 	
-	private Errors populateErrorsCategoryPercentage(Map<String, Object> model, CategoryPercentage categoryPercentage, Integer index) {
+	private Errors populateErrorsCategoryPercentage(Map<String, Object> model, CategoryPercentage categoryPercentage) {
 		Errors errors = categoryPercentage.validate();
         HashMap<String, HashMap<String, String>> map = (HashMap<String, HashMap<String, String>>) model.get("categoriesPercentageError");
         HashMap<String, String> value;
@@ -234,6 +235,20 @@ public class ExamDefinitionController extends AdminController {
             @Override
             public void setAsText(String text) throws IllegalArgumentException {
                 setValue(getAdminService().findCategoryById(Long.parseLong(text)));
+            }
+        });
+        binder.registerCustomEditor(JobPosition.class, new PropertyEditorSupport() {
+            @Override
+            public String getAsText() {
+                if (getValue() != null) {
+                    return ((JobPosition)getValue()).getId().toString();
+                }
+                return null;
+            }
+
+            @Override
+            public void setAsText(String text) throws IllegalArgumentException {
+                setValue(getAdminService().findJobPositionById(Long.parseLong(text)));
             }
         });
     }

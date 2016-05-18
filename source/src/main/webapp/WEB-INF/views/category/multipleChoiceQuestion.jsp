@@ -42,6 +42,7 @@
                     });
                     var dataToSend = {
                         <c:if test="${!(category eq null)}">'c':${category.id},</c:if>
+                        <c:if test="${!(isNew eq null)}">'n':true,</c:if>
                         'q':'${question.artifactId}',
                         index:choiceIndex,
                         'name':name,
@@ -76,6 +77,7 @@
                     });
                     var dataToSend = {
                         <c:if test="${!(category eq null)}">'c':${category.id},</c:if>
+                        <c:if test="${!(isNew eq null)}">'n':true,</c:if>
                         'q':'${question.artifactId}',
                         'name':name,
                         'prompt':prompt,

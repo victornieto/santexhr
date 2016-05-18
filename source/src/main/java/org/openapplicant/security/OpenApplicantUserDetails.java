@@ -15,9 +15,9 @@ class OpenApplicantUserDetails implements UserDetails {
 	//========================================================================
 	// MEMBERS
 	//=========================================================================
-	private User _user;
+	private final User _user;
 	
-	private Long _userId;
+	private final Long _userId;
 	
 	private Long _companyId;
 	

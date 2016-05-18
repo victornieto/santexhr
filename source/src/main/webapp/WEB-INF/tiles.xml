@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <!DOCTYPE tiles-definitions PUBLIC
-       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
-       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
 <tiles-definitions>
 	
 	<!--
@@ -45,17 +45,28 @@
 	<!-- SIDEBARS -->
 	<definition name="sidebar/candidate" template="/WEB-INF/views/shared/candidateSidebar.jsp">
 		<put-attribute name="candidateTree" value="/WEB-INF/views/candidate/candidateTree.jsp"/>
+        <put-attribute name="jobOpenings" value=""/>
 		<put-attribute name="profile" value=""/>
 		<put-attribute name="searches" value=""/>
 	</definition>
+
 	<definition name="sidebar/candidates" template="/WEB-INF/views/shared/candidateSidebar.jsp">
 		<put-attribute name="candidateTree" value="/WEB-INF/views/candidates/candidateTree.jsp"/>
+        <put-attribute name="jobOpenings" value=""/>
 		<put-attribute name="profile" value=""/>
 		<put-attribute name="searches" value="/WEB-INF/views/shared/searches.jsp"/>
 	</definition>
 
+    <definition name="sidebar/jobOpenings" template="/WEB-INF/views/shared/candidateSidebar.jsp">
+        <put-attribute name="candidateTree" value=""/>
+        <put-attribute name="jobOpenings" value="/WEB-INF/views/jobOpenings/sidebarComponent.jsp"/>
+        <put-attribute name="profile" value=""/>
+        <put-attribute name="searches" value=""/>
+    </definition>
+
 	<definition name="sidebar/results" template="/WEB-INF/views/shared/candidateSidebar.jsp">
 		<put-attribute name="candidateTree" value="/WEB-INF/views/results/candidateTree.jsp"/>
+        <put-attribute name="jobOpenings" value=""/>
 		<put-attribute name="profile" value="/WEB-INF/views/shared/profile.jsp"/>
 		<put-attribute name="searches" value=""/>
 	</definition>
@@ -63,6 +74,7 @@
 	<definition name="sidebar/settings" template="/WEB-INF/views/shared/settingsSidebar.jsp">
 		<put-attribute name="categories" value=""/>
 		<put-attribute name="examDefinitions" value=""/>
+        <put-attribute name="jobPosition" value=""/>
 		<put-attribute name="email" value=""/>
 		<put-attribute name="screening" value=""/>
 		<put-attribute name="users" value=""/>
@@ -79,6 +91,9 @@
 	<definition name="sidebar/settings/category" extends="sidebar/settings">
 		<put-attribute name="categories" value="/WEB-INF/views/category/sidebarComponent.jsp"/>
 	</definition>
+    <definition name="sidebar/settings/jobPosition" extends="sidebar/settings">
+        <put-attribute name="jobPosition" value="/WEB-INF/views/jobPositions/sidebarComponent.jsp"/>
+    </definition>
 	<definition name="sidebar/settings/categories" extends="sidebar/settings">
 		<put-attribute name="categories" value="/WEB-INF/views/categories/sidebarComponent.jsp"/>
 	</definition>
@@ -90,6 +105,9 @@
 	</definition>
 	<definition name="sidebar/settings/users" extends="sidebar/settings">
 		<put-attribute name="users" value=""/>
+	</definition>
+		<definition name="sidebar/reports" template="/WEB-INF/views/reports/reportsSidebar.jsp">
+		<put-attribute name="candidates" value=""/>		
 	</definition>
 	
 	<!-- ADMIN QUESTION TYPES -->
@@ -143,6 +161,16 @@
 		<put-attribute name="sidebar" value="sidebar/candidate"/>
 		<put-attribute name="content" value="/WEB-INF/views/candidate/detail.jsp"/>
 	</definition>
+    <definition name="candidates/notes" extends="application">
+        <put-attribute name="title" value="Santex HR | Candidates Notes"/>
+        <put-attribute name="sidebar" value="sidebar/candidates"/>
+        <put-attribute name="content" value="/WEB-INF/views/candidates/notes.jsp"/>
+    </definition>
+    <definition name="candidates/my_candidates" extends="application">
+        <put-attribute name="title" value="Santex HR | My Candidates"/>
+        <put-attribute name="sidebar" value="sidebar/candidates"/>
+        <put-attribute name="content" value="/WEB-INF/views/candidates/index.jsp"/>
+    </definition>
 	<definition name="candidates/history" template="/WEB-INF/views/candidate/history.jsp"/>
 	<definition name="candidates/emailLinkDialog" template="/WEB-INF/views/candidate/emailLinkDialog.jsp"/>
 	
@@ -248,6 +276,36 @@
 		<put-attribute name="sidebar" value="sidebar/settings/categories"/>
 		<put-attribute name="content" value="/WEB-INF/views/categories/index.jsp"/>
 	</definition>
+
+    <!-- JOB POSITIONS -->
+    <definition name="jobPositions/index" extends="application">
+        <put-attribute name="title" value="Santex HR | Job Positions"/>
+        <put-attribute name="sidebar" value="sidebar/settings"/>
+        <put-attribute name="content" value="/WEB-INF/views/jobPositions/index.jsp"/>
+    </definition>
+    <definition name="jobPositions/view" extends="application">
+        <put-attribute name="title" value="Santex HR | Job Position"/>
+        <put-attribute name="sidebar" value="sidebar/settings/jobPosition"/>
+        <put-attribute name="content" value="/WEB-INF/views/jobPositions/view.jsp"/>
+    </definition>
+
+    <!-- JOB OPENINGS -->
+    <definition name="jobOpenings/index" extends="application">
+        <put-attribute name="title" value="Santex HR | Job Openings"/>
+        <put-attribute name="sidebar" value="sidebar/jobOpenings"/>
+        <put-attribute name="content" value="/WEB-INF/views/jobOpenings/index.jsp"/>
+    </definition>
+    <definition name="jobOpenings/view" extends="application">
+        <put-attribute name="title" value="Santex HR | Job Opening"/>
+        <put-attribute name="sidebar" value="sidebar/jobOpenings"/>
+        <put-attribute name="content">
+            <definition template="/WEB-INF/views/jobOpenings/view.jsp">
+                <put-attribute name="applicants" value="jobOpenings/applicants"/>
+            </definition>
+        </put-attribute>
+    </definition>
+    <definition name="jobOpenings/applicants" template="/WEB-INF/views/jobOpenings/applicants.jsp"/>
+    <definition name="jobOpenings/candidates" template="/WEB-INF/views/jobOpenings/selectCandidates.jsp"/>
 	
 	<!-- CreateAccount -->
 	<definition name="createAccount/index" extends="publicApplication">
@@ -428,6 +486,18 @@
 		<put-attribute name="title" value="Santex HR | Users"/>
 		<put-attribute name="sidebar" value="sidebar/settings/users"/>
 		<put-attribute name="content" value="/WEB-INF/views/users/index.jsp"/>
+	</definition>
+	
+	<!-- REPORTS -->
+	<definition name="reports/index" extends="application">
+		<put-attribute name="title" value="Santex HR | Settings"/>
+		<put-attribute name="sidebar" value="sidebar/reports"/>
+		<put-attribute name="content" value="/WEB-INF/views/reports/index.jsp"/>
+	</definition>
+	<definition name="reports/view" extends="application">
+		<put-attribute name="title" value="Santex HR | Settings"/>
+		<put-attribute name="sidebar" value="sidebar/reports"/>
+		<put-attribute name="content" value="/WEB-INF/views/reports/view.jsp"/>
 	</definition>
 	
 </tiles-definitions>	

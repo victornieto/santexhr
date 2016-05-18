@@ -58,6 +58,10 @@ public abstract class ApplicationService {
 	private IUserDAO userDao;
 	
 	private IAccountCreationTokenDAO accountCreationTokenDao;
+
+    private IJobPositionDAO jobPositionDao;
+
+    private IJobOpeningDAO jobOpeningDao;
 	
 	private MailSender mailSender;
 
@@ -93,7 +97,7 @@ public abstract class ApplicationService {
 		candidateExamLinkDao = value;
 	}
 	
-	protected ICandidateSearchDAO getCandidateSearchDao() {
+	ICandidateSearchDAO getCandidateSearchDao() {
 		return candidateSearchDao;
 	}
 	
@@ -120,7 +124,7 @@ public abstract class ApplicationService {
 		companyDao = value;
 	}
 	
-	protected ICategoryDAO getCategoryDao() {
+	ICategoryDAO getCategoryDao() {
 		return categoryDao;
 	}
 	
@@ -129,7 +133,7 @@ public abstract class ApplicationService {
 		categoryDao = value;
 	}
 
-	protected IEmailTemplateDAO getEmailTemplateDao() {
+	IEmailTemplateDAO getEmailTemplateDao() {
 		return emailTemplateDao;
 	}
 	
@@ -138,7 +142,7 @@ public abstract class ApplicationService {
 		emailTemplateDao = value;
 	}
 	
-	protected IExamDefinitionDAO getExamDefinitionDao() {
+	IExamDefinitionDAO getExamDefinitionDao() {
 		return examDefinitionDao;
 	}
 	
@@ -147,7 +151,7 @@ public abstract class ApplicationService {
 		examDefinitionDao = value;
 	}
 
-	protected IExamDAO getExamDao() {
+	IExamDAO getExamDao() {
 		return examDao;
 	}
 	
@@ -156,7 +160,7 @@ public abstract class ApplicationService {
 		examDao = value;
 	}
 
-	protected IExamLinkDAO getExamLinkDao() {
+	IExamLinkDAO getExamLinkDao() {
 		return examLinkDao;
 	}
 	
@@ -174,7 +178,7 @@ public abstract class ApplicationService {
 		gradeDao = value;
 	}
 	
-	protected IPasswordRecoveryTokenDAO getPasswordRecoveryTokenDao() {
+	IPasswordRecoveryTokenDAO getPasswordRecoveryTokenDao() {
 		return passwordRecoveryTokenDao;
 	}
 	
@@ -183,7 +187,7 @@ public abstract class ApplicationService {
 		passwordRecoveryTokenDao = value;
 	}
 	
-	protected IProfileDAO getProfileDao() {
+	IProfileDAO getProfileDao() {
 		return profileDao;
 	}
 	
@@ -192,7 +196,7 @@ public abstract class ApplicationService {
 		profileDao = value;
 	}
 
-	protected IQuestionDAO getQuestionDao() {
+	IQuestionDAO getQuestionDao() {
 		return questionDao;
 	}
 	
@@ -201,7 +205,7 @@ public abstract class ApplicationService {
 		questionDao = value;
 	}
 
-	protected IResponseDAO getResponseDao() {
+	IResponseDAO getResponseDao() {
 		return responseDao;
 	}
 	
@@ -210,7 +214,7 @@ public abstract class ApplicationService {
 		responseDao = value;
 	}
 
-	protected ISittingDAO getSittingDao() {
+	ISittingDAO getSittingDao() {
 		return sittingDao;
 	}
 	
@@ -219,7 +223,7 @@ public abstract class ApplicationService {
 		sittingDao = value;
 	}
 
-	protected IUserDAO getUserDao() {
+	IUserDAO getUserDao() {
 		return userDao;
 	}
 	
@@ -227,12 +231,30 @@ public abstract class ApplicationService {
 	public void setUserDao(IUserDAO value) {
 		userDao = value;
 	}
+
+    IJobPositionDAO getJobPositionDao() {
+        return jobPositionDao;
+    }
+
+    @Required
+    public void setJobPositionDao(IJobPositionDAO value) {
+        this.jobPositionDao = value;
+    }
+
+    IJobOpeningDAO getJobOpeningDao() {
+        return jobOpeningDao;
+    }
+
+    @Required
+    public void setJobOpeningDao(IJobOpeningDAO value) {
+        this.jobOpeningDao = value;
+    }
 	
 	public void setAccountCreationTokenDao(IAccountCreationTokenDAO accountCreationTokenDao) {
 		this.accountCreationTokenDao = accountCreationTokenDao;
 	}
 	
-	public IAccountCreationTokenDAO getAccountCreationTokenDao() {
+	IAccountCreationTokenDAO getAccountCreationTokenDao() {
 		return accountCreationTokenDao;
 	}
 
@@ -268,7 +290,7 @@ public abstract class ApplicationService {
 	 * @param artifactId the artifact id of the exam to retrieve.
 	 * @return the exam
 	 */
-	public Exam findExamByArtifactId(String artifactId) {
+    Exam findExamByArtifactId(String artifactId) {
 		return getExamDao().findByArtifactId(artifactId);
 	}
 

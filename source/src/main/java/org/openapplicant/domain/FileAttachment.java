@@ -1,20 +1,5 @@
 package org.openapplicant.domain;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.sql.Blob;
-import java.sql.Clob;
-import java.sql.SQLException;
-import java.util.zip.DataFormatException;
-
-import javax.persistence.Column;
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.Entity;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.Transient;
-
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.poi.hwpf.HWPFDocument;
@@ -24,6 +9,14 @@ import org.hibernate.validator.NotNull;
 import org.pdfbox.pdmodel.PDDocument;
 import org.pdfbox.util.PDFTextStripper;
 import org.springframework.dao.DataRetrievalFailureException;
+
+import javax.persistence.*;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.Blob;
+import java.sql.Clob;
+import java.sql.SQLException;
 
 @Entity
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
@@ -158,9 +151,7 @@ public abstract class FileAttachment extends DomainObject {
 		else if(StringUtils.equalsIgnoreCase(fileType, DOC)) {
 			int pad = 512 - (content.length % 512);
 			byte[] newString = new byte[content.length + pad];
-			for(int i = 0; i < content.length; i++) {
-				newString[i] = content[i];
-			}
+            System.arraycopy(content, 0, newString, 0, content.length);
 			for(int i = 0; i < pad; i++) {
 				newString[content.length + i] = 0;
 			}			

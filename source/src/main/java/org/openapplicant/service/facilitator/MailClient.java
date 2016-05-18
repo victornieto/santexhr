@@ -125,7 +125,7 @@ public class MailClient {
 	
 	private static class Auth extends Authenticator {
 		
-		private PasswordAuthentication passwordAuthentication;
+		private final PasswordAuthentication passwordAuthentication;
 		
 		public Auth(String username, String password) {
 			passwordAuthentication = new PasswordAuthentication(username, password);

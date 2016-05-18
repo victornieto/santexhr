@@ -22,7 +22,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 @Controller
 public class CategoryController extends AdminController {
 	
-	Pagination pagination = Pagination.oneBased().perPage(10000); // FIXME see how can we get this work
+	private final Pagination pagination = Pagination.oneBased().perPage(10000); // FIXME see how can we get this work
 	private static final Log logger = LogFactory.getLog(CategoryController.class);
 	
 	@ModelAttribute("categories")
@@ -43,8 +43,7 @@ public class CategoryController extends AdminController {
 	@RequestMapping(method=POST)
 	public String update(
 			@ModelAttribute("category") Category cmd, 
-			BindingResult binding,
-			Map<String, Object> model) {
+			BindingResult binding) {
 		
 		Errors errors = cmd.validate();
 		if(errors.hasErrors()) {
@@ -126,7 +125,7 @@ public class CategoryController extends AdminController {
             model.put("category", category);
         }
         model.put("question", question);
-        model.put("isNew", new Boolean(true));
+        model.put("isNew", Boolean.TRUE);
     }
 
 	@RequestMapping(method=GET)
@@ -135,7 +134,7 @@ public class CategoryController extends AdminController {
 			@RequestParam("q") String questionArtifactId,
             @RequestParam(required = false, value = "success") Boolean success,
 			Map<String, Object> model) {
-		Question question = null;
+		Question question;
 		if (categoryId != null) {
 			Category category = getAdminService().findCategoryById(categoryId);
 			model.put("category", category);
@@ -312,14 +311,14 @@ public class CategoryController extends AdminController {
             isNew = false;
         }
         if (categoryId != null) {
-            if (isNew != null && isNew) {
+            if (isNew) {
                 getAdminService().addQuestionToCategory(categoryId, question);
                 model.put("success", isNew);
             } else {
                 getAdminService().updateCategoryQuestion(categoryId, question);
             }
         } else {
-            if (isNew != null && isNew) {
+            if (isNew) {
                 getAdminService().saveQuestion(question);
                 model.put("success", isNew);
             } else {
@@ -356,6 +355,7 @@ public class CategoryController extends AdminController {
             @RequestParam("answerIndex") Integer answerIndex,
             @RequestParam("timeAllowed") Integer timeAllowed,
             @RequestParam(required=false, value="choices") List<String> choices,
+            @RequestParam(required = false, value = "n") Boolean isNew,
             Map<String, Object> model) {
         MultipleChoiceQuestion multipleChoiceQuestion = new MultipleChoiceQuestion();
         multipleChoiceQuestion.setArtifactId(questionArtifactId);
@@ -370,6 +370,7 @@ public class CategoryController extends AdminController {
             Category category = getAdminService().findCategoryById(categoryId);
             model.put("category", category);
         }
+        model.put("isNew", isNew);
         return "category/multipleChoiceQuestion";
     }
 
@@ -383,6 +384,7 @@ public class CategoryController extends AdminController {
             @RequestParam("answerIndex") Integer answerIndex,
             @RequestParam("timeAllowed") Integer timeAllowed,
             @RequestParam(required=false, value="choices") List<String> choices,
+            @RequestParam(required = false, value = "n") Boolean isNew,
             Map<String, Object> model) {
         MultipleChoiceQuestion multipleChoiceQuestion = new MultipleChoiceQuestion();
         multipleChoiceQuestion.setArtifactId(questionArtifactId);
@@ -397,6 +399,7 @@ public class CategoryController extends AdminController {
             Category category = getAdminService().findCategoryById(categoryId);
             model.put("category", category);
         }
+        model.put("isNew", isNew);
         return "category/multipleChoiceQuestion";
     }
 

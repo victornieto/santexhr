@@ -1,15 +1,15 @@
 package org.openapplicant.domain.link;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.ManyToOne;
-
 import org.hibernate.annotations.Cascade;
 import org.openapplicant.domain.Candidate;
 import org.openapplicant.domain.Company;
 import org.openapplicant.policy.NeverCall;
 import org.springframework.util.Assert;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
 
 
 /**

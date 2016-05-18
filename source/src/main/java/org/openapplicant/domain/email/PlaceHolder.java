@@ -14,9 +14,9 @@ public enum PlaceHolder {
 	
 	COMPANY_NAME("Company name", "<<Company Name>>");
 	
-	private String description;
+	private final String description;
 	
-	private String symbol;
+	private final String symbol;
 	
 	private PlaceHolder(String description, String symbol) {
 		this.description = description;
